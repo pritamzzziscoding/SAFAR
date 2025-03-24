@@ -7,7 +7,7 @@ export const SignUpForm = ({type}) => {
         lastname: "",
         password: "",
         confirm_password:"",
-        type: type
+        type
     })
 
     const handleChange = (event) => {
@@ -20,24 +20,34 @@ export const SignUpForm = ({type}) => {
         console.log(formData)
     }
 
-    return <form className="flex flex-col" onSubmit={handleSubmit}>
+    return <form className="flex flex-col items-center gap-5 md:text-xl" onSubmit={handleSubmit}>
 
-        <label htmlFor="email">Email</label>
-        <input type="email" name="email" id="email" required autoComplete="on" value={formData.email} onChange={handleChange}/>
+        <div className="flex flex-col items-center gap-1 text-teal-700 w-[80%]">
+            <label className="font-semibold" htmlFor="email">Email</label>
+            <input className="shadow-2xl border-2 border-blue-50 h-9 rounded w-[90%]" type="email" name="email" id="email" required autoComplete="on" value={formData.email} onChange={handleChange}/>
+        </div>
+        <div className="flex flex-col gap-1 text-teal-700">
+            <div className="flex justify-between">
+                <label className="font-semibold" htmlFor="firstname">First Name</label>
+                <label className="font-semibold" htmlFor="lastname">Last Name</label>
+            </div>
+            <div className="flex justify-evenly">
+                <input className="shadow-2xl border-2 border-blue-50 h-9 rounded w-[48%]" type="text" name="firstname" id="firstname" required autoComplete="on" value={formData.firstname} onChange={handleChange}/>
+                <input className="shadow-2xl border-2 border-blue-50 h-9 rounded w-[48%]" type="text" name="lastname" id="lastname" required autoComplete="on" value={formData.lastname} onChange={handleChange}/>
+            </div>
+        </div>
+        <div className="flex flex-col gap-1 text-teal-700">
+            <div className="flex justify-between">
+                <label className="font-semibold" htmlFor="password">Password</label>
+                <label className="font-semibold" htmlFor="confirm_password">Confirm Password</label>
+            </div>
+            <div className="flex justify-evenly">
+                <input className="shadow-2xl border-2 border-blue-50 h-9 rounded w-[48%]" type="password" name="password" id="password" required autoComplete="on" value={formData.password} onChange={handleChange}/>
+                <input className="shadow-2xl border-2 border-blue-50 h-9 rounded w-[48%]" type="password" name="confirm_password" id="confirm_password" value={formData.confirm_password} onChange={handleChange}/>                
+            </div>
+        </div>
 
-        <label htmlFor="firstname">First Name</label>
-        <input type="text" name="firstname" id="firstname" required autoComplete="on" value={formData.firstname} onChange={handleChange}/>
 
-        <label htmlFor="lastname">Last Name</label>
-        <input type="text" name="lastname" id="lastname" required autoComplete="on" value={formData.lastname} onChange={handleChange}/>
-
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" required autoComplete="on" value={formData.password} onChange={handleChange}/>
-
-        <label htmlFor="confirm_password">Confirm Password</label>
-        <input type="password" name="confirm_password" id="confirm_password" value={formData.confirm_password} onChange={handleChange}/>
-
-        <button type="submit">Sign Up as {type}</button>
-
+        <button className="font-medium bg-teal-600 rounded text-blue-50 shadow-4xl" type="submit">Sign Up</button>
     </form>
 }

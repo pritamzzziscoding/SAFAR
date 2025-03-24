@@ -1,8 +1,5 @@
-import { Landing } from "../components/Home-Header"
+import { Header } from "../components/Header"
 
 export const Home = () => {
-    return <>
-        <Landing />
-        <h1>Home</h1>
-    </>
+    return <Header />
 }

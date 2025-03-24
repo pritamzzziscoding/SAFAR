@@ -1,17 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { Home } from "./pages/Home"
+import { Landing } from "./pages/Landing"
 import { Login } from "./pages/Login"
 import { SignUp } from "./pages/SignUp"
 import { LoginForm } from "./components/Login-Form"
 import { AddPackage } from "./components/AddPackage"
 import { BookingForm } from "./components/BookingForm"
 import { RatingForm } from "./components/RatingForm"
+import { Home } from "./pages/Home"
+import { Bookings } from "./pages/Bookings"
+import { Reviews } from "./pages/Reviews"
 
 export const App = () => {
   const router = createBrowserRouter([
     {
       path: "/", //Landing Page
-      element: <Home />
+      element: <Landing />
     },
     {
       path: "/login-page", //Login Option Page
@@ -21,6 +24,18 @@ export const App = () => {
       path: "/sign-page", //Signup Option Page
       element: <SignUp />
     },
+    {
+      path: "/home",
+      element: <Home />
+    },
+    {
+      path: "/bookings",
+      element: <Bookings />
+    },{
+      path: "/review",
+      element: <Reviews />
+    }
+    ,
     {
       path: "/add-package",
       element: <AddPackage agency_id="1234"/>
