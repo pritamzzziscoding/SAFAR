@@ -1,0 +1,54 @@
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-120%);
+        opacity: 0;
+    }
+}
+
+.profile-page{
+    padding: 15px;
+    padding-top: 25px;
+    gap: 15px;
+    animation: slideDown 0.8s ease-out;
+}
+
+input{
+    padding: 0px;
+    padding-left: 10px;
+}
+
+button{
+    padding: 3px;
+}
+
+.image-btn{
+    margin-top: 5px;
+    font-size: small;
+}
+
+.form-container{
+    margin-top: 5px;
+}
+
+.logout-btn{
+    padding-left: 5px;
+}
+
+.close-profile{
+    display: none;
+}

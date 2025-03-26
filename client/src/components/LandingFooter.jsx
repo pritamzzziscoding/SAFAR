@@ -4,7 +4,7 @@ import { FaXTwitter } from "react-icons/fa6"
 import { useState } from "react";
 
 export const LandingFooter = () => {
-    return <footer className="landing-footer bg-gradient-to-r from-teal-500 via-teal-500 to-teal-500 text-green-50">
+    return <footer className="landing-footer bg-gradient-to-r from-teal-500 via-teal-400 to-teal-500 text-green-50">
         <p className="text-center text-xl font-medium footer-title">🌍 SAFAR – Your Travel Partner</p>
             <div className="grid grid-cols-2 sm:grid-cols-3">
                     <ul className="place-self-center">

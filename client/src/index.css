@@ -132,3 +132,15 @@ button{
 .why-card{
     padding: 10px;
 }
+
+.filter-form{
+    padding: 15px;
+    margin: 20px;
+    margin-top: 7%;
+}
+
+.active{
+    color: rgb(8, 97, 8);
+    font-weight: 600;
+    text-decoration: underline;
+}

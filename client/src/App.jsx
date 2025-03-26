@@ -8,7 +8,9 @@ import { BookingForm } from "./components/BookingForm"
 import { RatingForm } from "./components/RatingForm"
 import { Home } from "./pages/Home"
 import { Bookings } from "./pages/Bookings"
-import { Reviews } from "./pages/Reviews"
+import { Blogs } from "./pages/Blogs"
+import { Packages } from "./pages/Packages"
+import { Profile } from "./pages/Profile"
 
 export const App = () => {
   const router = createBrowserRouter([
@@ -32,10 +34,13 @@ export const App = () => {
       path: "/bookings",
       element: <Bookings />
     },{
-      path: "/review",
-      element: <Reviews />
-    }
-    ,
+      path: "/blogs",
+      element: <Blogs />
+    },
+    {
+      path: "/packages",
+      element: <Packages />
+    },
     {
       path: "/add-package",
       element: <AddPackage agency_id="1234"/>
