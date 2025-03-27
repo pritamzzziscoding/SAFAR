@@ -29,7 +29,7 @@ export const BlogForm = () => {
                 </div>
                 <div className="flex justify-between items-center blog-content">
                     <label htmlFor="location">Location: </label>
-                    <input className="border-teal-50 border-2 rounded w-[60%]" type="text" name="location" id="location" required autoComplete="off" maxLength={100} placeholder="max length 100" value={formData.location} onChange={handleChange} />
+                    <input className="border-teal-50 border-2 rounded w-[60%]" type="text" name="location" id="location" required autoComplete="off" maxLength={100} placeholder="max length 30" value={formData.location} onChange={handleChange} />
                 </div>
                 <div className="flex justify-between items-center blog-content">
                     <label htmlFor="image_url">Image URL</label>
@@ -39,7 +39,7 @@ export const BlogForm = () => {
 
             <div className="flex flex-col blog-content">
                 <label htmlFor="description">Description: </label>
-                <textarea className="bg-white/30 h-auto resize-none rounded text-sm border-2 border-teal-50" name="description" id="description" rows={7} required value={formData.description} onChange={handleChange}></textarea>
+                <textarea className="bg-white/30 h-auto resize-none rounded text-sm border-2 border-teal-50" name="description" id="description" placeholder="For paragraph use <br />" rows={7} required value={formData.description} onChange={handleChange}></textarea>
             </div>
 
             <button className="bg-green-600/70 rounded-md text-teal-50 blog-content" type="submit">Add Blog</button>

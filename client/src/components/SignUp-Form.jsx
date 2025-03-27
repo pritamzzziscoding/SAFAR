@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { signup } from "../services/auth-apis"
+import { useNavigate } from "react-router-dom"
 
 export const SignUpForm = ({type}) => {
     const[formData, setFormData] = useState({
@@ -10,14 +12,25 @@ export const SignUpForm = ({type}) => {
         type
     })
 
+    const navigate = useNavigate()
+
     const handleChange = (event) => {
         const {name, value} = event.target
         setFormData({...formData, [name] : value})
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(formData)
+        try {
+            const res = await signup(formData)
+            if(res.data.success === true){
+                navigate("/home")
+            }else{
+                alert(res.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return <form className="flex flex-col items-center gap-5 md:text-xl" onSubmit={handleSubmit}>

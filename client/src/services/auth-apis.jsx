@@ -13,3 +13,8 @@ export const logout = () => {
   const res = api.get("/logout");
   return res;
 };
+
+export const signup = (body) => {
+  const res = api.post("/signup", body);
+  return res;
+};
