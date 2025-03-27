@@ -19,7 +19,7 @@ export const LoginForm = ({type}) => {
         event.preventDefault()
         const res = await login(data)
         if(res.status === 200){
-            navigate("/home")
+            navigate("/blogs")
         }
     }
 

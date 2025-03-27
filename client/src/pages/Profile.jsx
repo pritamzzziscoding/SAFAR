@@ -10,7 +10,7 @@ export const Profile = ({status}) => {
     const handleClick = async () => {
         try {
             const res = await logout();
-            console.log(message)
+            console.log(res.data.message)
             if(res.status === 200){
                 navigate("/")
             }else{
