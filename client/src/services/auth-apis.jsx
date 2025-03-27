@@ -18,3 +18,8 @@ export const signup = (body) => {
     const res = api.post("/signup", body);
     return res
 }
+
+export const type = () => {
+    const res = api.get("/type");
+    return res
+}

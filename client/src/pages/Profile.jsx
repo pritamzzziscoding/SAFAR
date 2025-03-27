@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import "../styles/profile.css"
 import { useNavigate } from "react-router-dom";
-import { logout } from "../services/auth-apis";
+import { logout, type } from "../services/auth-apis";
 
 export const Profile = ({status}) => {
     const navigate = useNavigate()
+    const [typee, setType] = useState("")
     const handleClick = async () => {
         try {
             const res = await logout();
@@ -20,6 +21,23 @@ export const Profile = ({status}) => {
         }
     }
 
+    const getType = async () => {
+        try {
+            const t = await type()
+            if(t.data.success === true){
+                setType(t.data.type)
+            }else{
+                alert(t.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getType()
+    },[])
+
     return <div className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>
         <div className="grid gap-3">
             <div className="flex gap-5 items-center">
@@ -27,6 +45,7 @@ export const Profile = ({status}) => {
                 <div className="font-medium">
                     <div className="text-stone-800 font-semibold">Jhon Doe</div>
                     <div className="text-green-700">jhondoe@gmail.com</div>
+                    <div>{typee}</div>
                 </div>
             </div>
             <div className="grid gap-3">
