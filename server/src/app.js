@@ -32,6 +32,7 @@ app.get("/type", async (req, res) => {
     res.status(200).json({
       success: true,
       type,
+      message: "Type nahi pata chala kya ? Refresh kar!",
     });
   } catch (error) {
     console.log(error);
