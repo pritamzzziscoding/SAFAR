@@ -2,11 +2,22 @@ import { useState } from "react";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import "../styles/profile.css"
 import { useNavigate } from "react-router-dom";
+import { logout } from "../services/auth-apis";
 
 export const Profile = ({status}) => {
     const navigate = useNavigate()
-    const handleClick = () => {
-        navigate("/")
+    const handleClick = async () => {
+        try {
+            const res = await logout();
+            console.log(message)
+            if(res.status === 200){
+                navigate("/")
+            }else{
+                alert(res.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return <div className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>

@@ -5,6 +5,11 @@ const api = axios.create({
 });
 
 export const login = (body) => {
-  const res = api.post("/login-page", body);
+  const res = api.post("/login", body);
+  return res;
+};
+
+export const logout = () => {
+  const res = api.get("/logout");
   return res;
 };
