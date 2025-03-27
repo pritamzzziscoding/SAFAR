@@ -5,7 +5,9 @@ export const addReview = async (req, res) => {
   try {
     const { token } = req.cookies;
     if (!token) {
-      return res.status(401).json({ message: "Please login first!" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Please login first!" });
     }
     const decoded = jwt.verify(token, "ijinwincwifjqun");
     const TouristID = decoded.id;
@@ -16,14 +18,14 @@ export const addReview = async (req, res) => {
     );
     if (result.length === 0) {
       return res
-        .status(401)
-        .json({ message: "You can't review without booking!" });
+        .status(200)
+        .json({ success: false, message: "You can't review without booking!" });
     }
     const { bookingID, Rating, Feedback } = req.body;
     if (!bookingID || !Rating) {
       return res
-        .status(400)
-        .json({ message: "Please enter the required fields" });
+        .status(200)
+        .json({ success: false, message: "Please enter the required fields" });
     }
 
     const query = `
@@ -40,7 +42,8 @@ export const addReview = async (req, res) => {
     const [rows] = await db.execute(query, [bookingID]);
     let isExpired = rows.length > 0 ? rows[0].isExpired === 1 : false;
     if (!isExpired) {
-      return res.status(400).json({
+      return res.status(200).json({
+        success: false,
         message:
           "You can't review this booking as  it's duration is not complete yet.",
       });
@@ -52,8 +55,11 @@ export const addReview = async (req, res) => {
     );
     if (result2.length === 0) {
       return res
-        .status(401)
-        .json({ message: "No booking exists with the given bookingID!" });
+        .status(200)
+        .json({
+          success: false,
+          message: "No booking exists with the given bookingID!",
+        });
     }
 
     const package_query = "SELECT PACKAGEID FROM BOOKINGS WHERE BOOKINGID = ?";
@@ -61,15 +67,19 @@ export const addReview = async (req, res) => {
     const PackageID = helper[0]?.PACKAGEID;
 
     if (!PackageID) {
-      return res.status(400).json({ message: "Invalid BookingID" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Invalid BookingID" });
     }
 
     const reviewQuery =
       "INSERT INTO REVIEWS(BookingID, PackageID, Rating, Feedback) VALUES (?, ?, ?, ?)";
     await db.query(reviewQuery, [bookingID, PackageID, Rating, Feedback || ""]);
-    res.json({ message: "Review Added Successfully!" });
+    res
+      .status(200)
+      .json({ success: true, message: "Review Added Successfully!" });
   } catch (err) {
     console.error("Error in review:", err);
-    res.status(500).json({ message: "Internal Server Error!" });
+    res.status(500).json({ success: false, message: "Internal Server Error!" });
   }
 };

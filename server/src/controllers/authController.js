@@ -23,19 +23,19 @@ export const signup = async (req, res) => {
       !type
     ) {
       return res
-        .status(400)
+        .status(200)
         .json({ success: false, message: "Please fill all the details!" });
     }
     if (confirmpassword !== password) {
       return res
-        .status(400)
+        .status(200)
         .json({ success: false, message: "Passwords do not match!" });
     }
 
     const find_user = `SELECT * FROM ${type} WHERE email = ?;`;
     const result = await db.query(find_user, [email]);
     if (result[0].length !== 0) {
-      return res.status(400).json({
+      return res.status(200).json({
         success: false,
         message: "User already exists! Please login.",
       });
@@ -85,19 +85,21 @@ export const login = async (req, res) => {
     const { email, password, type } = req.body;
     if (!email || !password || !type) {
       return res
-        .status(400)
+        .status(200)
         .json({ success: false, message: "Email and password are required!" });
     }
 
     const find_user = `SELECT * FROM ${type} WHERE email = ?;`;
     const [result] = await db.query(find_user, [email]);
+    console.log("User find kiya idhar", result);
     if (!result[0]) {
-      return res.status(400).json({
+      console.log("if user doesn't exist then i have returned ");
+      return res.status(200).json({
         success: false,
         message: "User doesn't exist! Please sign up!",
       });
     }
-
+    console.log("2");
     if (!result[0].Password) {
       return res
         .status(500)
@@ -107,10 +109,10 @@ export const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, result[0].Password);
     if (!isMatch) {
       return res
-        .status(400)
+        .status(200)
         .json({ success: false, message: "Incorrect Password!" });
     }
-
+    console.log("Password match kiya");
     const userId =
       type.toLowerCase() === "agency"
         ? result[0].AgencyID
@@ -119,7 +121,7 @@ export const login = async (req, res) => {
       { id: userId },
       process.env.JWT_SECRET || "ijinwincwifjqun"
     );
-
+    console.log("token generate kiya");
     res
       .cookie("token", token, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -127,6 +129,7 @@ export const login = async (req, res) => {
       })
       .status(200)
       .json({ success: true, message: "User logged in successfully!" });
+    console.log("response bhej diya");
   } catch (err) {
     console.error("Error in login: ", err);
     res.status(500).json({ success: false, message: "Internal Server Error!" });
@@ -137,7 +140,7 @@ export const logout = (req, res) => {
   try {
     res.cookie("token", null, {
       httpOnly: true,
-      expires: new Date(Date.now()),
+      expires: new Date(0),
     });
     res.status(200).json({
       success: true,
@@ -145,7 +148,7 @@ export const logout = (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.json({
+    res.status(500).json({
       message: "Internal Server Error!",
     });
   }

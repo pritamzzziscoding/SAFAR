@@ -8,12 +8,14 @@ export const getPackageDetails = async (req, res) => {
     const packageData = await getPackageById(packageID);
 
     if (!packageData) {
-      return res.status(404).json({ message: "Package not found" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Package not found" });
     }
     res.json(packageData);
   } catch (error) {
     console.error("Error fetching package:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 
@@ -21,7 +23,9 @@ export const setnewpackage = async (req, res) => {
   try {
     const { token } = req.cookies;
     if (!token) {
-      return res.status(401).json({ message: "Please login first!" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Please login first!" });
     }
 
     const decoded = jwt.verify(token, "ijinwincwifjqun");
@@ -59,7 +63,9 @@ export const setnewpackage = async (req, res) => {
       }
     }
 
-    res.status(200).json({ message: "Package Added Successfully!" });
+    res
+      .status(200)
+      .json({ success: true, message: "Package Added Successfully!" });
   } catch (err) {
     console.log("Error: ", err);
     res.status(500).json({

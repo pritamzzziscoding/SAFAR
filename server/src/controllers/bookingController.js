@@ -6,7 +6,9 @@ export const booking = async (req, res) => {
     const { token } = req.cookies;
     console.log(token);
     if (!token) {
-      return res.status(401).json({ message: "Please login first!" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Please login first!" });
     }
     const decoded = jwt.verify(token, "ijinwincwifjqun");
     console.log(decoded);
@@ -17,7 +19,9 @@ export const booking = async (req, res) => {
     console.log(members);
     console.log(packageId);
     if (!packageId || !start_date || !Array.isArray(members)) {
-      return res.status(400).json({ message: "Invalid booking data!" });
+      return res
+        .status(200)
+        .json({ success: false, message: "Invalid booking data!" });
     }
 
     const bookQuery = `INSERT INTO bookings (TouristID, PackageID, FromDate) VALUES (?, ?, ?)`;
@@ -39,9 +43,9 @@ export const booking = async (req, res) => {
       ]);
     }
 
-    res.status(200).json({ message: "Booking Successful!" });
+    res.status(200).json({ success: true, message: "Booking Successful!" });
   } catch (err) {
     console.error("Error:", err);
-    res.status(500).json({ message: "Internal Server Error!" });
+    res.status(500).json({ success: false, message: "Internal Server Error!" });
   }
 };

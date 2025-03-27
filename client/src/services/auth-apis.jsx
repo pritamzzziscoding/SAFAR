@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 export const login = (body) => {
-  const res = api.post("/login", body);
+  const res = api.post("/login-page", body);
   return res;
 };
 

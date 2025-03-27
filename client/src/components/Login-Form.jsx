@@ -17,12 +17,16 @@ export const LoginForm = ({ type }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const res = await login(data);
-    console.log(res);
-    if (res.status === 200) {
-      navigate("/home");
-    } else {
-      alert(res.data.message);
+    try {
+      const res = await login(data);
+      console.log(res);
+      if (res.data.success === true) {
+        navigate("/home");
+      } else {
+        alert(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
