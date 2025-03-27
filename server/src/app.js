@@ -9,7 +9,12 @@ import bookingRoutes from "./routes/bookingRoutes.js";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(authRoutes);
 app.get("/", (req, res) => {
@@ -27,6 +32,7 @@ app.get("/", (req, res) => {
 app.get("/type", async (req, res) => {
   try {
     const { token } = req.cookies;
+    console.log(token);
     const decoded = jwt.verify(token, "ijinwincwifjqun");
     const type = decoded.type;
     res.status(200).json({

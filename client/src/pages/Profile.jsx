@@ -4,60 +4,69 @@ import "../styles/profile.css";
 import { useNavigate } from "react-router-dom";
 import { logout, type } from "../services/auth-apis";
 
-export const Profile = ({status}) => {
-    const navigate = useNavigate()
-    const [typee, setType] = useState("")
-    const handleClick = async () => {
-        try {
-            const res = await logout();
-            console.log(message)
-            if(res.status === 200){
-                navigate("/")
-            }else{
-                alert(res.data.message)
-            }
-        } catch (error) {
-            console.log(error)
-        }
+export const Profile = ({ status }) => {
+  const navigate = useNavigate();
+  const [typee, setType] = useState("");
+  const handleClick = async () => {
+    try {
+      const res = await logout();
+      console.log(res.data.message);
+      if (res.status === 200) {
+        navigate("/");
+      } else {
+        alert(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const getType = async () => {
-        try {
-            const t = await type()
-            if(t.data.success === true){
-                setType(t.data.type)
-            }else{
-                alert(t.data.message)
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  const getType = async () => {
+    try {
+      const t = await type();
+      if (t.data.success === true) {
+        setType(t.data.type);
+      } else {
+        alert(t.data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    useEffect(()=>{
-        getType()
-    },[])
+  useEffect(() => {
+    getType();
+  }, []);
 
-    return <div className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>
+  return (
+    <div
+      className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}
+    >
+      <div className="grid gap-3">
+        <div className="flex gap-5 items-center">
+          <div className="w-20 h-20 bg-amber-400 rounded">
+            <img src="123" alt="" />
+          </div>
+          <div className="font-medium">
+            <div className="text-stone-800 font-semibold">Jhon Doe</div>
+            <div className="text-green-700">jhondoe@gmail.com</div>
+            <div>{typee}</div>
+          </div>
+        </div>
         <div className="grid gap-3">
-            <div className="flex gap-5 items-center">
-                <div className="w-20 h-20 bg-amber-400 rounded"><img src="123" alt="" /></div>
-                <div className="font-medium">
-                    <div className="text-stone-800 font-semibold">Jhon Doe</div>
-                    <div className="text-green-700">jhondoe@gmail.com</div>
-                    <div>{typee}</div>
-                </div>
-            </div>
-            <div className="grid gap-3">
-                <ImageUrlForm />
-                <ProfileForm />
-                <ChangePasswordForm />
-            </div>
+          <ImageUrlForm />
+          <ProfileForm />
+          <ChangePasswordForm />
         </div>
-        <div className="flex justify-center">
-            <button onClick={handleClick} className="logout-btn flex gap-2 items-center bg-red-500 rounded text-white font-medium">Logout <RiLogoutBoxLine /></button>
-        </div>
-        
+      </div>
+      <div className="flex justify-center">
+        <button
+          onClick={handleClick}
+          className="logout-btn flex gap-2 items-center bg-red-500 rounded text-white font-medium"
+        >
+          Logout <RiLogoutBoxLine />
+        </button>
+      </div>
     </div>
   );
 };
