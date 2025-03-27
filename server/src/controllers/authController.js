@@ -35,12 +35,10 @@ export const signup = async (req, res) => {
     const find_user = `SELECT * FROM ${type} WHERE email = ?;`;
     const result = await db.query(find_user, [email]);
     if (result[0].length !== 0) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User already exists! Please login.",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User already exists! Please login.",
+      });
     }
 
     const hashedpassword = await bcrypt.hash(password, 10);
@@ -55,12 +53,10 @@ export const signup = async (req, res) => {
 
     const newresult = await db.query(find_user, [email]);
     if (newresult[0].length === 0) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Error retrieving user after insertion.",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Error retrieving user after insertion.",
+      });
     }
 
     const user = newresult[0][0];
@@ -96,12 +92,10 @@ export const login = async (req, res) => {
     const find_user = `SELECT * FROM ${type} WHERE email = ?;`;
     const [result] = await db.query(find_user, [email]);
     if (!result[0]) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User doesn't exist! Please sign up!",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User doesn't exist! Please sign up!",
+      });
     }
 
     if (!result[0].Password) {
@@ -136,5 +130,23 @@ export const login = async (req, res) => {
   } catch (err) {
     console.error("Error in login: ", err);
     res.status(500).json({ success: false, message: "Internal Server Error!" });
+  }
+};
+
+export const logout = (req, res) => {
+  try {
+    res.cookie("token", null, {
+      httpOnly: true,
+      expires: new Date(Date.now()),
+    });
+    res.status(200).json({
+      success: true,
+      message: "successfully logged out",
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({
+      message: "Internal Server Error!",
+    });
   }
 };
