@@ -22,10 +22,14 @@ export const signup = async (req, res) => {
       !confirmpassword ||
       !type
     ) {
-      return res.status(400).json({ message: "Please fill all the details!" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Please fill all the details!" });
     }
     if (confirmpassword !== password) {
-      return res.status(400).json({ message: "Passwords do not match!" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Passwords do not match!" });
     }
 
     const find_user = `SELECT * FROM ${type} WHERE email = ?;`;
@@ -33,7 +37,10 @@ export const signup = async (req, res) => {
     if (result[0].length !== 0) {
       return res
         .status(400)
-        .json({ message: "User already exists! Please login." });
+        .json({
+          success: false,
+          message: "User already exists! Please login.",
+        });
     }
 
     const hashedpassword = await bcrypt.hash(password, 10);
@@ -50,7 +57,10 @@ export const signup = async (req, res) => {
     if (newresult[0].length === 0) {
       return res
         .status(500)
-        .json({ message: "Error retrieving user after insertion." });
+        .json({
+          success: false,
+          message: "Error retrieving user after insertion.",
+        });
     }
 
     const user = newresult[0][0];
@@ -66,10 +76,11 @@ export const signup = async (req, res) => {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
+      .status(200)
       .json({ success: true, message: `New ${type} added`, user, token });
   } catch (err) {
     console.error("Error in signup: ", err);
-    res.status(500).json({ message: "Internal Server Error!" });
+    res.status(500).json({ success: false, message: "Internal Server Error!" });
   }
 };
 
@@ -79,7 +90,7 @@ export const login = async (req, res) => {
     if (!email || !password || !type) {
       return res
         .status(400)
-        .json({ message: "Email and password are required!" });
+        .json({ success: false, message: "Email and password are required!" });
     }
 
     const find_user = `SELECT * FROM ${type} WHERE email = ?;`;
@@ -87,18 +98,23 @@ export const login = async (req, res) => {
     if (!result[0]) {
       return res
         .status(400)
-        .json({ message: "User doesn't exist! Please sign up!" });
+        .json({
+          success: false,
+          message: "User doesn't exist! Please sign up!",
+        });
     }
 
     if (!result[0].Password) {
       return res
         .status(500)
-        .json({ message: "Password not found in database!" });
+        .json({ success: false, message: "Password not found in database!" });
     }
 
     const isMatch = await bcrypt.compare(password, result[0].Password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Incorrect Password!" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Incorrect Password!" });
     }
 
     const userId =
@@ -115,9 +131,10 @@ export const login = async (req, res) => {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
+      .status(200)
       .json({ success: true, message: "User logged in successfully!" });
   } catch (err) {
     console.error("Error in login: ", err);
-    res.status(500).json({ message: "Internal Server Error!" });
+    res.status(500).json({ success: false, message: "Internal Server Error!" });
   }
 };
