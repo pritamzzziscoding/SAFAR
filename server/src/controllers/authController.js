@@ -63,7 +63,7 @@ export const signup = async (req, res) => {
     const userId =
       type.toLowerCase() === "tourist" ? user.TouristID : user.AgencyID;
     const token = jwt.sign(
-      { id: userId },
+      { id: userId, type: type.toLowerCase() },
       process.env.JWT_SECRET || "ijinwincwifjqun"
     );
 
@@ -118,10 +118,12 @@ export const login = async (req, res) => {
         ? result[0].AgencyID
         : result[0].TouristID;
     const token = jwt.sign(
-      { id: userId },
+      { id: userId, type: type.toLowerCase() },
       process.env.JWT_SECRET || "ijinwincwifjqun"
     );
     console.log("token generate kiya");
+    const decoded = jwt.verify(token, "ijinwincwifjqun");
+    console.log(decoded.type);
     res
       .cookie("token", token, {
         maxAge: 30 * 24 * 60 * 60 * 1000,

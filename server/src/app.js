@@ -24,6 +24,23 @@ app.get("/", (req, res) => {
     });
   }
 });
+app.get("/type", async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    const decoded = jwt.verify(token, "ijinwincwifjqun");
+    const type = decoded.type;
+    res.status(200).json({
+      success: true,
+      type,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error!",
+    });
+  }
+});
 app.use("/package", packageRoutes);
 app.use("/review", reviewRoutes);
 app.use("/book", bookingRoutes);
