@@ -13,7 +13,6 @@ export const signup = async (req, res) => {
       confirmpassword,
       type,
     } = req.body;
-
     if (
       !email ||
       !password ||
@@ -122,8 +121,8 @@ export const login = async (req, res) => {
       process.env.JWT_SECRET || "ijinwincwifjqun"
     );
     console.log("token generate kiya");
-    const decoded = jwt.verify(token, "ijinwincwifjqun");
-    console.log(decoded.type);
+    // const decoded = jwt.verify(token, "ijinwincwifjqun");
+    // console.log(decoded.type);
     res
       .cookie("token", token, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
