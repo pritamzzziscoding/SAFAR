@@ -1,53 +1,53 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { Landing } from "./pages/Landing"
-import { Login } from "./pages/Login"
-import { SignUp } from "./pages/SignUp"
-import { LoginForm } from "./components/Login-Form"
-import { AddPackage } from "./components/AddPackage"
-import { BookingForm } from "./components/BookingForm"
-import { RatingForm } from "./components/RatingForm"
-import { Home } from "./pages/Home"
-import { Bookings } from "./pages/Bookings"
-import { Reviews } from "./pages/Reviews"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Landing } from "./pages/Landing";
+import { Login } from "./pages/Login";
+import { SignUp } from "./pages/SignUp";
+import { LoginForm } from "./components/Login-Form";
+import { AddPackage } from "./components/AddPackage";
+import { BookingForm } from "./components/BookingForm";
+import { RatingForm } from "./components/RatingForm";
+import { Home } from "./pages/Home";
+import { Bookings } from "./pages/Bookings";
+import { Reviews } from "./pages/Reviews";
 
 export const App = () => {
   const router = createBrowserRouter([
     {
       path: "/", //Landing Page
-      element: <Landing />
+      element: <Landing />,
     },
     {
       path: "/login-page", //Login Option Page
-      element: <Login />
+      element: <Login />,
     },
     {
       path: "/sign-page", //Signup Option Page
-      element: <SignUp />
+      element: <SignUp />,
     },
     {
       path: "/home",
-      element: <Home />
+      element: <Home />,
     },
     {
       path: "/bookings",
-      element: <Bookings />
-    },{
+      element: <Bookings />,
+    },
+    {
       path: "/review",
-      element: <Reviews />
-    }
-    ,
+      element: <Reviews />,
+    },
     {
       path: "/add-package",
-      element: <AddPackage agency_id="1234"/>
+      element: <AddPackage agency_id="1234" />,
     },
     {
       path: "/book",
-      element: <BookingForm touristId={1} packageId={1}/>
+      element: <BookingForm touristId={1} packageId={1} />,
     },
     {
       path: "/rating",
-      element: <RatingForm bookingId="12"/>
-    }
-  ])
-  return <RouterProvider router={router} />
-}
+      element: <RatingForm bookingId="12" />,
+    },
+  ]);
+  return <RouterProvider router={router} />;
+};
