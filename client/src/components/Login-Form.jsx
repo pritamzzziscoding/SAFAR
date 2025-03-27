@@ -1,6 +1,9 @@
 import { useState } from "react"
+import { login } from "../services/auth-apis";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = ({type}) => {
+    const navigate = useNavigate()
     const[data, setData] = useState({
         email: "",
         password: "",
@@ -12,9 +15,12 @@ export const LoginForm = ({type}) => {
         setData({...data, [name] : value})
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(data)
+        const res = await login(data)
+        if(res.status === 200){
+            navigate("/home")
+        }
     }
 
     return <form className="login-form flex flex-col justify-evenly h-[65%] gap-3" onSubmit={handleSubmit}>
