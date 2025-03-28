@@ -16,3 +16,8 @@ export const updateName = (body) => {
     const res = api.put("/update-name", body);
     return res
 }
+
+export const updatePassword = (body) => {
+    const res = api.put("/update-password", body)
+    return res
+}

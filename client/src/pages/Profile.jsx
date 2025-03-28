@@ -3,7 +3,7 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import "../styles/profile.css"
 import { useNavigate } from "react-router-dom";
 import { logout, details } from "../services/auth-apis";
-import { updateImage, updateName } from "../services/update";
+import { updateImage, updateName, updatePassword } from "../services/update";
 
 export const Profile = ({status, image, setImage}) => {
     const navigate = useNavigate()
@@ -127,13 +127,22 @@ const ChangePasswordForm = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (passwordData.new !== passwordData.confirm) {
             alert("New password and confirm password do not match!");
             return;
         }
-        console.log("Password Change Data:", passwordData);
+        try {
+            const res = await updatePassword(passwordData)
+            if(res.data.success === true){
+                alert("Password Change ho gya")
+            }else{
+                alert(res.data.message)
+            }
+        } catch (error) {
+            console.log("Password change nehi hua reh!!!!")
+        }
     };
 
     return (
