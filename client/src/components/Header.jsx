@@ -11,7 +11,7 @@ export const Header = () => {
     const [profileOpen, setProfileOpen] = useState(false);
     const [detail, setDetail] = useState({})
     const[image, setImage] = useState({
-        image_url: ""
+        image: null
     })
 
     const toggleMenu = () => {
