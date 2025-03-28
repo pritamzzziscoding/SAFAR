@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import "../styles/profile.css"
+import "../styles/profile.css";
 import { useNavigate } from "react-router-dom";
 import { logout, details } from "../services/auth-apis";
 import { updateImage, updateName, updatePassword } from "../services/update";
@@ -55,7 +55,7 @@ export const Profile = ({status, image, setImage}) => {
                 </div>
             </div>
             <div className="grid gap-3">
-                <ImageUrlForm image={image} setImage={image}/>
+                <ImageUrlForm image={image} setImage={setImage}/>
                 <ProfileForm formData={formData} setFormData={setFormData}/>
                 <ChangePasswordForm />
             </div>
@@ -65,17 +65,17 @@ export const Profile = ({status, image, setImage}) => {
         </div>
         
     </div>
-}
+};
 
 const ProfileForm = ({formData, setFormData}) => {
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: type === "checkbox" ? checked : value,
-        }));
-    };
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -95,37 +95,58 @@ const ProfileForm = ({formData, setFormData}) => {
         }
     };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <div className="form-container flex justify-between items-center">
-                <label htmlFor="firstname">First Name: </label>
-                <input className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="text" name="firstname" id="firstname" value={formData.firstname} onChange={handleChange} required />
-            </div>
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="form-container flex justify-between items-center">
+        <label htmlFor="firstname">First Name: </label>
+        <input
+          className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          type="text"
+          name="firstname"
+          id="firstname"
+          value={formData.firstname}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-            <div className="form-container flex justify-between items-center">
-                <label htmlFor="lastname">Last Name: </label>
-                <input className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="text" name="lastname" id="lastname" value={formData.lastname} onChange={handleChange} required />
-            </div>
+      <div className="form-container flex justify-between items-center">
+        <label htmlFor="lastname">Last Name: </label>
+        <input
+          className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          type="text"
+          name="lastname"
+          id="lastname"
+          value={formData.lastname}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-            <button className="image-btn bg-green-600/70 text-white rounded-lg font-medium" type="submit">Change</button>
-        </form>
-    );
+      <button
+        className="image-btn bg-green-600/70 text-white rounded-lg font-medium"
+        type="submit"
+      >
+        Change
+      </button>
+    </form>
+  );
 };
 
 const ChangePasswordForm = () => {
-    const [passwordData, setPasswordData] = useState({
-        current: "",
-        new: "",
-        confirm: "",
-    });
+  const [passwordData, setPasswordData] = useState({
+    current: "",
+    new: "",
+    confirm: "",
+  });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setPasswordData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -145,26 +166,58 @@ const ChangePasswordForm = () => {
         }
     };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <div className="form-container flex justify-between items-center">
-                <label htmlFor="current">Current Password: </label>
-                <input className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="password" name="current" id="current" value={passwordData.current} onChange={handleChange} required autoComplete="off"/>
-            </div>
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="form-container flex justify-between items-center">
+        <label htmlFor="current">Current Password: </label>
+        <input
+          className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          type="password"
+          name="current"
+          id="current"
+          value={passwordData.current}
+          onChange={handleChange}
+          required
+          autoComplete="off"
+        />
+      </div>
 
-            <div className="form-container flex justify-between items-center">
-                <label htmlFor="new">New Password: </label>
-                <input className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="password" name="new" id="new" value={passwordData.new} onChange={handleChange} required autoComplete="off"/>
-            </div>
+      <div className="form-container flex justify-between items-center">
+        <label htmlFor="new">New Password: </label>
+        <input
+          className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          type="password"
+          name="new"
+          id="new"
+          value={passwordData.new}
+          onChange={handleChange}
+          required
+          autoComplete="off"
+        />
+      </div>
 
-            <div className="form-container flex justify-between items-center">
-                <label htmlFor="confirm">Confirm Password: </label>
-                <input className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="password" name="confirm" id="confirm" value={passwordData.confirm} onChange={handleChange} required autoComplete="off"/>
-            </div>
+      <div className="form-container flex justify-between items-center">
+        <label htmlFor="confirm">Confirm Password: </label>
+        <input
+          className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          type="password"
+          name="confirm"
+          id="confirm"
+          value={passwordData.confirm}
+          onChange={handleChange}
+          required
+          autoComplete="off"
+        />
+      </div>
 
-            <button className="image-btn bg-green-600/70 text-white rounded-lg font-medium" type="submit">Change</button>
-        </form>
-    );
+      <button
+        className="image-btn bg-green-600/70 text-white rounded-lg font-medium"
+        type="submit"
+      >
+        Change
+      </button>
+    </form>
+  );
 };
 
 const ImageUrlForm = ({image, setImage}) => {
@@ -179,9 +232,11 @@ const ImageUrlForm = ({image, setImage}) => {
 
         const formData = new FormData();
         formData.append("image", image.image);
+        console.log("yeh hai ",formData)
 
         try {
-            console.log("Lora", image)
+            console.log("Lora", image.image)
+            console.log(formData)
             const res = await updateImage(formData)
             if(res.data.success === true){
                 console.log("Image sahi se update ho gya");
@@ -194,9 +249,10 @@ const ImageUrlForm = ({image, setImage}) => {
 
     return <form className="" onSubmit={handleSubmit}>
         <div className="flex justify-between items-center">
-            <label htmlFor="image_url">Image URL:</label>
-            <input className="w-[65%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="file" name="image" id="image" onChange={handleChange} required autoComplete="off"/>
+            <label htmlFor="image_url">Upload DP:</label>
+            <input className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="file" name="image" id="image" onChange={handleChange} required autoComplete="off"/>
         </div>
         <button className="image-btn bg-green-600/70 text-white rounded-lg font-medium" type="submit">Change</button>
     </form>
-}
+    
+};
