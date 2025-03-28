@@ -27,3 +27,8 @@ export const details = () => {
     const res = api.get("/details");
     return res
 }
+
+export const checkCookie = () => {
+  const res = api.get("/")
+  return res
+}

@@ -20,7 +20,6 @@ export const Profile = ({status}) => {
             console.log(error)
         }
     }
-  };
 
     const getDetails = async () => {
         try {
@@ -45,9 +44,9 @@ export const Profile = ({status}) => {
             <div className="flex gap-5 items-center">
                 <div className="w-20 h-20 bg-amber-400 rounded"><img src="123" alt="" /></div>
                 <div className="font-medium">
-                    <div className="text-stone-800 font-semibold">Jhon Doe | tourist</div>
-                    <div className="text-green-700">jhondoe@gmail.com</div>
-                    <div>8812032614</div>
+                    <div className="text-stone-800 font-semibold">{`${detail.firstname} ${detail.lastname}`} | {detail.type}</div>
+                    <div className="text-green-700">{detail.email}</div>
+                    <div>{detail.phoneno}</div>
                 </div>
             </div>
             <div className="grid gap-3">
@@ -61,7 +60,6 @@ export const Profile = ({status}) => {
         </div>
         
     </div>
-  );
 };
 
 const ProfileForm = () => {
