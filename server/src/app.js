@@ -27,6 +27,12 @@ app.get("/", (req, res) => {
         message: "Cookie hai chup chaap redirect hojaa!",
       });
     }
+    else{
+      return res.status(200).json({
+        success: false,
+        message: "Cookie set nehi hai",
+      });
+    }
   } catch (err) {
     res.status(500).json({
       success: false,

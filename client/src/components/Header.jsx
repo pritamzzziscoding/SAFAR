@@ -1,15 +1,33 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../styles/Headers.css";
 import { Profile } from "../pages/Profile";
 import { CheckToken } from "../services/CheckToken";
-import { details } from "../services/auth-apis";
+import { checkCookie, details } from "../services/auth-apis";
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const [detail, setDetail] = useState({})
+    const navigate = useNavigate()
+    const getCookieStatus = async () => {
+      try {
+        const res = await checkCookie();
+        if(res.data.success === false){
+          navigate("/")
+        }else{
+          console.log("Badiya hai cookie is set")
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    useEffect(()=>{
+      getCookieStatus()
+    },[])
+
     const[image, setImage] = useState({
         image: null
     })

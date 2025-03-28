@@ -1,8 +1,9 @@
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import jwt from "jsonwebtoken";
-import { db } from "../db.js";
+import { db } from "../config/database.js";
 import dotenv from "dotenv";
+import path from "path";
 
 dotenv.config({
     path:"C:\Users\divya\OneDrive\safar_final_practice\SAFAR\server\src\config\.env"
@@ -16,54 +17,75 @@ cloudinary.config({
 });
 
 // Configure Multer for file upload
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads"); // Store files temporarily in "uploads/" folder
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+  });
+  
+  // Initialize multer
+  const upload = multer({ storage: storage });
 
 // Middleware to handle file upload
 export const imgUpload = async (req, res) => {
-  try {
-    const { token } = req.cookies;
-    if (!token) return res.status(401).json({ success: false, message: "Unauthorized" });
-
-    const decoded = jwt.verify(token, "ijinwincwifjqun");
-    const id = decoded.id;
-    const type = decoded.type;
-    const id_string = type === "tourist" ? "TouristID" : "AgencyID";
-
-    // Check if file exists
-    if (!req.file) {
-      return res.status(400).json({ success: false, message: "No image uploaded" });
-    }
-
-    // Upload image to Cloudinary
-    const result = await cloudinary.uploader.upload_stream({ resource_type: "image" }, async (error, cloudinaryResult) => {
-      if (error) {
-        return res.status(500).json({ success: false, message: "Cloudinary upload failed" });
+    try {
+      const { token } = req.cookies;
+      if (!token) return res.status(401).json({ success: false, message: "Unauthorized" });
+  
+      const decoded = jwt.verify(token, "ijinwincwifjqun");
+      const id = decoded.id;
+      const type = decoded.type;
+      const id_string = type === "tourist" ? "TouristID" : "AgencyID";
+  
+      // Check if file exists
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: "No image uploaded" });
       }
+      console.log(req.file);
+  
+      // Upload image to Cloudinary using the buffer
+      console.log("File path: ",req.file.path);
+    //   const result = await cloudinary.uploader.upload(req.file.path, {
+    //     folder: "safar_uploads", // Optional: Change the folder name as per your need
+    //     resource_type: "image",
+    //   });
 
       // Get Cloudinary image URL
-      const imageUrl = cloudinaryResult.secure_url;
-
+      const imageUrl = await getImageUrl(req.file.path)
+      console.log("Uploaded Image URL:", imageUrl);
+  
       // Update database with new image URL
       const query = `UPDATE ${type} SET image_url = ? WHERE ${id_string} = ?`;
       await db.query(query, [imageUrl, id]);
-
-      res.status(200).json({
+  
+      // Send success response
+      return res.status(200).json({
         success: true,
         message: "Image uploaded successfully!",
         imageUrl,
       });
-    });
+    } catch (error) {
+      console.error("Error in imgUpload:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+      });
+    }
+  };
 
-    // Pipe file to Cloudinary
-    req.file.stream.pipe(result);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Internal Server Error",
-    });
-  }
-};
+export const getImageUrl = async (path) => {
+    const result = await cloudinary.uploader.upload(path, {
+        folder: "safar_uploads", // Optional: Change the folder name as per your need
+        resource_type: "image",
+      });
+
+      // Get Cloudinary image URL
+      const imageUrl = result.secure_url;
+      return imageUrl;
+}
 
 // Multer middleware for handling image upload
 export const uploadMiddleware = upload.single("image");

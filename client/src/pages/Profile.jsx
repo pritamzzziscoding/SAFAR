@@ -232,9 +232,11 @@ const ImageUrlForm = ({image, setImage}) => {
 
         const formData = new FormData();
         formData.append("image", image.image);
+        console.log("yeh hai ",formData)
 
         try {
-            console.log("Lora", image)
+            console.log("Lora", image.image)
+            console.log(formData)
             const res = await updateImage(formData)
             if(res.data.success === true){
                 console.log("Image sahi se update ho gya");
@@ -247,8 +249,8 @@ const ImageUrlForm = ({image, setImage}) => {
 
     return <form className="" onSubmit={handleSubmit}>
         <div className="flex justify-between items-center">
-            <label htmlFor="image_url">Image URL:</label>
-            <input className="w-[65%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="file" name="image" id="image" onChange={handleChange} required autoComplete="off"/>
+            <label htmlFor="image_url">Upload DP:</label>
+            <input className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="file" name="image" id="image" onChange={handleChange} required autoComplete="off"/>
         </div>
         <button className="image-btn bg-green-600/70 text-white rounded-lg font-medium" type="submit">Change</button>
     </form>

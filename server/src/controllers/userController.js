@@ -6,14 +6,12 @@ import bcrypt from "bcrypt";
 export const getDetails = async (req, res) => {
     try {
       const { token } = req.cookies;
-      console.log(token);
       const decoded = jwt.verify(token, "ijinwincwifjqun");
       const type = decoded.type;
       const id = decoded.id ;
       const id_string = type==='tourist'?"TouristID":"AgencyID";
       const query = `SELECT email,firstname,lastname,phoneno,image_url FROM ${type} WHERE ${id_string} = ? `
       const result = await db.query(query,[id]);
-      console.log(result);
       result[0][0]["type"] = type;
       res.status(200).json({
         success: true,
@@ -62,7 +60,7 @@ export const nameUpdate = async (req,res)=>{
         const id = decoded.id;
         const type = decoded.type;
         const id_string = type==="tourist"?"TouristID":"AgencyID";
-        console.log(id, id_string, type, firstname,lastname);
+        // console.log(id, id_string, type, firstname,lastname);
         
         const query = `UPDATE ${type} SET firstname = ? , lastname =? WHERE ${id_string} = ?`;
         await db.query(query,[firstname,lastname,id]);

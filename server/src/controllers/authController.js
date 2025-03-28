@@ -59,6 +59,7 @@ export const signup = async (req, res) => {
     }
 
     const user = newresult[0][0];
+    console.log(newresult);
     const userId =
       type.toLowerCase() === "tourist" ? user.TouristID : user.AgencyID;
     const token = jwt.sign(
@@ -91,15 +92,12 @@ export const login = async (req, res) => {
 
     const find_user = `SELECT * FROM ${type} WHERE email = ?;`;
     const [result] = await db.query(find_user, [email]);
-    console.log("User find kiya idhar", result);
     if (!result[0]) {
-      console.log("if user doesn't exist then i have returned ");
       return res.status(200).json({
         success: false,
         message: "User doesn't exist! Please sign up!",
       });
     }
-    console.log("2");
     if (!result[0].Password) {
       return res
         .status(500)
@@ -112,7 +110,6 @@ export const login = async (req, res) => {
         .status(200)
         .json({ success: false, message: "Incorrect Password!" });
     }
-    console.log("Password match kiya");
     const userId =
       type.toLowerCase() === "agency"
         ? result[0].AgencyID
@@ -121,7 +118,6 @@ export const login = async (req, res) => {
       { id: userId, type: type.toLowerCase() },
       process.env.JWT_SECRET || "ijinwincwifjqun"
     );
-    console.log("token generate kiya");
     // const decoded = jwt.verify(token, "ijinwincwifjqun");
     // console.log(decoded.type);
     res
@@ -132,7 +128,7 @@ export const login = async (req, res) => {
       })
       .status(200)
       .json({ success: true, message: "User logged in successfully!" });
-    console.log("response bhej diya");
+
   } catch (err) {
     console.error("Error in login: ", err);
     res.status(500).json({ success: false, message: "Internal Server Error!" });
