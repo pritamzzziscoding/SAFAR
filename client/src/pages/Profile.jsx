@@ -222,44 +222,35 @@ const ChangePasswordForm = () => {
 
 const ImageUrlForm = ({image, setImage}) => {
     const handleChange = (e) => {
-        const {name, value} = e.target
-        setImage({...image, [name] : value})
+        const {name, files} = e.target
+        console.log(files)
+        setImage({...image, [name] : files[0]})
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        const formData = new FormData();
+        formData.append("image", image.image);
+
         try {
-            const res = await updateImage(image)
+            console.log("Lora", image)
+            const res = await updateImage(formData)
             if(res.data.success === true){
                 console.log("Image sahi se update ho gya");
-                setImage({image_url: ""})
+                setImage({image : null})
             }
         } catch (error) {
             console.log("Image update karte samay server mei keeda mila hai")
         }
     }
 
-  return (
-    <form className="" onSubmit={handleSubmit}>
-      <div className="flex justify-between items-center">
-        <label htmlFor="image_url">Image URL:</label>
-        <input
-          className="w-[65%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
-          type="url"
-          name="image_url"
-          id="image_url"
-          value={image.image_url}
-          onChange={handleChange}
-          required
-          autoComplete="off"
-        />
-      </div>
-      <button
-        className="image-btn bg-green-600/70 text-white rounded-lg font-medium"
-        type="submit"
-      >
-        Change
-      </button>
+    return <form className="" onSubmit={handleSubmit}>
+        <div className="flex justify-between items-center">
+            <label htmlFor="image_url">Image URL:</label>
+            <input className="w-[65%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="file" name="image" id="image" onChange={handleChange} required autoComplete="off"/>
+        </div>
+        <button className="image-btn bg-green-600/70 text-white rounded-lg font-medium" type="submit">Change</button>
     </form>
-  );
+    
 };

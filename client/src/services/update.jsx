@@ -8,7 +8,11 @@ const api = axios.create({
 
 
 export const updateImage = (body) =>{
-    const res = api.put("/update-image", body);
+    const res = api.put("/update-image", body,{
+        headers: {
+            "Content-Type" : "multipart/form-data",
+        }
+    });
     return res
 }
 
