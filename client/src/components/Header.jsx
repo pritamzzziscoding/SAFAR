@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../styles/Headers.css";
 import { Profile } from "../pages/Profile";
-import { type } from "../services/auth-apis";
+import { CheckToken } from "../services/CheckToken";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -55,11 +55,11 @@ export const Header = () => {
             <NavLink to={"/blogs"}>Blogs</NavLink>
           </li>
           <li>
-            <NavLink to={`${typee === "tourist" ? "/home" : "/packages"}`}>{`${
-              typee === "tourist" ? "Home" : "Packages"
+            <NavLink to={`${type === "tourist" ? "/home" : "/packages"}`}>{`${
+              type === "tourist" ? "Home" : "Packages"
             }`}</NavLink>
           </li>
-          {typee === "tourist" && (
+          {type == "tourist" && (
             <li>
               <NavLink to={"/bookings"}>Bookings</NavLink>
             </li>
@@ -77,6 +77,7 @@ export const Header = () => {
           profileOpen == false ? "close-profile" : "open-profile slide-down"
         }
       />
+      {/* <CheckToken /> */}
     </header>
   );
 };

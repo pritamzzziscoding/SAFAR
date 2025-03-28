@@ -15,13 +15,14 @@ export const LoginForm = ({ type }) => {
     setData({ ...data, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const res = await login(data);
-    if (res.data.success === true) {
-      navigate("/blogs");
-    } else {
-      alert(res.data.message);
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        const res = await login(data)
+        if(res.data.success === true){
+            navigate("/blogs")
+        }else{
+            alert(res.data.message)
+        }
     }
   };
 
