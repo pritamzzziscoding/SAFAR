@@ -3,10 +3,11 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import "../styles/profile.css";
 import { useNavigate } from "react-router-dom";
 import { logout, details } from "../services/auth-apis";
+import { updateImage } from "../services/update";
 
 export const Profile = ({status}) => {
     const navigate = useNavigate()
-    const [detail, setDetail] = useState("")
+    const [detail, setDetail] = useState({})
     const handleClick = async () => {
         try {
             const res = await logout();
@@ -42,7 +43,7 @@ export const Profile = ({status}) => {
     return <div className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>
         <div className="grid gap-3">
             <div className="flex gap-5 items-center">
-                <div className="w-20 h-20 bg-amber-400 rounded"><img src="123" alt="" /></div>
+                <div className="w-20 h-20 bg-amber-400 rounded"><img className="w-full h-full" src={detail.image_url} alt="" /></div>
                 <div className="font-medium">
                     <div className="text-stone-800 font-semibold">{`${detail.firstname} ${detail.lastname}`} | {detail.type}</div>
                     <div className="text-green-700">{detail.email}</div>
@@ -208,10 +209,18 @@ const ImageUrlForm = () => {
     setImage({ ...image, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(image);
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await updateImage()
+            if(res.data.success === true){
+                console.log("Image sahi se update ho gya");
+                setImage({image_url: ""})
+            }
+        } catch (error) {
+            console.log("Image update karte samay server mei keeda mila hai")
+        }
+    }
 
   return (
     <form className="" onSubmit={handleSubmit}>

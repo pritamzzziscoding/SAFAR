@@ -1,37 +1,36 @@
-import { useEffect } from "react";
-import { LandingHeader } from "../components/Home-Header";
-import { LandingFooter } from "../components/LandingFooter";
-import { WhySection } from "../components/WhySection";
-import { checkCookie } from "../services/auth-apis";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { LandingHeader } from "../components/Home-Header"
+import { LandingFooter } from "../components/LandingFooter"
+import { WhySection } from "../components/WhySection"
+import { useEffect } from "react"
+import { checkCookie } from "../services/auth-apis"
 
 export const Landing = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate()
 
-  const getCookieStatus = async () => {
-    try {
-      const t = await checkCookie();
-      if (t.data.success === true) {
-        navigate("/blogs");
-      }
-    } catch (error) {
-      console.log(error);
+    const getCookieStatus = async () => {
+        try {
+            const res = await checkCookie()
+            if(res.data.status === true){
+                navigate("/blogs")
+            }else{
+                console.log("Cookie set kaar pehle")
+            }
+        } catch (error) {
+            console.log("Error in Cookie Check")
+        }
     }
-  };
 
-  useEffect(() => {
-    getCookieStatus();
-  }, []);
-
-  return (
-    <>
-      <LandingHeader />
-      <LandingTitle />
-      <Features />
-      <WhySection />
-      <LandingFooter />
+    useEffect(()=>{
+        getCookieStatus()
+    },[])
+    return <>
+        <LandingHeader />
+        <LandingTitle />
+        <Features />
+        <WhySection />
+        <LandingFooter />
     </>
-  );
 };
 
 const LandingTitle = () => {
