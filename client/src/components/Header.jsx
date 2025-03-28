@@ -9,7 +9,7 @@ import { details } from "../services/auth-apis";
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
-    const [detail, setDetail] = useState("")
+    const [detail, setDetail] = useState({})
 
     const toggleMenu = () => {
         setIsMenuOpen(prevState => !prevState);
