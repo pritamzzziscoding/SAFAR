@@ -18,8 +18,10 @@ export const LoginForm = ({ type }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const res = await login(data);
-    if (res.status === 200) {
+    if (res.data.success === true) {
       navigate("/blogs");
+    } else {
+      alert(res.data.message);
     }
   };
 

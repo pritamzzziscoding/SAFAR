@@ -27,3 +27,8 @@ export const type = () => {
   const res = api.get("/type");
   return res;
 };
+
+export const checkCookie = () => {
+  const res = api.get("/");
+  return res;
+};

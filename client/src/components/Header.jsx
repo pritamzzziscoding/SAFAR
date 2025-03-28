@@ -3,58 +3,80 @@ import { NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../styles/Headers.css";
 import { Profile } from "../pages/Profile";
+import { type } from "../services/auth-apis";
 
 export const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [profileOpen, setProfileOpen] = useState(false);
-    const [type, setType] = useState("")
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [typee, setType] = useState("");
 
-    const toggleMenu = () => {
-        setIsMenuOpen(prevState => !prevState);
-    };
+  const toggleMenu = () => {
+    setIsMenuOpen((prevState) => !prevState);
+  };
 
-    const handleImageClick = () => {
-        setProfileOpen(prev => !prev)
+  const handleImageClick = () => {
+    setProfileOpen((prev) => !prev);
+  };
+
+  const getType = async () => {
+    try {
+      const t = await type();
+      if (t.data.success === true) {
+        setType(t.data.type);
+      } else {
+        alert(t.data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const getType = async () => {
-        try {
-            const t = await type()
-            if(t.data.success === true){
-                setType(t.data.type)
-            }else{
-                alert(t.data.message)
-            }
-        } catch (error) {
-            console.log(error)
+  useEffect(() => {
+    getType();
+  }, []);
+
+  return (
+    <header className="header bg-gradient-to-r from-stone-200 via-stone-50 to-stone-200 home-header w-full flex justify-between items-center h-15 shadow-2xl fixed top-0 left-0">
+      <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-teal-700 via-teal-600 to-teal-700 bg-clip-text text-transparent italic">
+        SAFAR
+      </span>
+      <span className="flex items-center gap-5">
+        {/* Hamburger Icon */}
+        <ul className="hamburger text-3xl" onClick={toggleMenu}>
+          <GiHamburgerMenu />
+        </ul>
+        {/* Menu Items */}
+        <ul
+          className={`text-teal-700 font-medium flex text-md gap-5 menu ${
+            isMenuOpen ? "close" : "open"
+          }`}
+        >
+          <li>
+            <NavLink to={"/blogs"}>Blogs</NavLink>
+          </li>
+          <li>
+            <NavLink to={`${typee === "tourist" ? "/home" : "/packages"}`}>{`${
+              typee === "tourist" ? "Home" : "Packages"
+            }`}</NavLink>
+          </li>
+          {typee === "tourist" && (
+            <li>
+              <NavLink to={"/bookings"}>Bookings</NavLink>
+            </li>
+          )}
+        </ul>
+        <img
+          onClick={handleImageClick}
+          className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2"
+          src="123"
+          alt="."
+        />
+      </span>
+      <Profile
+        status={
+          profileOpen == false ? "close-profile" : "open-profile slide-down"
         }
-    }
-
-    useEffect(()=>{
-        getType()
-    },[])
-
-    return (
-        <header className="header bg-gradient-to-r from-stone-200 via-stone-50 to-stone-200 home-header w-full flex justify-between items-center h-15 shadow-2xl fixed top-0 left-0">
-            <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-teal-700 via-teal-600 to-teal-700 bg-clip-text text-transparent italic">SAFAR</span>
-            <span className="flex items-center gap-5">
-                {/* Hamburger Icon */}
-                <ul className="hamburger text-3xl" onClick={toggleMenu}>
-                    <GiHamburgerMenu />
-                </ul>
-                {/* Menu Items */}
-                <ul className={`text-teal-700 font-medium flex text-md gap-5 menu ${isMenuOpen ? 'close' : 'open'}`}>
-                    <li><NavLink to={"/blogs"}>Blogs</NavLink></li>
-                    <li><NavLink to={`${type === "tourist" ? "/home" : "/packages"}`}>{`${type === "tourist" ? "Home" : "Packages"}`}</NavLink></li>
-                    {()=>{
-                        if(type == "tourist") return <li><NavLink to={"/bookings"}>Bookings</NavLink></li>
-                    }}
-                </ul>
-                <img onClick={handleImageClick} className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2" src="123" alt="." />
-            </span>
-            <Profile status = {profileOpen == false ? 'close-profile' : 'open-profile slide-down'}/>
-        </header>
-    );
+      />
+    </header>
+  );
 };
-
-

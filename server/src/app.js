@@ -21,10 +21,14 @@ app.get("/", (req, res) => {
   try {
     const { token } = req.cookies;
     if (token) {
-      return res.redirect("/home");
+      return res.status(200).json({
+        success: true,
+        message: "Cookie hai chup chaap redirect hojaa!",
+      });
     }
   } catch (err) {
     res.status(500).json({
+      success: false,
       message: "Internal Server Error",
     });
   }
