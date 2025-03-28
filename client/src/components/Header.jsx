@@ -4,6 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import "../styles/Headers.css";
 import { Profile } from "../pages/Profile";
 import { CheckToken } from "../services/CheckToken";
+import { type } from "../services/auth-apis";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,6 +23,7 @@ export const Header = () => {
     try {
       const t = await type();
       if (t.data.success === true) {
+        console.log(t.data.type);
         setType(t.data.type);
       } else {
         alert(t.data.message);
@@ -55,11 +57,11 @@ export const Header = () => {
             <NavLink to={"/blogs"}>Blogs</NavLink>
           </li>
           <li>
-            <NavLink to={`${type === "tourist" ? "/home" : "/packages"}`}>{`${
-              type === "tourist" ? "Home" : "Packages"
+            <NavLink to={typee === "tourist" ? "/home" : "/packages"}>{`${
+              typee === "tourist" ? "Home" : "Packages"
             }`}</NavLink>
           </li>
-          {type == "tourist" && (
+          {typee == "tourist" && (
             <li>
               <NavLink to={"/bookings"}>Bookings</NavLink>
             </li>
