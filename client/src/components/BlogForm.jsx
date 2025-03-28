@@ -21,7 +21,7 @@ export const BlogForm = () => {
     };
 
     return (
-        <form className="blog-form bg-teal-400/60 rounded-xl text-teal-50" onSubmit={handleSubmit}>
+        <form className="blog-form bg-teal-400/20 rounded-xl text-teal-50" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 blog-content">
                 <div className="flex justify-between items-center">
                     <label htmlFor="caption">Blog Caption: </label>

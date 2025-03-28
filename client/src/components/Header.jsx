@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../styles/Headers.css";
 import { Profile } from "../pages/Profile";
+import { CheckToken } from "../services/CheckToken";
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,13 +47,12 @@ export const Header = () => {
                 <ul className={`text-teal-700 font-medium flex text-md gap-5 menu ${isMenuOpen ? 'close' : 'open'}`}>
                     <li><NavLink to={"/blogs"}>Blogs</NavLink></li>
                     <li><NavLink to={`${type === "tourist" ? "/home" : "/packages"}`}>{`${type === "tourist" ? "Home" : "Packages"}`}</NavLink></li>
-                    {()=>{
-                        if(type == "tourist") return <li><NavLink to={"/bookings"}>Bookings</NavLink></li>
-                    }}
+                    {type == "tourist" && <li><NavLink to={"/bookings"}>Bookings</NavLink></li>}
                 </ul>
                 <img onClick={handleImageClick} className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2" src="123" alt="." />
             </span>
             <Profile status = {profileOpen == false ? 'close-profile' : 'open-profile slide-down'}/>
+            {/* <CheckToken /> */}
         </header>
     );
 };
