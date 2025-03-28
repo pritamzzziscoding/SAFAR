@@ -10,9 +10,9 @@ export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const [detail, setDetail] = useState({})
-    const [image, setImage] = useState({
-      image_url: "",
-    });
+    const[image, setImage] = useState({
+        image_url: ""
+    })
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
