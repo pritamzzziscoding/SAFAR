@@ -59,7 +59,7 @@ export const SignUpForm = ({ type }) => {
             {/* Phone Number Input */}
             <div className="flex flex-col items-center gap-1 text-teal-700 w-[80%]">
                 <label className="font-semibold" htmlFor="phoneno">Phone Number</label>
-                <input className="shadow-md border-2 border-stone-500 h-10 rounded-full w-full px-3" type="tel" name="phoneno" id="phoneno" required autoComplete="on" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" />
+                <input className="shadow-md border-2 border-stone-500 h-10 rounded-full w-full px-3" type="tel" minLength={10} name="phoneno" id="phoneno" required autoComplete="on" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" />
             </div>
 
             {/* Password Inputs */}
