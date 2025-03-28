@@ -38,6 +38,8 @@ try {
     const id = decoded.id;
     const type = decoded.type;
     const id_string = type==="tourist"?"TouristID":"AgencyID";
+    console.log(id, id_string, type, image_url);
+    
     const query = `UPDATE ${type} SET image_url = ? WHERE ${id_string} = ?`;
     await db.query(query,[image_url,id]);
     res.status(200).json({
@@ -50,4 +52,30 @@ try {
         message:"Internal Server Error"
     })
 }
+}
+
+export const nameUpdate = async (req,res)=>{
+    try {
+        const {firstname,lastname} = req.body;
+        const {token} = req.cookies;
+        const decoded = jwt.verify(token,"ijinwincwifjqun");
+        const id = decoded.id;
+        const type = decoded.type;
+        const id_string = type==="tourist"?"TouristID":"AgencyID";
+        console.log(id, id_string, type, firstname,lastname);
+        
+        const query = `UPDATE ${type} SET firstname = ? , lastname =? WHERE ${id_string} = ?`;
+        await db.query(query,[firstname,lastname,id]);
+        res.status(200).json({
+            success:true,
+            message:"Frist and Last name Updated Successfully !"
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            
+            success:false,
+            message:"Internal Server Error"
+        })
+    }
 }

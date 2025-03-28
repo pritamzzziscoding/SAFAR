@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { logout, details } from "../services/auth-apis";
 import { updateImage } from "../services/update";
 
-export const Profile = ({status}) => {
+export const Profile = ({status, image, setImage}) => {
     const navigate = useNavigate()
     const [detail, setDetail] = useState({})
     const handleClick = async () => {
@@ -38,7 +38,7 @@ export const Profile = ({status}) => {
 
     useEffect(()=>{
         getDetails()
-    },[])
+    },[image])
 
     return <div className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>
         <div className="grid gap-3">
@@ -51,7 +51,7 @@ export const Profile = ({status}) => {
                 </div>
             </div>
             <div className="grid gap-3">
-                <ImageUrlForm />
+                <ImageUrlForm image={image} setImage={setImage}/>
                 <ProfileForm />
                 <ChangePasswordForm />
             </div>
@@ -199,10 +199,7 @@ const ChangePasswordForm = () => {
   );
 };
 
-const ImageUrlForm = () => {
-  const [image, setImage] = useState({
-    image_url: "",
-  });
+const ImageUrlForm = ({image, setImage}) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -212,7 +209,7 @@ const ImageUrlForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await updateImage()
+            const res = await updateImage(image)
             if(res.data.success === true){
                 console.log("Image sahi se update ho gya");
                 setImage({image_url: ""})

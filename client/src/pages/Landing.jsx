@@ -11,7 +11,8 @@ export const Landing = () => {
     const getCookieStatus = async () => {
         try {
             const res = await checkCookie()
-            if(res.data.status === true){
+            console.log(res)
+            if(res.data.success === true){
                 navigate("/blogs")
             }else{
                 console.log("Cookie set kaar pehle")
