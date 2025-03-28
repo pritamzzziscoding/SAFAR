@@ -55,7 +55,7 @@ export const Profile = ({status, image, setImage}) => {
                 </div>
             </div>
             <div className="grid gap-3">
-                <ImageUrlForm image={image} setImage={image}/>
+                <ImageUrlForm image={image} setImage={setImage}/>
                 <ProfileForm formData={formData} setFormData={setFormData}/>
                 <ChangePasswordForm />
             </div>
