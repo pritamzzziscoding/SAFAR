@@ -4,12 +4,12 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import "../styles/Headers.css";
 import { Profile } from "../pages/Profile";
 import { CheckToken } from "../services/CheckToken";
-import { type } from "../services/auth-apis";
+import { details } from "../services/auth-apis";
 
 export const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
-  const [typee, setType] = useState("");
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [profileOpen, setProfileOpen] = useState(false);
+    const [detail, setDetail] = useState("")
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -19,67 +19,41 @@ export const Header = () => {
     setProfileOpen((prev) => !prev);
   };
 
-  const getType = async () => {
-    try {
-      const t = await type();
-      if (t.data.success === true) {
-        console.log(t.data.type);
-        setType(t.data.type);
-      } else {
-        alert(t.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getType();
-  }, []);
-
-  return (
-    <header className="header bg-gradient-to-r from-stone-200 via-stone-50 to-stone-200 home-header w-full flex justify-between items-center h-15 shadow-2xl fixed top-0 left-0">
-      <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-teal-700 via-teal-600 to-teal-700 bg-clip-text text-transparent italic">
-        SAFAR
-      </span>
-      <span className="flex items-center gap-5">
-        {/* Hamburger Icon */}
-        <ul className="hamburger text-3xl" onClick={toggleMenu}>
-          <GiHamburgerMenu />
-        </ul>
-        {/* Menu Items */}
-        <ul
-          className={`text-teal-700 font-medium flex text-md gap-5 menu ${
-            isMenuOpen ? "close" : "open"
-          }`}
-        >
-          <li>
-            <NavLink to={"/blogs"}>Blogs</NavLink>
-          </li>
-          <li>
-            <NavLink to={typee === "tourist" ? "/home" : "/packages"}>{`${
-              typee === "tourist" ? "Home" : "Packages"
-            }`}</NavLink>
-          </li>
-          {typee == "tourist" && (
-            <li>
-              <NavLink to={"/bookings"}>Bookings</NavLink>
-            </li>
-          )}
-        </ul>
-        <img
-          onClick={handleImageClick}
-          className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2"
-          src="123"
-          alt="."
-        />
-      </span>
-      <Profile
-        status={
-          profileOpen == false ? "close-profile" : "open-profile slide-down"
+    const getDetail = async () => {
+        try {
+            const t = await details()
+            if(t.data.success === true){
+                setDetail(t.data.result)
+            }else{
+                alert(t.data.message)
+            }
+        } catch (error) {
+            console.log(error)
         }
-      />
-      {/* <CheckToken /> */}
-    </header>
-  );
+    }
+
+    useEffect(()=>{
+        getDetail()
+    },[])
+
+    return (
+        <header className="header bg-gradient-to-r from-stone-200 via-stone-50 to-stone-200 home-header w-full flex justify-between items-center h-15 shadow-2xl fixed top-0 left-0">
+            <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-teal-700 via-teal-600 to-teal-700 bg-clip-text text-transparent italic">SAFAR</span>
+            <span className="flex items-center gap-5">
+                {/* Hamburger Icon */}
+                <ul className="hamburger text-3xl" onClick={toggleMenu}>
+                    <GiHamburgerMenu />
+                </ul>
+                {/* Menu Items */}
+                <ul className={`text-teal-700 font-medium flex text-md gap-5 menu ${isMenuOpen ? 'close' : 'open'}`}>
+                    <li><NavLink to={"/blogs"}>Blogs</NavLink></li>
+                    <li><NavLink to={`${detail.type === "tourist" ? "/home" : "/packages"}`}>{`${detail.type === "tourist" ? "Home" : "Packages"}`}</NavLink></li>
+                    {detail.type == "tourist" && <li><NavLink to={"/bookings"}>Bookings</NavLink></li>}
+                </ul>
+                <img onClick={handleImageClick} className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2" src="123" alt="." />
+            </span>
+            <Profile status = {profileOpen == false ? 'close-profile' : 'open-profile slide-down'}/>
+            {/* <CheckToken /> */}
+        </header>
+    );
 };

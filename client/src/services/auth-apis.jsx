@@ -23,12 +23,7 @@ export const signup = (body) => {
   return res;
 };
 
-export const type = () => {
-  const res = api.get("/type");
-  return res;
-};
-
-export const checkCookie = () => {
-  const res = api.get("/");
-  return res;
-};
+export const details = () => {
+    const res = api.get("/details");
+    return res
+}
