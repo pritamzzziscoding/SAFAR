@@ -21,7 +21,7 @@ export const signup = (body) => {
     return res
 }
 
-export const type = () => {
-    const res = api.get("/type");
+export const details = () => {
+    const res = api.get("/details");
     return res
 }

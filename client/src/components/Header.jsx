@@ -4,11 +4,12 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import "../styles/Headers.css";
 import { Profile } from "../pages/Profile";
 import { CheckToken } from "../services/CheckToken";
+import { details } from "../services/auth-apis";
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
-    const [type, setType] = useState("")
+    const [detail, setDetail] = useState("")
 
     const toggleMenu = () => {
         setIsMenuOpen(prevState => !prevState);
@@ -18,11 +19,11 @@ export const Header = () => {
         setProfileOpen(prev => !prev)
     }
 
-    const getType = async () => {
+    const getDetail = async () => {
         try {
-            const t = await type()
+            const t = await details()
             if(t.data.success === true){
-                setType(t.data.type)
+                setDetail(t.data.result)
             }else{
                 alert(t.data.message)
             }
@@ -32,7 +33,7 @@ export const Header = () => {
     }
 
     useEffect(()=>{
-        getType()
+        getDetail()
     },[])
 
     return (
@@ -46,8 +47,8 @@ export const Header = () => {
                 {/* Menu Items */}
                 <ul className={`text-teal-700 font-medium flex text-md gap-5 menu ${isMenuOpen ? 'close' : 'open'}`}>
                     <li><NavLink to={"/blogs"}>Blogs</NavLink></li>
-                    <li><NavLink to={`${type === "tourist" ? "/home" : "/packages"}`}>{`${type === "tourist" ? "Home" : "Packages"}`}</NavLink></li>
-                    {type == "tourist" && <li><NavLink to={"/bookings"}>Bookings</NavLink></li>}
+                    <li><NavLink to={`${detail.type === "tourist" ? "/home" : "/packages"}`}>{`${detail.type === "tourist" ? "Home" : "Packages"}`}</NavLink></li>
+                    {detail.type == "tourist" && <li><NavLink to={"/bookings"}>Bookings</NavLink></li>}
                 </ul>
                 <img onClick={handleImageClick} className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2" src="123" alt="." />
             </span>

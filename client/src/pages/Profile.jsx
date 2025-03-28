@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import "../styles/profile.css"
 import { useNavigate } from "react-router-dom";
-import { logout, type } from "../services/auth-apis";
+import { logout, details } from "../services/auth-apis";
 
 export const Profile = ({status}) => {
     const navigate = useNavigate()
-    const [typee, setType] = useState("")
+    const [detail, setDetail] = useState("")
     const handleClick = async () => {
         try {
             const res = await logout();
@@ -21,11 +21,12 @@ export const Profile = ({status}) => {
         }
     }
 
-    const getType = async () => {
+    const getDetails = async () => {
         try {
-            const t = await type()
+            const t = await details()
+            console.log(t.data.result)
             if(t.data.success === true){
-                setType(t.data.type)
+                setDetail(t.data.result)
             }else{
                 alert(t.data.message)
             }
@@ -35,7 +36,7 @@ export const Profile = ({status}) => {
     }
 
     useEffect(()=>{
-        getType()
+        getDetails()
     },[])
 
     return <div className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>
@@ -43,9 +44,9 @@ export const Profile = ({status}) => {
             <div className="flex gap-5 items-center">
                 <div className="w-20 h-20 bg-amber-400 rounded"><img src="123" alt="" /></div>
                 <div className="font-medium">
-                    <div className="text-stone-800 font-semibold">Jhon Doe</div>
+                    <div className="text-stone-800 font-semibold">Jhon Doe | tourist</div>
                     <div className="text-green-700">jhondoe@gmail.com</div>
-                    <div>{typee}</div>
+                    <div>8812032614</div>
                 </div>
             </div>
             <div className="grid gap-3">
