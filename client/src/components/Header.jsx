@@ -10,6 +10,9 @@ export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const [detail, setDetail] = useState({})
+    const[image, setImage] = useState({
+        image_url: ""
+    })
 
     const toggleMenu = () => {
         setIsMenuOpen(prevState => !prevState);
@@ -52,7 +55,7 @@ export const Header = () => {
                 </ul>
                 <img onClick={handleImageClick} className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2" src="123" alt="." />
             </span>
-            <Profile status = {profileOpen == false ? 'close-profile' : 'open-profile slide-down'}/>
+            <Profile image={image} setImage={setImage} status = {profileOpen == false ? 'close-profile' : 'open-profile slide-down'}/>
             {/* <CheckToken /> */}
         </header>
     );

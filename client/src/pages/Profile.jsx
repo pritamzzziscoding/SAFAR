@@ -3,11 +3,15 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import "../styles/profile.css"
 import { useNavigate } from "react-router-dom";
 import { logout, details } from "../services/auth-apis";
-import { updateImage } from "../services/update";
+import { updateImage, updateName } from "../services/update";
 
-export const Profile = ({status}) => {
+export const Profile = ({status, image, setImage}) => {
     const navigate = useNavigate()
     const [detail, setDetail] = useState({})
+    const [formData, setFormData] = useState({
+        firstname: "",
+        lastname: "",
+    });
     const handleClick = async () => {
         try {
             const res = await logout();
@@ -38,7 +42,7 @@ export const Profile = ({status}) => {
 
     useEffect(()=>{
         getDetails()
-    },[])
+    },[image, formData])
 
     return <div className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>
         <div className="grid gap-3">
@@ -51,8 +55,8 @@ export const Profile = ({status}) => {
                 </div>
             </div>
             <div className="grid gap-3">
-                <ImageUrlForm />
-                <ProfileForm />
+                <ImageUrlForm image={image} setImage={image}/>
+                <ProfileForm formData={formData} setFormData={setFormData}/>
                 <ChangePasswordForm />
             </div>
         </div>
@@ -63,12 +67,7 @@ export const Profile = ({status}) => {
     </div>
 }
 
-const ProfileForm = () => {
-    const [formData, setFormData] = useState({
-        firstname: "",
-        lastname: "",
-        check: false,
-    });
+const ProfileForm = ({formData, setFormData}) => {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -78,9 +77,22 @@ const ProfileForm = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Profile Data:", formData);
+        try {
+            const res = await updateName(formData)
+            if(res.data.success === true){
+                console.log("Naam set ho gya")
+                setFormData({
+                    firstname: "",
+                    lastname: "",
+                })
+            }else{
+                console.log("kuch galat hai front end mei")
+            }
+        } catch (error) {
+            console.log("Sahi se name update nehi hua keeda dekh")
+        }
     };
 
     return (
@@ -146,11 +158,7 @@ const ChangePasswordForm = () => {
     );
 };
 
-const ImageUrlForm = () => {
-    const[image, setImage] = useState({
-        image_url: ""
-    })
-
+const ImageUrlForm = ({image, setImage}) => {
     const handleChange = (e) => {
         const {name, value} = e.target
         setImage({...image, [name] : value})

@@ -11,3 +11,8 @@ export const updateImage = (body) =>{
     const res = api.put("/update-image", body);
     return res
 }
+
+export const updateName = (body) => {
+    const res = api.put("/update-name", body);
+    return res
+}
