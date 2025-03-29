@@ -7,7 +7,7 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
-
+import blogRoutes from "./routes/blogRoutes.js";
 const app = express();
 app.use(express.json());
 app.use(
@@ -44,6 +44,7 @@ app.get("/", (req, res) => {
 
 app.use(userRoutes);
 app.use(uploadRoutes);
+app.use(blogRoutes);
 app.use("/package", packageRoutes);
 app.use("/review", reviewRoutes);
 app.use("/book", bookingRoutes);

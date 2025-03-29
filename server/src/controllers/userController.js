@@ -13,6 +13,7 @@ export const getDetails = async (req, res) => {
       const query = `SELECT email,firstname,lastname,phoneno,image_url FROM ${type} WHERE ${id_string} = ? `
       const result = await db.query(query,[id]);
       result[0][0]["type"] = type;
+      result[0][0]["id"] = id;
       res.status(200).json({
         success: true,
         result:result[0][0],

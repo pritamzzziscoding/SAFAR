@@ -12,4 +12,5 @@ export const addBlog = (formData) => {
             "Content-Type" : "multipart/form-data"
         }
     })
+    return res
 }
