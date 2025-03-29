@@ -55,6 +55,7 @@ export const Blogs = () => {
     }
 
     useEffect(()=>{
+        getDetails()
         getAndFilterBlogs()
     },[search, userBlog])
 
@@ -74,7 +75,7 @@ export const Blogs = () => {
             </div>
             <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                 {
-                    blogs.map((blog, idx) => {
+                    blogs.map((blog) => {
                         return <BlogCard key={blog.BlogID} blog={blog} deleteButton = {blog.UserID === detail.id && blog.UserType === detail.type ? "not-hidden" : "hidden"}/>
                     })
                 }
