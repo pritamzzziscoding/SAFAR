@@ -129,11 +129,43 @@ export const getCurrentLike = async (req,res)=>{
             success:false,
             message:"Internal Server Error"
         })
-        }
+    }
 }
 
 
 const updateLikeCountInBlog = async (BlogID)=>{
     const khatarnak = `UPDATE BLOGS SET LIKES = (SELECT COUNT(*) FROM LIKES WHERE BLOGID = ?) WHERE BLOGID = ?`;
     await db.query(khatarnak,[BlogID,BlogID]);
+}
+
+
+
+export const updateBlog = async (req,res)=>{
+    try {
+        const {caption,location,description} = req.body;
+        let imgURL = "";
+        const userId = req.user.id;
+        const userType = req.user.type;
+        if(req.file){
+            imgURL = await getImageUrl(req.file.path);
+            const query = `UPDATE BLOGS SET Title=?,IMGURL=?,Location=?,Description=? WHERE USERID=${userId} AND USERTYPE=${userType}`
+            await db.query(query,[caption,imgURL,location,description]);
+            delete_local_file(req.file.path);
+        }
+        else{
+            const query = `UPDATE BLOGS SET Title=?,Location=?,Description=? WHERE USERID=? AND USERTYPE=?`
+            await db.query(query,[caption,location,description,userId,userType]);
+        }
+        return res.status(200).json({
+            success:true,
+            message:"Blog updated successfully!"
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            success:false,
+            message:"Internal Server Error!"
+        })
+    }
 }
