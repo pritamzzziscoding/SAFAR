@@ -41,10 +41,11 @@ export const Blogs = () => {
                 </div>
             </div>
             <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                <BlogCard />
-                <BlogCard />
-                <BlogCard />
-                <BlogCard />
+                {
+                    blogs.map((blog, idx) => {
+                        return <BlogCard key={blog.BlogID} blog={blog} />
+                    })
+                }
             </ul>
         </div>
     </>
