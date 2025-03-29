@@ -15,6 +15,7 @@ export const Blogs = () => {
             const res = await getBlog()
             if(res.data.success === true){
                 console.log("blogs fetched")
+                console.log(res.data.blogs)
                 setBlogs(res.data.blogs)
             }
         } catch (error) {
