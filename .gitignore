@@ -1,28 +1,2 @@
 node_modules
-
-DELIMITER //
-
-CREATE TRIGGER prevent_salary_reduction
-BEFORE UPDATE ON employee
-FOR EACH ROW
-BEGIN
-    IF NEW.sal < OLD.sal THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Salary cannot be decreased!';
-    END IF;
-END //
-
-DELIMITER ;
-
-
-DELIMITER //
-
-CREATE TRIGGER audit_salary_changess
-AFTER UPDATE ON employee
-FOR EACH ROW
-BEGIN
-    INSERT INTO employee_audit (emp_id, old_salary, new_salary)
-    VALUES (OLD.empno, OLD.sal, NEW.sal);
-END //
-
-DELIMITER ;
+*.env
