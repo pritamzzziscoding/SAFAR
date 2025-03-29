@@ -44,7 +44,6 @@ export const Header = () => {
         try {
             const t = await details()
             if(t.data.success === true){
-              console.log(t.data.result)
                 setDetail(t.data.result)
             }else{
                 alert(t.data.message)

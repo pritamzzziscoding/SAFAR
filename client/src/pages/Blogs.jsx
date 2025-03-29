@@ -4,27 +4,59 @@ import { Header } from "../components/Header"
 import "../styles/blogs.css"
 import { BlogCard } from "../components/BlogCard"
 import { getBlog } from "../services/get-data"
+import { details } from "../services/auth-apis"
+
+
+function check(string1, string2) {
+    if (string1.length > string2.length) return false;
+    return string2.startsWith(string1);
+}
 
 export const Blogs = () => {
     const[search, setSearch] = useState("")
     const[userBlog, setUserBlog] = useState(false)
     const[blogs, setBlogs] = useState([])
+    const[detail, setDetail] = useState({})
 
     const getAndFilterBlogs = async () =>{
         try {
             const res = await getBlog()
             if(res.data.success === true){
                 console.log("blogs fetched")
-                setBlogs(res.data.blogs)
+                const b = res.data.blogs
+                const filterBlog = b.map((blog)=>{
+                    if(check(search, blog.Location)){
+                        return blog;
+                    }
+                })
+                if(userBlog){
+                    const newFilterArray = filterBlog.map((blog)=>{
+                        if(detail.id === blog.UserID) return blog
+                    })
+                    setBlogs(newFilterArray)
+                }else{
+                    setBlogs(filterBlog)
+                }
             }
         } catch (error) {
             console.log("Backend mei keeda")
         }
     }
 
+    const getDetails = async () => {
+        try {
+            const res = await details()
+            if(res.data.status === true){
+                setDetail(res.data.result)
+            }
+        } catch (error) {
+            console.log("Backend Error hai!!!")
+        }
+    }
+
     useEffect(()=>{
         getAndFilterBlogs()
-    },[])
+    },[search, userBlog])
 
     return <>
         <Header />
@@ -43,7 +75,7 @@ export const Blogs = () => {
             <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                 {
                     blogs.map((blog, idx) => {
-                        return <BlogCard key={blog.BlogID} blog={blog} />
+                        return <BlogCard key={blog.BlogID} blog={blog} deleteButton = {blog.UserID === detail.id && blog.UserType === detail.type ? "not-hidden" : "hidden"}/>
                     })
                 }
             </ul>
