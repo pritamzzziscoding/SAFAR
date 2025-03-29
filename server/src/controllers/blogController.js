@@ -46,9 +46,10 @@ export const getAllBlogs = async (req,res)=>{
     }
 }
 
-export const deleteblog = async(req,res)=>{
+export const deleteblog = async (req,res)=>{
     try {
         const {BlogID} = req.body
+        console.log(BlogID)
         const query = `DELETE FROM BLOGS WHERE BLOGID = ?`;
         await db.query(query,[BlogID]);
         res.status(200).json({

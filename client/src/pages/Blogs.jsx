@@ -24,14 +24,16 @@ export const Blogs = () => {
             if(res.data.success === true){
                 console.log("blogs fetched")
                 const b = res.data.blogs
-                const filterBlog = b.map((blog)=>{
+                const filterBlog = b.filter((blog)=>{
                     if(check(search, blog.Location)){
-                        return blog;
+                        return true
                     }
+                    return false
                 })
                 if(userBlog){
-                    const newFilterArray = filterBlog.map((blog)=>{
-                        if(detail.id === blog.UserID) return blog
+                    const newFilterArray = filterBlog.filter((blog)=>{
+                        if(detail.id === blog.UserID) return true
+                        return false
                     })
                     setBlogs(newFilterArray)
                 }else{
@@ -46,7 +48,9 @@ export const Blogs = () => {
     const getDetails = async () => {
         try {
             const res = await details()
-            if(res.data.status === true){
+            console.log(res.data.result)
+            if(res.data.success === true){
+                console.log(res.data)
                 setDetail(res.data.result)
             }
         } catch (error) {
@@ -55,6 +59,7 @@ export const Blogs = () => {
     }
 
     useEffect(()=>{
+        getDetails()
         getAndFilterBlogs()
     },[search, userBlog])
 
@@ -69,12 +74,12 @@ export const Blogs = () => {
                 <input className="place-self-center blog-content h-8 w-[100%] rounded-xl" type="text" name="search" id="search" placeholder="Search Location" value={search} onChange={(e)=>setSearch(e.target.value)}/>
                 <div className="flex items-center gap-10 place-self-center">
                     <p className="text-stone-900 font-medium">My Blogs: </p>
-                    <input className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500" type="checkbox" value={userBlog} onChange={(e)=>setUserBlog(e.target.value)}/>
+                    <input className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500" type="checkbox" value={userBlog} onChange={()=>setUserBlog(prev => !prev)}/>
                 </div>
             </div>
             <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                 {
-                    blogs.map((blog, idx) => {
+                    blogs.map((blog) => {
                         return <BlogCard key={blog.BlogID} blog={blog} deleteButton = {blog.UserID === detail.id && blog.UserType === detail.type ? "not-hidden" : "hidden"}/>
                     })
                 }
