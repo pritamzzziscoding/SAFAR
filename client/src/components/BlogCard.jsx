@@ -5,7 +5,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { deleteBlog } from "../services/delete-data";
 import { checkLike, Like } from "../services/get-data";
 
-export const BlogCard = ({ blog, deleteButton, like, setLike }) => {
+export const BlogCard = ({ blog, hide, setLike, setEdit, setData }) => {
   const [full, setFull] = useState(false);
   const [currLike, setCurrentLike] = useState(null);
 
@@ -63,6 +63,11 @@ export const BlogCard = ({ blog, deleteButton, like, setLike }) => {
     }
   };
 
+  const handleEdit = (blog) => {
+    console.log(blog)
+    setEdit(blog)
+  }
+
   useEffect(() => {
     checkCurrentLiked();
   }, []);
@@ -95,11 +100,11 @@ export const BlogCard = ({ blog, deleteButton, like, setLike }) => {
             </button>
             <button
               onClick={handleDelete}
-              className={`${deleteButton} bg-red-500 w-10 h-8 flex justify-center items-center text-xl rounded text-white`}
+              className={`${hide} bg-red-500 w-10 h-8 flex justify-center items-center text-xl rounded text-white`}
             >
               <MdDelete />
             </button>
-            <button className="bg-red-500 w-10 h-8 flex justify-center items-center text-xl rounded text-white">
+            <button onClick={()=>handleEdit(blog)} className={`${hide} bg-red-500 w-10 h-8 flex justify-center items-center text-xl rounded text-white`}>
               <MdEdit />
             </button>
           </div>
