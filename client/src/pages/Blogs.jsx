@@ -17,6 +17,7 @@ export const Blogs = () => {
     const[userBlog, setUserBlog] = useState(false)
     const[blogs, setBlogs] = useState([])
     const[detail, setDetail] = useState({})
+    const [like, setLike] = useState(null)
 
     const getAndFilterBlogs = async () =>{
         try {
@@ -61,7 +62,7 @@ export const Blogs = () => {
     useEffect(()=>{
         getDetails()
         getAndFilterBlogs()
-    },[search, userBlog])
+    },[search, userBlog, like])
 
     return <>
         <Header />
@@ -80,7 +81,7 @@ export const Blogs = () => {
             <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                 {
                     blogs.map((blog) => {
-                        return <BlogCard key={blog.BlogID} blog={blog} deleteButton = {blog.UserID === detail.id && blog.UserType === detail.type ? "not-hidden" : "hidden"}/>
+                        return <BlogCard key={blog.BlogID} blog={blog} deleteButton = {blog.UserID === detail.id && blog.UserType === detail.type ? "not-hidden" : "hidden"} like={like} setLike={setLike}/>
                     })
                 }
             </ul>
