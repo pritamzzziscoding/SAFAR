@@ -13,9 +13,9 @@ export const BlogCard = ({blog}) => {
         setFull((prev) => !prev)
     }
 
-    return <li>
-        <div className="bg-stone-200 blog-card rounded place-self-center">
-            <img className="w-[100%] rounded-t" src="https://images.pexels.com/photos/815880/pexels-photo-815880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Add a Valid Image" />
+    return <li className="flex items center bg-red-500/50">
+        <div className="bg-stone-200 blog-card rounded place-self-center flex flex-col justify-between">
+            <img className="w-[100%] rounded-t" src={ImgURL} alt="Add a Valid Image" />
             <div className="blog-card-content">
                 <p className="text-xl text-stone-800 font-medium">{Title}</p>
                 <p className="text-stone-600 flex items-center gap-2"><MdLocationPin /> {Location}</p>
