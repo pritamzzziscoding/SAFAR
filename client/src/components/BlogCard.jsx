@@ -2,8 +2,9 @@ import { useState } from "react";
 import { MdEdit, MdLocationPin } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
+import { deleteBlog } from "../services/delete-data";
 
-export const BlogCard = ({blog}) => {
+export const BlogCard = ({blog, deleteButton}) => {
     const [full, setFull] = useState(false)
 
     const {BlogID, Description, ImgURL,Likes,Location, Title, UserID, UserType} = blog
@@ -22,6 +23,7 @@ export const BlogCard = ({blog}) => {
                 <div className="flex items-center justify-between">
                     <button onClick={handleClick} className="rounded text-green-500">Read more</button>
                     <button className="flex items-center justify-center gap-2"><FaRegHeart />{Likes}</button>
+                    <button onClick={handleDelete} className={`${deleteButton}bg-red-500 w-10 h-8 flex justify-center items-center text-xl rounded text-white`}>Delete</button>
                     <button className="bg-red-500 w-10 h-8 flex justify-center items-center text-xl rounded text-white"><MdEdit /></button>
                 </div>
             </div>
