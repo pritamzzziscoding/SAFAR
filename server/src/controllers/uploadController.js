@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { db } from "../config/database.js";
 import dotenv from "dotenv";
 import path from "path";
+import fs from "fs";
 
 dotenv.config({
     path:"C:\Users\divya\OneDrive\safar_final_practice\SAFAR\server\src\config\.env"
@@ -28,7 +29,6 @@ const storage = multer.diskStorage({
   
   // Initialize multer
   const upload = multer({ storage: storage });
-
 // Middleware to handle file upload
 export const imgUpload = async (req, res) => {
     try {
@@ -60,7 +60,8 @@ export const imgUpload = async (req, res) => {
       // Update database with new image URL
       const query = `UPDATE ${type} SET image_url = ? WHERE ${id_string} = ?`;
       await db.query(query, [imageUrl, id]);
-  
+      // Delete the image from the local folder 
+      delete_local_file(req.file.path);
       // Send success response
       return res.status(200).json({
         success: true,
@@ -77,6 +78,7 @@ export const imgUpload = async (req, res) => {
   };
 
 export const getImageUrl = async (path) => {
+  try{
     const result = await cloudinary.uploader.upload(path, {
         folder: "safar_uploads", // Optional: Change the folder name as per your need
         resource_type: "image",
@@ -85,7 +87,20 @@ export const getImageUrl = async (path) => {
       // Get Cloudinary image URL
       const imageUrl = result.secure_url;
       return imageUrl;
+    }catch(err){
+          console.log(err);
+          return ""
+    }
 }
 
+export const delete_local_file = (path)=>{
+  fs.unlink(path, (err) => {
+    if (err) {
+        console.error("Error deleting file:", err);
+    } else {
+        console.log("Local file deleted successfully");
+    }
+});
+}
 // Multer middleware for handling image upload
 export const uploadMiddleware = upload.single("image");
