@@ -28,12 +28,14 @@ export const BlogForm = () => {
 
         try {
             const res = await addBlog(formData)
+            console.log(res)
             if(res.data.success === true){
                 console.log("Data surakshit hai database mei")
             }else{
                 console.log("Dekh agar sahi data bheja hai ki nehi")
             }
         } catch (error) {
+            console.log(error)
             console.log("Blog add karte samay backend mei keeda mila")
         }
     };

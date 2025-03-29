@@ -3,7 +3,6 @@ import { getImageUrl } from "./uploadController.js";
 import { delete_local_file } from "./uploadController.js";
 // import jwt from "jsonwebtoken";
 // import { authenticateUser } from "../middlewares/authMiddleware.js";
-caption, location,image_file , description 
 
 export const insertblog = async (req,res)=>{
     try {
@@ -19,6 +18,25 @@ export const insertblog = async (req,res)=>{
             message:"Blog successfully inserted into the database! "
         })
 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success:false,
+            message:"Internal Server Error!"
+        })
+    }
+}
+
+export const getAllBlogs = async (req,res)=>{
+    try {
+        const query = `SELECT * FROM BLOGS`;
+        const result = await db.query(query);
+        console.log(result[0]);
+        res.status(200).json({
+            success:true,
+            message:"Fetched all records successfully !",
+            blogs:result[0]
+        })
     } catch (error) {
         console.log(error);
         res.status(500).json({
