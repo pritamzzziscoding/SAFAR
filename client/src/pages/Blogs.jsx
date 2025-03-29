@@ -1,12 +1,31 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BlogForm } from "../components/BlogForm"
 import { Header } from "../components/Header"
 import "../styles/blogs.css"
 import { BlogCard } from "../components/BlogCard"
+import { getBlog } from "../services/get-data"
 
 export const Blogs = () => {
     const[search, setSearch] = useState("")
     const[userBlog, setUserBlog] = useState(false)
+    const[blogs, setBlogs] = useState([])
+
+    const getAndFilterBlogs = async () =>{
+        try {
+            const res = await getBlog()
+            if(res.data.success === true){
+                console.log("blogs fetched")
+                setBlogs(res.data.blogs)
+            }
+        } catch (error) {
+            console.log("Backend mei keeda")
+        }
+    }
+
+    useEffect(()=>{
+        getAndFilterBlogs()
+    },[])
+
     return <>
         <Header />
         <div className="blog-container">
