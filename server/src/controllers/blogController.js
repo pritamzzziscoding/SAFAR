@@ -31,7 +31,7 @@ export const getAllBlogs = async (req,res)=>{
     try {
         const query = `SELECT * FROM BLOGS`;
         const result = await db.query(query);
-        console.log(result[0]);
+       
         res.status(200).json({
             success:true,
             message:"Fetched all records successfully !",
@@ -73,8 +73,8 @@ export const likehelper = async(req,res)=>{
         const type = req.user.type;
         const like_check = `SELECT * FROM LIKES WHERE BlogID = ? AND UserID = ? AND UserType = ?`
         const like_result = await db.query(like_check,[BlogID,id,type]);
-        const like = false;
-        if(!like_result){
+        let like = false;
+        if(!like_result[0][0]){
             const add_query = `INSERT INTO LIKES (BlogID,USERID,USERTYPE) VALUES (?,?,?)`;
             await db.query(add_query,[BlogID,id,type]);
             like = true;
@@ -103,15 +103,15 @@ export const likehelper = async(req,res)=>{
 export const getCurrentLike = async (req,res)=>{
         try {
         const {BlogID} = req.params;
+        // console.log(BlogID);
         const id = req.user.id ;
         const type = req.user.type;
         const like_check = `SELECT * FROM LIKES WHERE BlogID = ? AND UserID = ? AND UserType = ?`
         const like_result = await db.query(like_check,[BlogID,id,type]);
-        const like = false;
-        if(!like_result){
+        if(!like_result[0][0]){
             return res.status(200).json({
-                success:true,
-                like:false,
+                success: true,
+                like: false,
                 message:"Abhi like nahi hai bhai"
             })
         }
