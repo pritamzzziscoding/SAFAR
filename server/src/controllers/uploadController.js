@@ -77,6 +77,7 @@ export const imgUpload = async (req, res) => {
   };
 
 export const getImageUrl = async (path) => {
+  try{
     const result = await cloudinary.uploader.upload(path, {
         folder: "safar_uploads", // Optional: Change the folder name as per your need
         resource_type: "image",
@@ -85,6 +86,10 @@ export const getImageUrl = async (path) => {
       // Get Cloudinary image URL
       const imageUrl = result.secure_url;
       return imageUrl;
+    }catch(err){
+          console.log(err);
+          return ""
+    }
 }
 
 // Multer middleware for handling image upload
