@@ -31,7 +31,7 @@ export const getAllBlogs = async (req,res)=>{
     try {
         const query = `SELECT * FROM BLOGS`;
         const result = await db.query(query);
-        console.log(result[0]);
+       
         res.status(200).json({
             success:true,
             message:"Fetched all records successfully !",
@@ -63,4 +63,77 @@ export const deleteblog = async (req,res)=>{
             message:""
         })
     }
+}
+
+
+export const likehelper = async(req,res)=>{
+    try {
+        const {BlogID} = req.body;
+        const id = req.user.id ;
+        const type = req.user.type;
+        const like_check = `SELECT * FROM LIKES WHERE BlogID = ? AND UserID = ? AND UserType = ?`
+        const like_result = await db.query(like_check,[BlogID,id,type]);
+        let like = false;
+        if(!like_result[0][0]){
+            const add_query = `INSERT INTO LIKES (BlogID,USERID,USERTYPE) VALUES (?,?,?)`;
+            await db.query(add_query,[BlogID,id,type]);
+            like = true;
+            updateLikeCountInBlog(BlogID);
+        }
+        else{
+            const delete_query = `DELETE FROM LIKES WHERE BlogID = ? AND userid =? AND usertype=?`;
+            await db.query(delete_query,[BlogID,id,type]);
+            like = false;
+            updateLikeCountInBlog(BlogID);
+        }
+        return res.status(200).json({
+            success:true,
+            like,
+            message:"Likes manipulated successfully!"
+        })
+    } catch (error) {
+        console.log(error);
+       return  res.status(500).json({
+            success:false,
+            message:"Internal Server Error"
+        })
+    }
+}
+
+export const getCurrentLike = async (req,res)=>{
+        try {
+        const {BlogID} = req.params;
+        // console.log(BlogID);
+        const id = req.user.id ;
+        const type = req.user.type;
+        const like_check = `SELECT * FROM LIKES WHERE BlogID = ? AND UserID = ? AND UserType = ?`
+        const like_result = await db.query(like_check,[BlogID,id,type]);
+        if(!like_result[0][0]){
+            return res.status(200).json({
+                success: true,
+                like: false,
+                message:"Abhi like nahi hai bhai"
+            })
+        }
+        else{
+            return res.status(200).json({
+                success:true,
+                like:true,
+                message:"Already like kar rakha hai"
+            })
+        }
+
+        } catch (error) {
+            console.log(error);
+        res.status(500).json({
+            success:false,
+            message:"Internal Server Error"
+        })
+        }
+}
+
+
+const updateLikeCountInBlog = async (BlogID)=>{
+    const khatarnak = `UPDATE BLOGS SET LIKES = (SELECT COUNT(*) FROM LIKES WHERE BLOGID = ?) WHERE BLOGID = ?`;
+    await db.query(khatarnak,[BlogID,BlogID]);
 }

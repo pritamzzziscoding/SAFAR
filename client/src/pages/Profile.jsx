@@ -29,7 +29,6 @@ export const Profile = ({status, image, setImage}) => {
     const getDetails = async () => {
         try {
             const t = await details()
-            console.log(t.data.result)
             if(t.data.success === true){
                 setDetail(t.data.result)
             }else{

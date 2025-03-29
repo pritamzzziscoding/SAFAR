@@ -7,7 +7,7 @@ import { checkLike, Like } from "../services/get-data";
 
 export const BlogCard = ({ blog, deleteButton, like, setLike }) => {
   const [full, setFull] = useState(false);
-  const [currLike, setCurrentLike] = useState();
+  const [currLike, setCurrentLike] = useState(null);
 
   const {
     BlogID,
@@ -40,10 +40,11 @@ export const BlogCard = ({ blog, deleteButton, like, setLike }) => {
 
   const handleLike = async () => {
     try {
-      const res = await Like({ BlogID });
+      const res = await Like({BlogID});
+      console.log("Manipulate ",res.data.like)
       if (res.data.success === true) {
         setLike(res.data.like);
-        setCurrentLike(res.data.like);
+        setCurrentLike(res.data.like)
       }
     } catch (error) {
       console.log("Like wala keeda mila backend mei");
@@ -53,6 +54,7 @@ export const BlogCard = ({ blog, deleteButton, like, setLike }) => {
   const checkCurrentLiked = async () => {
     try {
       const res = await checkLike(BlogID);
+      console.log("Check Like ",res.data.like)
       if (res.data.success === true) {
         setCurrentLike(res.data.like);
       }

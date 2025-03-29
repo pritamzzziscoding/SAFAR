@@ -49,9 +49,7 @@ export const Blogs = () => {
     const getDetails = async () => {
         try {
             const res = await details()
-            console.log(res.data.result)
             if(res.data.success === true){
-                console.log(res.data)
                 setDetail(res.data.result)
             }
         } catch (error) {
