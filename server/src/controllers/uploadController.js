@@ -103,4 +103,12 @@ export const delete_local_file = (path)=>{
 });
 }
 // Multer middleware for handling image upload
-export const uploadMiddleware = upload.single("image");
+export const uploadMiddleware = (req, res, next) => {
+  upload.single("image")(req, res, (err) => {
+      if (err && err.code !== "LIMIT_UNEXPECTED_FILE") {
+          return res.status(400).json({ success: false, message: "File upload error" });
+      }
+      next();
+  });
+};
+
