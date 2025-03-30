@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { addBlog } from "../services/postData";
 import { updateBlog } from "../services/update";
 
-export const BlogForm = ({data, setData, edit, setEdit}) => {
+export const BlogForm = ({data, setData, edit, setEdit, setRefresh}) => {
 
     const handleChange = (e) => {
         const {name} = e.target
@@ -13,7 +13,7 @@ export const BlogForm = ({data, setData, edit, setEdit}) => {
 
     useEffect(()=>{
         edit && setData({
-            caption: edit.Titile,
+            caption: edit.Title,
             location: edit.Location,
             image: null,
             description: edit.Description
@@ -32,6 +32,7 @@ export const BlogForm = ({data, setData, edit, setEdit}) => {
 
         try {
             if(edit){
+                formData.append("blogId", edit.BlogID)
                 const res = await updateBlog(formData)
                 if(res.data.success === true){
                     console.log("Data Saved Success Fully")
@@ -60,7 +61,7 @@ export const BlogForm = ({data, setData, edit, setEdit}) => {
                     console.log("Dekh agar sahi data bheja hai ki nehi")
                 }
             }
-
+            setRefresh((prev) => !prev)
         } catch (error) {
             console.log(error)
             console.log("Blog add karte samay backend mei keeda mila")

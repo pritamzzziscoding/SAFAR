@@ -1,0 +1,41 @@
+/* BlogCard.css */
+
+/* Margins and paddings for BlogCard */
+.blog-card-container {
+    margin: 1rem;
+  }
+  
+  .blog-card-content {
+    padding: 1rem;
+  }
+  
+  .action-buttons button {
+    margin: 0.5rem;
+  }
+  
+  /* Margins and paddings for BlogContent */
+  .description-container {
+    padding: 2rem;
+  }
+  
+  .close-button button {
+    margin: 1rem;
+  }
+  
+  /* Custom scrollbar styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
