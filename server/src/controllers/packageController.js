@@ -106,3 +106,21 @@ export const updateStatus = async (req,res)=>{
     })
   }
 }
+
+export const deletePackage = async (req,res)=>{
+  try {
+    const {PackageID} = req.body;
+    const query = `DELETE FROM  PACKAGES WHERE PACKAGEID = ? `;
+    await db.query(query,[PackageID]);
+    return res.status(200).json({
+      success:true,
+      message:"Package deleted successfully!"
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:"Internal Server Error !"
+    })
+  }
+}
