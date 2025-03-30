@@ -7,7 +7,7 @@ import { MdDelete } from 'react-icons/md';
 import { deletePackage } from '../services/delete-data';
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
-export const AgencyPackageCard = ({pkg, setRefresh}) => {
+export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
     const [isActive, setIsActive] = useState(pkg.IsActive); // State to manage active status
     const [toggleMenu, setToggleMenu] = useState(false)
 
@@ -42,6 +42,11 @@ export const AgencyPackageCard = ({pkg, setRefresh}) => {
         setRefresh((prev) => !prev)
     }
 
+    const handleEdit = () => {
+        setEdit(pkg)
+    }
+
+
     return (
         <li className="agency-package-card bg-white shadow-lg rounded-lg overflow-hidden p-4 relative">
             <img 
@@ -53,7 +58,7 @@ export const AgencyPackageCard = ({pkg, setRefresh}) => {
                 <h2 className="truncate text-xl font-bold flex">{pkg.Title}</h2>
                 <HiOutlineDotsVertical onClick={()=>setToggleMenu((prev)=>!prev)} className='text-xl'/>
                 <div className={`${toggleMenu ? "" : "hidden"} toggle-btn rounded flex flex-col w-15 bg-white gap-1 top-0 right-5 absolute shadow-xl`}>
-                    <p className='cursor-pointer hover:bg-gray-100'>Edit</p>
+                    <p onClick={handleEdit} className='cursor-pointer hover:bg-gray-100'>Edit</p>
                     <p onClick={handleDelete} className='cursor-pointer hover:bg-gray-100'>Delete</p>
                 </div>
             </div>

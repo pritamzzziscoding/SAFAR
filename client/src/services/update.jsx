@@ -34,3 +34,8 @@ export const togglePackage = (body) => {
     const res = api.put("/toggle-package", body)
     return res
 }
+
+export const updatePackage = (body) => {
+    const res = api.put("/update-package", body)
+    return res
+}
