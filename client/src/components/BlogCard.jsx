@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdDelete, MdEdit, MdLocationPin } from "react-icons/md";
 import { MdClose } from "react-icons/md";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { deleteBlog } from "../services/delete-data";
 import { checkLike, Like } from "../services/get-data";
 
@@ -74,40 +74,40 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) 
   }, []);
 
   return (
-    <li className="flex items center bg-red-500/50">
-      <div className="bg-stone-200 blog-card rounded place-self-center flex flex-col justify-between">
+    <li className="flex items-center bg-red-500/50">
+      <div className="bg-stone-200 blog-card rounded place-self-center flex flex-col justify-between w-full">
         <img
-          className="w-[100%] rounded-t"
+          className="package-image w-full h-48 object-cover rounded-md"
           src={ImgURL}
           alt="Add a Valid Image"
         />
+
         <div className="blog-card-content">
+          <div>
+            <button onClick={handleLike} className="flex items-center gap-1">
+              {currLike ? <FaHeart className="text-red-600"/> : <FaRegHeart />}
+              {Likes} Likes
+            </button>
+          </div>
           <p className="text-xl text-stone-800 font-medium">{Title}</p>
           <p className="text-stone-600 flex items-center gap-2">
             <MdLocationPin /> {Location}
           </p>
           <div className="flex items-center justify-between">
             <button onClick={handleClick} className="rounded text-green-500">
-              Read more
+              Read more...
             </button>
-            <button
-              onClick={handleLike}
-              className={`${
-                currLike ? "bg-green-500" : "bg-red-600"
-              } flex items-center justify-center gap-2`}
-            >
-              <FaRegHeart />
-              {Likes}
-            </button>
-            <button
-              onClick={handleDelete}
-              className={`${hide} bg-red-500 w-10 h-8 flex justify-center items-center text-xl rounded text-white`}
-            >
-              <MdDelete />
-            </button>
-            <button onClick={()=>handleEdit(blog)} className={`${hide} bg-red-500 w-10 h-8 flex justify-center items-center text-xl rounded text-white`}>
-              <MdEdit />
-            </button>
+
+
+            <div className={`${hide} flex text-2xl`}>
+              <button onClick={handleDelete}>
+                <MdDelete className="text-red-600"/>
+              </button>
+              <button onClick={() => handleEdit(blog)}>
+                <MdEdit />
+              </button>
+            </div>
+
           </div>
         </div>
         <BlogContent
