@@ -40,7 +40,7 @@ export const PackageAdder = async (req,res)=>{
           }
           else{
             const query = `INSERT INTO PACKAGES (AgencyID,Description,Price,Duration,Address,Title,Destination) VALUES(?,?,?,?,?,?,?)`
-            [result] = await db.query(query,[userId,description,price,duration,address,packagename,destination]);
+            result = await db.query(query,[userId,description,price,duration,address,packagename,destination]);
           }
 
           const PackageID = result[0].insertId;
@@ -66,4 +66,62 @@ export const PackageAdder = async (req,res)=>{
               message:"Internal Server Error!"
           })
       }
+}
+
+
+export const getPackages = async (req,res)=>{
+  try {
+      const id = req.user.id;
+      const query = `SELECT * FROM PACKAGES WHERE AGENCYID = ?`;
+      const result = await db.query(query,[id]);
+      // console.log(result[0][0]);
+      res.status(200).json({
+        success:true,
+        message:"Fetched all the packages of this agency successfully!",
+        package:result[0]
+      })
+  } catch (error) {
+     console.log(error);
+     res.status(500).json({
+      success:false,
+      message:"Internal Server Error!"
+     })
+  }
+}
+
+export const updateStatus = async (req,res)=>{
+  try {
+    const {PackageID,IsActive} = req.body;
+    const query = `UPDATE PACKAGES SET IsActive = ? WHERE PACKAGEID = ? `;
+    await db.query(query,[IsActive,PackageID]);
+    return res.status(200).json({
+      success:true,
+      message:"Package toggled successfully!"
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:"Internal Server Error !"
+    })
+  }
+}
+
+export const deletePackage = async (req,res)=>{
+  try {
+    console.log("LUND", req.body)
+    const {PackageID} = req.body;
+    const query = `DELETE FROM  PACKAGES WHERE PACKAGEID = ? `;
+    await db.query(query,[PackageID]);
+    return res.status(200).json({
+      success:true,
+      message:"Package deleted successfully!"
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:"Internal Server Error !"
+    })
+  }
 }

@@ -5,9 +5,11 @@ import { togglePackage } from '../services/update';
 import { FaDeleteLeft } from 'react-icons/fa6';
 import { MdDelete } from 'react-icons/md';
 import { deletePackage } from '../services/delete-data';
+import { HiOutlineDotsVertical } from "react-icons/hi";
 
 export const AgencyPackageCard = ({pkg, setRefresh}) => {
-    const [isActive, setIsActive] = useState(pkg.isActive); // State to manage active status
+    const [isActive, setIsActive] = useState(pkg.IsActive); // State to manage active status
+    const [toggleMenu, setToggleMenu] = useState(false)
 
     const toggleActiveStatus = async () => {
         try {
@@ -28,7 +30,7 @@ export const AgencyPackageCard = ({pkg, setRefresh}) => {
 
     const handleDelete = async () => {
         try {
-            const res = await deletePackage(pkg.PackageID)
+            const res = await deletePackage({PackageID : pkg.PackageID})
             if(res.data.success){
                 console.log("Data Deleted")
             }else{
@@ -41,17 +43,18 @@ export const AgencyPackageCard = ({pkg, setRefresh}) => {
     }
 
     return (
-        <li className="agency-package-card bg-white shadow-lg rounded-lg overflow-hidden p-4">
+        <li className="agency-package-card bg-white shadow-lg rounded-lg overflow-hidden p-4 relative">
             <img 
                 src={pkg.ImgURL} 
                 alt="Package Thumbnail" 
                 className="package-image w-full h-48 object-cover rounded-md"
             />
-            <div className="flex justify-between items-center mt-2 gap-2">
-                <h2 className="package-name truncate text-xl font-bold">{pkg.Title}</h2>
-                <div className='flex gap-1'>
-                    <FaEdit className="edit-icon text-teal-600 cursor-pointer hover:text-teal-800 transition-colors duration-200" />
-                    <MdDelete onClick={handleDelete} className="edit-icon text-red-500 cursor-pointer hover:text-red-800 transition-colors duration-200" />
+            <div className="flex justify-between items-center mt-2 gap-2 package-name relative">
+                <h2 className="truncate text-xl font-bold flex">{pkg.Title}</h2>
+                <HiOutlineDotsVertical onClick={()=>setToggleMenu((prev)=>!prev)} className='text-xl'/>
+                <div className={`${toggleMenu ? "" : "hidden"} toggle-btn rounded flex flex-col w-15 bg-white gap-1 top-0 right-5 absolute shadow-xl`}>
+                    <p className='cursor-pointer hover:bg-gray-100'>Edit</p>
+                    <p onClick={handleDelete} className='cursor-pointer hover:bg-gray-100'>Delete</p>
                 </div>
             </div>
             <div className='flex justify-between'>

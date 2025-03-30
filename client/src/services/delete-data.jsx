@@ -12,5 +12,7 @@ export const deleteBlog = (body) => {
 }
 
 export const deletePackage = (body) => {
+    console.log(body)
     const res = api.delete("/delete-package", {data : body})
+    return res
 }
