@@ -74,7 +74,7 @@ export const getPackages = async (req,res)=>{
       const id = req.user.id;
       const query = `SELECT * FROM PACKAGES WHERE AGENCYID = ?`;
       const result = await db.query(query,[id]);
-      console.log(result[0][0]);
+      // console.log(result[0][0]);
       res.status(200).json({
         success:true,
         message:"Fetched all the packages of this agency successfully!",
@@ -86,5 +86,23 @@ export const getPackages = async (req,res)=>{
       success:false,
       message:"Internal Server Error!"
      })
+  }
+}
+
+export const updateStatus = async (req,res)=>{
+  try {
+    const {PackageID,IsActive} = req.body;
+    const query = `UPDATE PACKAGES SET IsActive = ? WHERE PACKAGEID = ? `;
+    await db.query(query,[IsActive,PackageID]);
+    return res.status(200).json({
+      success:true,
+      message:"Package toggled successfully!"
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:"Internal Server Error !"
+    })
   }
 }

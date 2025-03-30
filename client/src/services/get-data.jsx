@@ -23,5 +23,5 @@ export const checkLike = (BlogID) => {
 
 export const getAgencyPackage = () => {
     const res = api.get("/agency-packages")
-    return res.data.packages
+    return res
 }

@@ -3,7 +3,7 @@ import { FaEdit } from 'react-icons/fa'; // Importing the edit icon from react-i
 import '../styles/agency-package.css'; // Import the CSS file for padding and margin
 
 export const AgencyPackageCard = ({pkg}) => {
-    const [isActive, setIsActive] = useState(pkg.isActive); // State to manage active status
+    const [isActive, setIsActive] = useState(pkg.IsActive); // State to manage active status
 
     const toggleActiveStatus = () => {
         setIsActive(!isActive); // Toggle the active status
