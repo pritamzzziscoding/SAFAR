@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
-import { MdCloseFullscreen, MdDelete, MdEdit, MdLocationPin } from "react-icons/md";
+import {
+  MdCloseFullscreen,
+  MdDelete,
+  MdEdit,
+  MdLocationPin,
+} from "react-icons/md";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { deleteBlog } from "../services/delete-data";
 import { checkLike, Like } from "../services/get-data";
 import { MdClose } from "react-icons/md";
-import "../styles/BlogContent.css"
+import "../styles/BlogContent.css";
 
-export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) => {
+export const BlogCard = ({
+  blog,
+  hide,
+  setLike,
+  setEdit,
+  setData,
+  setRefresh,
+}) => {
   const [full, setFull] = useState(false);
   const [currLike, setCurrentLike] = useState(null);
 
@@ -34,7 +46,7 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) 
       } else {
         console.log("not deleted");
       }
-      setRefresh((prev)=>!prev)
+      setRefresh((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
@@ -42,11 +54,11 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) 
 
   const handleLike = async () => {
     try {
-      const res = await Like({BlogID});
-      console.log("Manipulate ",res.data.like)
+      const res = await Like({ BlogID });
+      console.log("Manipulate ", res.data.like);
       if (res.data.success === true) {
         setLike(res.data.like);
-        setCurrentLike(res.data.like)
+        setCurrentLike(res.data.like);
       }
     } catch (error) {
       console.log("Like wala keeda mila backend mei");
@@ -56,7 +68,7 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) 
   const checkCurrentLiked = async () => {
     try {
       const res = await checkLike(BlogID);
-      console.log("Check Like ",res.data.like)
+      console.log("Check Like ", res.data.like);
       if (res.data.success === true) {
         setCurrentLike(res.data.like);
       }
@@ -66,9 +78,9 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) 
   };
 
   const handleEdit = (blog) => {
-    setEdit(blog)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+    setEdit(blog);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   useEffect(() => {
     checkCurrentLiked();
@@ -84,7 +96,11 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) 
         />
         <div className="blog-card-content">
           <div>
-          <button style={{marginTop : "0px"}} onClick={handleLike} className="flex items-center gap-1.5">
+            <button
+              style={{ marginTop: "0px" }}
+              onClick={handleLike}
+              className="flex items-center gap-1.5"
+            >
               {currLike ? <FaHeart className="text-red-600" /> : <FaRegHeart />}
               {Likes} Likes
             </button>
@@ -95,19 +111,17 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) 
           </p>
           <div className="flex items-center justify-between">
             <button onClick={handleClick} className="rounded text-green-500">
-              Read more
+              Read more..
             </button>
-
 
             <div className={`${hide} text-2xl`}>
               <button onClick={handleDelete}>
-                <MdDelete className="text-red-600"/>
+                <MdDelete className="text-red-600" />
               </button>
-              <button onClick={()=>handleEdit(blog)}>
+              <button onClick={() => handleEdit(blog)}>
                 <MdEdit />
               </button>
             </div>
-
           </div>
         </div>
         <BlogContent

@@ -1,12 +1,7 @@
 import { useState } from "react";
 
-export const FilterForm = () => {
-    const [filters, setFilters] = useState({
-        destination: "",
-        rating: "",
-        maximum: "",
-        sort: false,
-    });
+export const FilterForm = ({filters, setFilters, handleSubmit}) => {
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -14,11 +9,6 @@ export const FilterForm = () => {
             ...prevFilters,
             [name]: type === "checkbox" ? checked : value,
         }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(filters); 
     };
 
     return (
