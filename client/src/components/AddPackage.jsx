@@ -18,6 +18,7 @@ export const AddPackage = ({ agency_id, setRefresh, edit, setEdit}) => {
     });
 
     useEffect(()=>{
+        console.log(edit)
         edit && setFormData({
             packagename: edit.Title,
             destination: edit.DESTINATION,
