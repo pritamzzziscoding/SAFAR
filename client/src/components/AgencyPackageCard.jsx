@@ -20,17 +20,22 @@ export const AgencyPackageCard = () => {
                 <h2 className="package-name text-xl font-bold">Beach Adventure</h2>
                 <FaEdit className="edit-icon text-teal-600 cursor-pointer hover:text-teal-800 transition-colors duration-200" />
             </div>
-            <div className="flex items-center mt-2 gap-2">
-                <label className="toggle-label">
-                    <input 
-                        type="checkbox" 
-                        checked={isActive} 
-                        onChange={toggleActiveStatus} 
-                        className="toggle-checkbox" 
-                    />
-                    <span className={`toggle ${isActive ? 'active' : 'inactive'}`}></span>
-                </label>
-                <span className="ml-2 text-md font-medium">{isActive ? 'Active' : 'Inactive'}</span>
+            <div className='flex justify-between'>
+                <div className="flex items-center mt-2 gap-2">
+                    <label className="toggle-label">
+                        <input 
+                            type="checkbox" 
+                            checked={isActive} 
+                            onChange={toggleActiveStatus} 
+                            className="toggle-checkbox" 
+                        />
+                        <span className={`toggle ${isActive ? 'active' : 'inactive'}`}></span>
+                    </label>
+                    <span className="ml-2 text-md font-medium">{isActive ? 'Active' : 'Inactive'}</span>
+                </div>
+                <div className='cursor-pointer'>
+                    <p className='text-green-700'>bookings....</p>
+                </div>
             </div>
         </div>
     );
