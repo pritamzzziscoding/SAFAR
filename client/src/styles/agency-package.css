@@ -1,0 +1,61 @@
+/* Margins and Padding */
+.agency-package-card {
+    margin: 1rem; /* Card margin */
+    padding: 1rem; /* Padding inside the card */
+}
+
+.package-image {
+    margin-bottom: 0.5rem; /* Spacing below the image */
+}
+
+.package-name {
+    margin-bottom: 0.5rem; /* Spacing below package name */
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+}
+
+.toggle-checkbox {
+    display: none; /* Hide the default checkbox */
+}
+
+.toggle {
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 20px;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.toggle.active {
+    background-color: #4caf50; /* Green when active */
+}
+
+.toggle.active::before {
+    transform: translateX(20px);
+}
+
+.toggle::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Edit Icon */
+.edit-icon {
+    font-size: 1.5rem; /* Size of the edit icon */
+}
+
+/* Status Text */
+.status-text {
+    margin-left: 0.5rem; /* Spacing between toggle and status text */
+}

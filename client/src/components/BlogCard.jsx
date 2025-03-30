@@ -76,7 +76,7 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData }) => {
     <li className="flex items center bg-red-500/50">
       <div className="bg-stone-200 blog-card rounded place-self-center flex flex-col justify-between">
         <img
-          className="w-[100%] rounded-t"
+          className="w-[100%] h-40 rounded-t"
           src={ImgURL}
           alt="Add a Valid Image"
         />

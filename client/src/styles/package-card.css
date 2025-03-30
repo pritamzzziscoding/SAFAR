@@ -1,0 +1,42 @@
+.package-card {
+    margin: 1rem; /* Card margin */
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px; /* Rounded corners */
+}
+
+.thumbnail-image {
+    width: 100%;
+    height: 12rem; /* Fixed height for thumbnail */
+    object-fit: cover;
+    transition: transform 0.3s ease; /* Smooth zoom effect */
+}
+
+.thumbnail-image:hover {
+    transform: scale(1.1); /* Zoom effect on hover */
+}
+
+.card-content {
+    padding: 1rem; /* Padding inside the card */
+    color: white; /* Text color for better contrast */
+}
+
+.package-name {
+    margin-bottom: 0.5rem; /* Spacing below package name */
+    font-size: 1.5rem; /* Larger font size */
+    font-weight: bold;
+}
+
+.destination {
+    margin-bottom: 0.5rem; /* Spacing below destination */
+    font-style: italic; /* Italic style for destination */
+}
+
+.price {
+    margin-bottom: 0.5rem; /* Spacing below price */
+    font-size: 1.25rem; /* Slightly larger font size */
+}
+
+.rating {
+    margin-top: 0.5rem; /* Spacing above rating section */
+}
