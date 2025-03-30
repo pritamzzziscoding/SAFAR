@@ -91,7 +91,7 @@ export const AddPackage = ({ agency_id, setRefresh, edit, setEdit}) => {
             is_active: true,
             facilities: []
         });
-        setEdit((prev)=>false)
+        setEdit(null)
         setRefresh((prev)=>!prev)
     };
 
