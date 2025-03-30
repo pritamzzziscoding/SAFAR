@@ -10,6 +10,6 @@ import {
 const router = express.Router();
 // router.get("/:packageID", getPackageDetails);
 router.post("/add-package",authenticateUser,uploadMiddleware,PackageAdder);
-router.get("/getPackages",authenticateUser,getPackages);
+router.get("/agency-packages",authenticateUser,getPackages);
 
 export default router;
