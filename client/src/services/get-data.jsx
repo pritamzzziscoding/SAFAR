@@ -20,3 +20,8 @@ export const checkLike = (BlogID) => {
     const res = api.get(`/currentLike/${BlogID}`)
     return res
 }
+
+export const getAgencyPackage = () => {
+    const res = api.get("/agency-packages")
+    return res.data.packages
+}

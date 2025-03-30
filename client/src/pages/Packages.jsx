@@ -1,18 +1,38 @@
+import { useEffect, useState } from "react"
 import { AddPackage } from "../components/AddPackage"
 import { AgencyPackageCard } from "../components/AgencyPackageCard"
 import { Header } from "../components/Header"
-import { PackageCard } from "../components/PackageCard"
 import "../styles/packages.css"
+import { getAgencyPackage } from "../services/get-data"
 
 export const Packages = () => {
+    const[packages, setPackages] = useState([])
+    
+    const getPackage = async () => {
+        try {
+            const p = await getAgencyPackage()
+            setPackages(p)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+
+    },[])
+
     return <>
         <Header />
         <div className="package-header">
             <p className="h-20 bg-gradient-to-r from-white to-white bg-clip-text text-transparent text-center text-2xl sm:text-3xl md:text-4xl font-bold italic shadow-4xl">Craft your Perfect Travel Package</p>
             <AddPackage />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <AgencyPackageCard />
-        </div>
+        <ul>
+            {
+                packages.map((pkg)=>{
+                    return <AgencyPackageCard key={pkg.PackageID} package={pkg}/>
+                })
+            }
+        </ul>
     </>
 }
