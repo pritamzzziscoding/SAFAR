@@ -20,14 +20,15 @@ export const Home = () => {
     const getPackages = async () => {
         try {
             const res = await getFilteredPackage(filters)
-            console.log(res.data.packages)
-            setPackages(res.data.packages)
+            console.log(res.data.package)
+            setPackages(res.data.package)
         } catch (error) {
             console.log(error)
         }
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault()
         setRefresh(!refresh)
     };
 

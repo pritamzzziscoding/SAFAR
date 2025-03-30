@@ -102,7 +102,7 @@ export const AddPackage = ({ agency_id, setRefresh, edit, setEdit}) => {
                 <div className="flex flex-col gap-5">
                     <div className="flex justify-between package-margin">
                         <label htmlFor="packagename" className="text-md font-medium">Package Name:</label>
-                        <input className="w-[40%] package-padding border border-teal-200 rounded focus:outline-none focus:ring focus:ring-teal-300" type="text" name="packagename" id="packagename" required value={formData.packagename} onChange={handleChange} />
+                        <input max={20} className="w-[40%] package-padding border border-teal-200 rounded focus:outline-none focus:ring focus:ring-teal-300" type="text" name="packagename" id="packagename" required value={formData.packagename} onChange={handleChange} />
                     </div>
 
                     <div className="flex justify-between package-margin">
