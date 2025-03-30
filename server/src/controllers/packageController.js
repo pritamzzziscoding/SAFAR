@@ -1,7 +1,7 @@
 import { getPackageById } from "../models/packageModel.js";
 import { db } from "../config/database.js";
-import jwt from "jsonwebtoken";
-
+import { getImageUrl } from "./uploadController.js";
+import { delete_local_file } from "./uploadController.js";
 export const getPackageDetails = async (req, res) => {
   try {
     const { packageID } = req.params;
@@ -19,58 +19,50 @@ export const getPackageDetails = async (req, res) => {
   }
 };
 
-export const setnewpackage = async (req, res) => {
+
+
+export const PackageAdder = async (req,res)=>{
   try {
-    const { token } = req.cookies;
-    if (!token) {
-      return res
-        .status(200)
-        .json({ success: false, message: "Please login first!" });
-    }
+          const userId  =req.user.id;
+          // const userType = req.user.type;
+          const {packagename,address,description,destination,duration,price,facilities} = req.body;
+          const arrayfacilities  = JSON.parse(facilities);
+          // console.log(caption,location,description);
+          console.log(address,description,destination,duration,price,packagename,facilities);
+          let [result] = [];
+          let imgUrl = "";
+          if(req.file){
+              imgUrl = await getImageUrl(req.file.path);
+              const query = `INSERT INTO PACKAGES (AgencyID,Description,Price,Duration,Address,ImgURL,Title,Destination) VALUES(?,?,?,?,?,?,?,?)`
+              [result] = await db.query(query,[userId,description,price,duration,address,imgUrl,packagename,destination]);
+              delete_local_file(req.file.path);
+          }
+          else{
+            const query = `INSERT INTO PACKAGES (AgencyID,Description,Price,Duration,Address,Title,Destination) VALUES(?,?,?,?,?,?,?)`
+            [result] = await db.query(query,[userId,description,price,duration,address,packagename,destination]);
+          }
 
-    const decoded = jwt.verify(token, "ijinwincwifjqun");
-    const AgencyID = decoded.id;
+          const PackageID = result.insertId;
+          if (!PackageID) {
+              throw new Error("Failed to retreive PackageID.!");
+                }
 
-    const {
-      Description,
-      Price,
-      Duration,
-      Address,
-      IsActive,
-      ImgURL,
-      Facilities,
-    } = req.body;
-
-    const add_package = `INSERT INTO packages(AgencyID, Description, Price, Duration, Address, IsActive, ImgURL) VALUES(?, ?, ?, ?, ?, ?, ?)`;
-    const [result] = await db.query(add_package, [
-      AgencyID,
-      Description,
-      Price,
-      Duration,
-      Address,
-      IsActive,
-      ImgURL,
-    ]);
-    const PackageID = result.insertId;
-    if (!PackageID) {
-      throw new Error("Failed to retreive PackageID.!");
-    }
-
-    if (Array.isArray(Facilities) && Facilities.length > 0) {
-      const detail = `INSERT INTO Details(PackageID, Facilities) VALUES(?, ?)`;
-      for (const facility of Facilities) {
-        await db.query(detail, [PackageID, facility]);
+              if (Array.isArray(arrayfacilities) && arrayfacilities.length > 0) {
+                  const detail = `INSERT INTO Details(PackageID, Facilities) VALUES(?, ?)`;
+                  for (const facility of arrayfacilities) {
+                    await db.query(detail, [PackageID, facility]);
+                      }
+                  }
+          return res.status(200).json({
+              success:true,
+              message:"Package successfully inserted into the database! "
+          })
+  
+      } catch (error) {
+          console.log(error);
+          res.status(500).json({
+              success:false,
+              message:"Internal Server Error!"
+          })
       }
-    }
-
-    res
-      .status(200)
-      .json({ success: true, message: "Package Added Successfully!" });
-  } catch (err) {
-    console.log("Error: ", err);
-    res.status(500).json({
-      success: false,
-      message: "Internal Server Error! ",
-    });
-  }
-};
+}

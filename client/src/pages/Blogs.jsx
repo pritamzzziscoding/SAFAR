@@ -67,7 +67,7 @@ export const Blogs = () => {
     useEffect(()=>{
         getDetails()
         getAndFilterBlogs()
-    },[search, userBlog, like])
+    },[search, userBlog, like, edit])
 
     return <>
         <Header />

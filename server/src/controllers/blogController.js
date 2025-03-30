@@ -4,15 +4,24 @@ import { delete_local_file } from "./uploadController.js";
 // import jwt from "jsonwebtoken";
 // import { authenticateUser } from "../middlewares/authMiddleware.js";
 
+
 export const insertblog = async (req,res)=>{
     try {
         const userId  =req.user.id;
         const userType = req.user.type;
         const {caption,location,description} = req.body;
-        const imgUrl = await getImageUrl(req.file.path);
-        const query = `INSERT INTO BLOGS (UserID,UserType,Title,IMGURL,Location,Description) VALUES(?,?,?,?,?,?)`
-        await db.query(query,[userId,userType,caption,imgUrl,location,description]);
-        delete_local_file(req.file.path);
+        console.log(caption,location,description);
+        let imgUrl = "";
+        if(req.file){
+            imgUrl = await getImageUrl(req.file.path);
+            const query = `INSERT INTO BLOGS (UserID,UserType,Title,IMGURL,Location,Description) VALUES(?,?,?,?,?,?)`
+            await db.query(query,[userId,userType,caption,imgUrl,location,description]);
+            delete_local_file(req.file.path);
+        }
+        else{
+            const query = `INSERT INTO BLOGS (UserID,UserType,Title,Location,Description) VALUES(?,?,?,?,?)`
+            await db.query(query,[userId,userType,caption,location,description]);
+        }
         return res.status(200).json({
             success:true,
             message:"Blog successfully inserted into the database! "
@@ -148,8 +157,8 @@ export const updateBlog = async (req,res)=>{
         const userType = req.user.type;
         if(req.file){
             imgURL = await getImageUrl(req.file.path);
-            const query = `UPDATE BLOGS SET Title=?,IMGURL=?,Location=?,Description=? WHERE USERID=${userId} AND USERTYPE=${userType}`
-            await db.query(query,[caption,imgURL,location,description]);
+            const query = `UPDATE BLOGS SET Title=?,IMGURL=?,Location=?,Description=? WHERE USERID=? AND USERTYPE=?`
+            await db.query(query,[caption,imgURL,location,description,userId,userType]);
             delete_local_file(req.file.path);
         }
         else{

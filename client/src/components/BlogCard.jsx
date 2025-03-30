@@ -64,8 +64,8 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData }) => {
   };
 
   const handleEdit = (blog) => {
-    console.log(blog)
     setEdit(blog)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   useEffect(() => {

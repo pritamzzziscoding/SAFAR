@@ -13,7 +13,7 @@ export const BlogForm = ({data, setData, edit, setEdit}) => {
 
     useEffect(()=>{
         edit && setData({
-            caption: edit.Titile,
+            caption: edit.Title,
             location: edit.Location,
             image: null,
             description: edit.Description
