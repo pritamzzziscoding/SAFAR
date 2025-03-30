@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import { FaEdit } from 'react-icons/fa'; // Importing the edit icon from react-icons
 import '../styles/agency-package.css'; // Import the CSS file for padding and margin
 
-export const AgencyPackageCard = () => {
-    const [isActive, setIsActive] = useState(true); // State to manage active status
+export const AgencyPackageCard = ({pkg}) => {
+    const [isActive, setIsActive] = useState(pkg.isActive); // State to manage active status
 
     const toggleActiveStatus = () => {
         setIsActive(!isActive); // Toggle the active status
     };
 
     return (
-        <div className="agency-package-card bg-white shadow-lg rounded-lg overflow-hidden p-4">
+        <li className="agency-package-card bg-white shadow-lg rounded-lg overflow-hidden p-4">
             <img 
-                src="https://images.pexels.com/photos/1486577/pexels-photo-1486577.jpeg?auto=compress&cs=tinysrgb&w=600" 
+                src={pkg.ImgURL} 
                 alt="Package Thumbnail" 
                 className="package-image w-full h-48 object-cover rounded-md"
             />
             <div className="flex justify-between items-center mt-2">
-                <h2 className="package-name text-xl font-bold">Beach Adventure</h2>
+                <h2 className="package-name text-xl font-bold">{pkg.Title}</h2>
                 <FaEdit className="edit-icon text-teal-600 cursor-pointer hover:text-teal-800 transition-colors duration-200" />
             </div>
             <div className='flex justify-between'>
@@ -37,6 +37,6 @@ export const AgencyPackageCard = () => {
                     <p className='text-green-700'>bookings....</p>
                 </div>
             </div>
-        </div>
+        </li>
     );
 };
