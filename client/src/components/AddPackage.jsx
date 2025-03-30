@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addPackage } from "../services/postData";
 import ReactQuill from "react-quill"
 // import "react-quill/dist/quill.snow"
 import "../styles/add-package.css"; // Import the CSS file for padding and margin
+import { updatePackage } from "../services/update";
 
-export const AddPackage = ({ agency_id, setRefresh}) => {
+export const AddPackage = ({ agency_id, setRefresh, edit, setEdit}) => {
     const [formData, setFormData] = useState({
         packagename: "",
         destination: "",
@@ -13,10 +14,21 @@ export const AddPackage = ({ agency_id, setRefresh}) => {
         address: "",
         image: null,
         description: "",
-        agency_id: agency_id,
-        is_active: true,
         facilities: []
     });
+
+    useEffect(()=>{
+        edit && setFormData({
+            packagename: edit.Title,
+            destination: edit.DESTINATION,
+            price: edit.Price,
+            duration: edit.Duration,
+            address: edit.ADDRESS,
+            image: null,
+            description: edit.Description,
+            facilities: edit.facilities
+        })
+    },[edit])
 
     const handleChange = (event) => {
         const { name } = event.target;
@@ -40,8 +52,7 @@ export const AddPackage = ({ agency_id, setRefresh}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        console.log(formData.facilities);
+
         const fd = new FormData();
         fd.append("packagename", formData.packagename);
         fd.append("destination", formData.destination);
@@ -52,30 +63,35 @@ export const AddPackage = ({ agency_id, setRefresh}) => {
         fd.append("facilities", JSON.stringify(formData.facilities));
         fd.append("image", formData.image);
         
-        const val = JSON.parse("[\"aasdfg\"]")
-        console.log(val)
-        console.log(Object.fromEntries(fd))
-
         try {
-            const res = await addPackage(fd);
-            if (res.data.success === true) {
-                console.log("Data saved in backend");
-                setFormData({
-                    packagename: "",
-                    destination: "",
-                    price: 1000,
-                    duration: 1,
-                    address: "",
-                    image: null,
-                    description: "",
-                    agency_id: agency_id,
-                    is_active: true,
-                    facilities: []
-                });
+            if(edit){
+                fd.append("PackageID", edit.PackageID)
+                const res = await updatePackage(fd)
+                if(res.data.success === true){
+                    console.log("Data Edited")
+                }
+            }else{
+                const res = await addPackage(fd);
+                if (res.data.success === true) {
+                    console.log("Data saved in backend");
+                }
             }
         } catch (error) {
-            console.log("Error saving data to backend");
+            console.log("Data update ya save kartw wqat backend mei keeda mila");
         }
+        setFormData({
+            packagename: "",
+            destination: "",
+            price: 1000,
+            duration: 1,
+            address: "",
+            image: null,
+            description: "",
+            agency_id: agency_id,
+            is_active: true,
+            facilities: []
+        });
+        setEdit(null)
         setRefresh((prev)=>!prev)
     };
 
@@ -151,7 +167,7 @@ export const AddPackage = ({ agency_id, setRefresh}) => {
             </div>
 
             <button type={`submit`} className={`bg-green-600 text-white font-medium p-2 rounded mt-4 hover:bg-green-700 transition-colors duration-200`}>
-                Add Package
+                {edit ? "Edit Package" : "Add Packages"}
             </button>
         </form>
     );
