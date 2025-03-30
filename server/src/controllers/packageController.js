@@ -28,13 +28,14 @@ export const PackageAdder = async (req,res)=>{
           const {packagename,address,description,destination,duration,price,facilities} = req.body;
           const arrayfacilities  = JSON.parse(facilities);
           // console.log(caption,location,description);
-          console.log(address,description,destination,duration,price,packagename,facilities);
+          console.log(address,description,destination,duration,price,packagename,arrayfacilities);
           let [result] = [];
           let imgUrl = "";
           if(req.file){
               imgUrl = await getImageUrl(req.file.path);
               const query = `INSERT INTO PACKAGES (AgencyID,Description,Price,Duration,Address,ImgURL,Title,Destination) VALUES(?,?,?,?,?,?,?,?)`
-              [result] = await db.query(query,[userId,description,price,duration,address,imgUrl,packagename,destination]);
+              result = await db.query(query,[userId,description,price,duration,address,imgUrl,packagename,destination]);
+              console.log(result[0].insertId)
               delete_local_file(req.file.path);
           }
           else{
@@ -42,7 +43,7 @@ export const PackageAdder = async (req,res)=>{
             [result] = await db.query(query,[userId,description,price,duration,address,packagename,destination]);
           }
 
-          const PackageID = result.insertId;
+          const PackageID = result[0].insertId;
           if (!PackageID) {
               throw new Error("Failed to retreive PackageID.!");
                 }

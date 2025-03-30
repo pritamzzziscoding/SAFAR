@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 app.use(userRoutes);
 app.use(uploadRoutes);
 app.use(blogRoutes);
-app.use("/package", packageRoutes);
+app.use(packageRoutes);
 app.use("/review", reviewRoutes);
 app.use("/book", bookingRoutes);
 export default app;

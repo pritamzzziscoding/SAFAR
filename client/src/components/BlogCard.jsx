@@ -5,7 +5,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { deleteBlog } from "../services/delete-data";
 import { checkLike, Like } from "../services/get-data";
 
-export const BlogCard = ({ blog, hide, setLike, setEdit, setData }) => {
+export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) => {
   const [full, setFull] = useState(false);
   const [currLike, setCurrentLike] = useState(null);
 
@@ -33,6 +33,7 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData }) => {
       } else {
         console.log("not deleted");
       }
+      setRefresh((prev)=>!prev)
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +77,7 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData }) => {
     <li className="flex items center bg-red-500/50">
       <div className="bg-stone-200 blog-card rounded place-self-center flex flex-col justify-between">
         <img
-          className="w-[100%] h-40 rounded-t"
+          className="w-[100%] rounded-t"
           src={ImgURL}
           alt="Add a Valid Image"
         />
