@@ -28,7 +28,7 @@ export const Packages = () => {
         <Header />
         <div className="package-header">
             <p className="h-20 bg-gradient-to-r from-white to-white bg-clip-text text-transparent text-center text-2xl sm:text-3xl md:text-4xl font-bold italic shadow-4xl">Craft your Perfect Travel Package</p>
-            <AddPackage setRefresh={setRefresh} edit={edit} setEdit={edit}/>
+            <AddPackage setRefresh={setRefresh} edit={edit} setEdit={setEdit}/>
         </div>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {
