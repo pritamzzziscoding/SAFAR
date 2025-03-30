@@ -11,14 +11,14 @@ export const Packages = () => {
     const getPackage = async () => {
         try {
             const p = await getAgencyPackage()
-            setPackages(p)
+            setPackages(p.data.package)
         } catch (error) {
             console.log(error)
         }
     }
 
     useEffect(()=>{
-
+        getPackage()
     },[])
 
     return <>
