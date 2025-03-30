@@ -29,3 +29,8 @@ export const updateBlog = (body) => {
     const res = api.put("/update-blog", body)
     return res
 }
+
+export const togglePackage = (body) => {
+    const res = api.put("/toggle-package", body)
+    return res
+}

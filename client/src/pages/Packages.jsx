@@ -11,7 +11,6 @@ export const Packages = () => {
     const getPackage = async () => {
         try {
             const p = await getAgencyPackage()
-            console.log(p.data.package)
             setPackages(p.data.package)
         } catch (error) {
             console.log(error)

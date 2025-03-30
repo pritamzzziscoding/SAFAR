@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
 import { FaEdit } from 'react-icons/fa'; // Importing the edit icon from react-icons
 import '../styles/agency-package.css'; // Import the CSS file for padding and margin
+import { togglePackage } from '../services/update';
 
 export const AgencyPackageCard = ({pkg}) => {
     const [isActive, setIsActive] = useState(pkg.IsActive); // State to manage active status
 
-    const toggleActiveStatus = () => {
+    const toggleActiveStatus = async () => {
+        try {
+            const res = await togglePackage({
+                PackageID : pkg.PackageID,
+                IsActive : +(!isActive)
+            })
+            if(res.data.success === true){
+                console.log("Successfully Toggled")
+            }else{
+                return;
+            }
+        } catch (error) {
+            console.log(error)
+        }
         setIsActive(!isActive); // Toggle the active status
     };
 
