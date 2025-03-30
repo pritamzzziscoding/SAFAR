@@ -180,3 +180,57 @@ res.status(500).json({
 })
 }
 }
+
+
+export const filterData = async (req,res)=>{
+   try {
+       let {destination, rating,maximum,sort} = req.body;
+       console.log(req.body)
+       destination = destination===""? "":destination;
+       const minRating = rating===""? 0:rating;
+       const maxPrice = maximum===""? 50000000:maximum;
+       const filterquery = `
+       SELECT P.PACKAGEID, P.AgencyID, P.Description, P.Price, P.Duration, 
+              P.Address, P.ImgURL, P.Title, P.Destination, 
+              COALESCE(Q.TotalRating, 0) AS TotalRating
+       FROM PACKAGES P 
+       LEFT JOIN 
+           (SELECT PACKAGEID, AVG(RATING) AS TotalRating 
+            FROM REVIEWS 
+            GROUP BY PACKAGEID) Q 
+       ON P.PACKAGEID = Q.PACKAGEID
+       WHERE P.DESTINATION LIKE ? 
+       AND (Q.TotalRating IS NULL OR Q.TotalRating >= ?) 
+       AND P.PRICE <= ?
+       ${sort ? "ORDER BY P.PRICE ASC, Q.TotalRating DESC" : ""}
+   `;
+   
+   const result = await db.query(filterquery, [`${destination}%`, minRating, maxPrice]);
+   for(let i = 0;i<result[0].length;i++){
+   
+    const facilities = await getfacilities(result[0][i].PACKAGEID);
+    result[0][i]["facilities"] = facilities;
+    }
+    res.status(200).json({
+      success:true,
+      message:"Fetched all the packages fulfilling these conditions successfully!",
+      package:result[0]
+    })
+
+
+   } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        success:false,
+        message:"INternal Server Error!"
+      })
+   }
+}
+
+
+
+const getRating = async (PackageID)=>{
+      const query = `Select  AVG(Rating) AS TOTALRATING FROM REVIEWS GROUP BY PACKAGEID HAVING PACKAGEID = ?`;
+      const result  = await db.query(query,[PackageID]);
+      return result[0].TOTALRATING;
+}

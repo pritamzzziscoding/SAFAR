@@ -9,6 +9,7 @@ import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 const app = express();
+app.use(express.urlencoded({extended:true}))
 app.use(express.json());
 app.use(
   cors({
