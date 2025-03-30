@@ -43,7 +43,7 @@ export const AgencyPackageCard = ({pkg, setRefresh}) => {
     }
 
     return (
-        <li className="agency-package-card bg-white shadow-lg rounded-lg overflow-hidden p-4 relative">
+        <li className="agency-package-card bg-white shadow-lg rounded-lg overflow-hidden p-4 relative transform transition-transform duration-300 hover:scale-105">
             <img 
                 src={pkg.ImgURL} 
                 alt="Package Thumbnail" 

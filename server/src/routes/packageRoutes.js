@@ -6,6 +6,7 @@ import {
   PackageAdder,
   deletePackage,
   getPackages,
+  updatePackage,
   updateStatus
 } from "../controllers/packageController.js";
 
@@ -15,5 +16,6 @@ router.post("/add-package",authenticateUser,uploadMiddleware,PackageAdder);
 router.get("/agency-packages",authenticateUser,getPackages);
 router.put("/toggle-package",updateStatus);
 router.delete("/delete-package",deletePackage);
+router.put("/update-package",uploadMiddleware,updatePackage);
 
 export default router;
