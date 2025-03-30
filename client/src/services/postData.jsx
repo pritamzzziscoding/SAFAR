@@ -24,3 +24,8 @@ export const addPackage = (formData) => {
     })
     return res
 }
+
+export const getFilteredPackage = (filterData) => {
+    const res = api.post("/filter-package", filterData)
+    return res
+}

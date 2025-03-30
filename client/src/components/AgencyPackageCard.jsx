@@ -56,9 +56,9 @@ export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
                 className="package-image w-full h-48 object-cover rounded-md"
             />
             <div className="flex justify-between items-center mt-2 gap-2 package-name relative">
-            <h2 className="truncate text-xl font-bold w-[90%] overflow-hidden whitespace-nowrap text-ellipsis">
-  {pkg.Title}
-</h2>
+                <h2 className="truncate text-xl font-bold w-[90%] overflow-hidden whitespace-nowrap text-ellipsis">
+                    {pkg.Title}
+                </h2>
                 <HiOutlineDotsVertical onClick={()=>setToggleMenu((prev)=>!prev)} className='text-xl'/>
                 <div className={`${toggleMenu ? "" : "hidden"} toggle-btn rounded flex flex-col w-15 bg-white gap-1 top-0 right-5 absolute shadow-xl`}>
                     <p onClick={handleEdit} className='cursor-pointer hover:bg-gray-100'>Edit</p>

@@ -13,7 +13,7 @@
 }
 
 .thumbnail-image:hover {
-    transform: scale(1.1); /* Zoom effect on hover */
+    transform: scale(1.0); /* Zoom effect on hover */
 }
 
 .card-content {
