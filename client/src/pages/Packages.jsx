@@ -31,7 +31,7 @@ export const Packages = () => {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {
                 packages.map((pkg)=>{
-                    return <AgencyPackageCard key={pkg.PackageID} package={pkg} setRefresh={setRefresh}/>
+                    return <AgencyPackageCard key={pkg.PackageID} pkg={pkg} setRefresh={setRefresh}/>
                 })
             }
         </ul>

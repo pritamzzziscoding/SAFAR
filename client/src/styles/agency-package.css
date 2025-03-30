@@ -59,3 +59,7 @@
 .status-text {
     margin-left: 0.5rem; /* Spacing between toggle and status text */
 }
+
+.toggle-btn{
+    padding: 2px;
+}

@@ -40,7 +40,7 @@ export const PackageAdder = async (req,res)=>{
           }
           else{
             const query = `INSERT INTO PACKAGES (AgencyID,Description,Price,Duration,Address,Title,Destination) VALUES(?,?,?,?,?,?,?)`
-            [result] = await db.query(query,[userId,description,price,duration,address,packagename,destination]);
+            result = await db.query(query,[userId,description,price,duration,address,packagename,destination]);
           }
 
           const PackageID = result[0].insertId;
@@ -109,6 +109,7 @@ export const updateStatus = async (req,res)=>{
 
 export const deletePackage = async (req,res)=>{
   try {
+    console.log("LUND", req.body)
     const {PackageID} = req.body;
     const query = `DELETE FROM  PACKAGES WHERE PACKAGEID = ? `;
     await db.query(query,[PackageID]);
