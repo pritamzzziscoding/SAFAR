@@ -67,3 +67,24 @@ export const PackageAdder = async (req,res)=>{
           })
       }
 }
+
+
+export const getPackages = async (req,res)=>{
+  try {
+      const id = req.user.id;
+      const query = `SELECT * FROM PACKAGES WHERE AGENCYID = ?`;
+      const result = await db.query(query,[id]);
+      console.log(result[0][0]);
+      res.status(200).json({
+        success:true,
+        message:"Fetched all the packages of this agency successfully!",
+        package:result[0]
+      })
+  } catch (error) {
+     console.log(error);
+     res.status(500).json({
+      success:false,
+      message:"Internal Server Error!"
+     })
+  }
+}
