@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { FaEdit } from 'react-icons/fa'; // Importing the edit icon from react-icons
 import '../styles/agency-package.css'; // Import the CSS file for padding and margin
 import { togglePackage } from '../services/update';
+import { FaDeleteLeft } from 'react-icons/fa6';
+import { MdDelete } from 'react-icons/md';
+import { deletePackage } from '../services/delete-data';
 
-export const AgencyPackageCard = ({pkg}) => {
-    const [isActive, setIsActive] = useState(pkg.IsActive); // State to manage active status
+export const AgencyPackageCard = ({pkg, setRefresh}) => {
+    const [isActive, setIsActive] = useState(pkg.isActive); // State to manage active status
 
     const toggleActiveStatus = async () => {
         try {
@@ -23,6 +26,20 @@ export const AgencyPackageCard = ({pkg}) => {
         setIsActive(!isActive); // Toggle the active status
     };
 
+    const handleDelete = async () => {
+        try {
+            const res = await deletePackage(pkg.PackageID)
+            if(res.data.success){
+                console.log("Data Deleted")
+            }else{
+                console.log("Data not deleted")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        setRefresh((prev) => !prev)
+    }
+
     return (
         <li className="agency-package-card bg-white shadow-lg rounded-lg overflow-hidden p-4">
             <img 
@@ -30,9 +47,12 @@ export const AgencyPackageCard = ({pkg}) => {
                 alt="Package Thumbnail" 
                 className="package-image w-full h-48 object-cover rounded-md"
             />
-            <div className="flex justify-between items-center">
-                <h2 className="package-name truncate text-xl w-[80%] font-bold">{pkg.Title}</h2>
-                <FaEdit className="w-[20%] edit-icon text-teal-600 cursor-pointer hover:text-teal-800 transition-colors duration-200" />
+            <div className="flex justify-between items-center mt-2 gap-2">
+                <h2 className="package-name truncate text-xl font-bold">{pkg.Title}</h2>
+                <div className='flex gap-1'>
+                    <FaEdit className="edit-icon text-teal-600 cursor-pointer hover:text-teal-800 transition-colors duration-200" />
+                    <MdDelete onClick={handleDelete} className="edit-icon text-red-500 cursor-pointer hover:text-red-800 transition-colors duration-200" />
+                </div>
             </div>
             <div className='flex justify-between'>
                 <div className="flex items-center mt-2 gap-2">

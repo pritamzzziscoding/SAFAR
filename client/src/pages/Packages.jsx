@@ -7,6 +7,7 @@ import { getAgencyPackage } from "../services/get-data"
 
 export const Packages = () => {
     const[packages, setPackages] = useState([])
+    const[refresh, setRefresh] = useState(false)
     
     const getPackage = async () => {
         try {
@@ -19,18 +20,18 @@ export const Packages = () => {
 
     useEffect(()=>{
         getPackage()
-    },[])
+    },[refresh])
 
     return <>
         <Header />
         <div className="package-header">
             <p className="h-20 bg-gradient-to-r from-white to-white bg-clip-text text-transparent text-center text-2xl sm:text-3xl md:text-4xl font-bold italic shadow-4xl">Craft your Perfect Travel Package</p>
-            <AddPackage />
+            <AddPackage setRefresh={setRefresh}/>
         </div>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {
                 packages.map((pkg)=>{
-                    return <AgencyPackageCard key={pkg.PackageID} pkg={pkg}/>
+                    return <AgencyPackageCard key={pkg.PackageID} package={pkg} setRefresh={setRefresh}/>
                 })
             }
         </ul>

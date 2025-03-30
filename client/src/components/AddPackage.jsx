@@ -4,7 +4,7 @@ import ReactQuill from "react-quill"
 // import "react-quill/dist/quill.snow"
 import "../styles/add-package.css"; // Import the CSS file for padding and margin
 
-export const AddPackage = ({ agency_id }) => {
+export const AddPackage = ({ agency_id, setRefresh}) => {
     const [formData, setFormData] = useState({
         packagename: "",
         destination: "",
@@ -76,6 +76,7 @@ export const AddPackage = ({ agency_id }) => {
         } catch (error) {
             console.log("Error saving data to backend");
         }
+        setRefresh((prev)=>!prev)
     };
 
     return (
