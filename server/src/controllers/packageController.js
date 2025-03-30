@@ -74,6 +74,11 @@ export const getPackages = async (req,res)=>{
       const id = req.user.id;
       const query = `SELECT * FROM PACKAGES WHERE AGENCYID = ?`;
       const result = await db.query(query,[id]);
+      // console.log(result[0]);
+      for(let i = 0;i<result[0].length;i++){
+      const facilities = await getfacilities(result[0][i].PackageID);
+      result[0][i]["facilities"] = facilities;
+      }
       // console.log(result[0][0]);
       res.status(200).json({
         success:true,
@@ -88,6 +93,7 @@ export const getPackages = async (req,res)=>{
      })
   }
 }
+
 
 export const updateStatus = async (req,res)=>{
   try {
@@ -122,6 +128,56 @@ export const deletePackage = async (req,res)=>{
     res.status(500).json({
       success:false,
       message:"Internal Server Error !"
+    })
+  }
+}
+
+const getfacilities = async (packageID)=>{
+      const fetch_query = `SELECT Facilities FROM DETAILS where PACKAGEID = ?`;
+      const result = await db.query(fetch_query,[packageID]);
+      // console.log(result[0]);
+      const final_result = result[0].map((obj)=>{
+          return obj.Facilities
+      })
+      // console.log(final_result);
+      return final_result;
+}
+
+export const updatePackage = async (req,res)=>{
+  try {
+    const {PackageID,packagename,destination,price,duration,address,description,facilities} = req.body;
+        let imgURL = "";
+        // const userId = req.user.id;
+        // const userType = req.user.type;
+        const arrayfacilities  = JSON.parse(facilities);
+        if(req.file){
+            imgURL = await getImageUrl(req.file.path);
+            const query = `UPDATE PACKAGES SET Description=?,Price=?,Duration=?,Address=?,ImgURL=?,Title=?,Destination=? WHERE PackageID=?`
+            await db.query(query,[description,price,duration,address,imgURL,packagename,destination,PackageID]);
+            delete_local_file(req.file.path);
+        }
+        else{
+          const query = `UPDATE PACKAGES SET Description=?,Price=?,Duration=?,Address=?,Title=?,Destination=? WHERE PackageID=?`
+          await db.query(query,[description,price,duration,address,packagename,destination,PackageID]);
+        }
+        const delete_query = `DELETE FROM DETAILS WHERE PACKAGEID=?`;
+        await db.query(delete_query,[PackageID]);
+        if(arrayfacilities.length>0){
+          const detail = `INSERT INTO Details(PackageID, Facilities) VALUES(?, ?)`;
+          for (let i = 0;i<arrayfacilities.length;i++) {
+            await db.query(detail, [PackageID, arrayfacilities[i]]);
+              }
+        }
+        return res.status(200).json({
+            success:true,
+            message:"Package updated successfully!"
+        })
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:"Internal Server Error!"
     })
   }
 }
