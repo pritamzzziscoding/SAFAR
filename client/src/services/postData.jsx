@@ -14,3 +14,13 @@ export const addBlog = (formData) => {
     })
     return res
 }
+
+
+export const addPackage = (formData) => {
+    const res = api.post("/add-package", formData, {
+        headers : {
+            "Content-Type" : "multipart/form-data"
+        }
+    })
+    return res
+}

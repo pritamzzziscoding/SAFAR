@@ -1,0 +1,11 @@
+.package-form {
+    margin-top: 1rem; /* Add margin to the top */
+}
+
+.package-margin {
+    margin-bottom: 1rem; /* Uniform bottom spacing */
+}
+
+.package-padding {
+    padding: 0.5rem; /* Uniform padding for input fields */
+}
