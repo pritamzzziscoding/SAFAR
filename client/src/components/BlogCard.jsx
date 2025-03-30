@@ -88,7 +88,7 @@ export const BlogCard = ({ blog, hide, setLike, setEdit, setData , setRefresh}) 
           </p>
           <div className="flex items-center justify-between">
             <button onClick={handleClick} className="rounded text-green-500">
-              Read more
+              Read more..
             </button>
             <button
               onClick={handleLike}
