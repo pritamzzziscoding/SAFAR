@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { addPackage } from "../services/postData";
-import ReactQuill from "react-quill"
+//import ReactQuill from "react-quill"
 // import "react-quill/dist/quill.snow"
 import "../styles/add-package.css"; // Import the CSS file for padding and margin
 import { updatePackage } from "../services/update";

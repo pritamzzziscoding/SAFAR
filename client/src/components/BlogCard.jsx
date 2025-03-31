@@ -59,6 +59,7 @@ export const BlogCard = ({
       if (res.data.success === true) {
         setLike(res.data.like);
         setCurrentLike(res.data.like);
+        setRefresh((prev)=>!prev)
       }
     } catch (error) {
       console.log("Like wala keeda mila backend mei");

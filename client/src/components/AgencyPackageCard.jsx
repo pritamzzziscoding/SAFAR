@@ -61,8 +61,8 @@ export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
                 </h2>
                 <HiOutlineDotsVertical onClick={()=>setToggleMenu((prev)=>!prev)} className='text-xl'/>
                 <div className={`${toggleMenu ? "" : "hidden"} toggle-btn rounded flex flex-col w-15 bg-white gap-1 top-0 right-5 absolute shadow-xl`}>
-                    <p onClick={handleEdit} className='cursor-pointer hover:bg-gray-100'>Edit</p>
-                    <p onClick={handleDelete} className='cursor-pointer hover:bg-gray-100'>Delete</p>
+                    <p onClick={handleEdit} className='cursor-pointer hover:bg-gray-100 text-sm font-normal'>Edit</p>
+                    <p onClick={handleDelete} className='cursor-pointer hover:bg-gray-100 text-sm font-normal'>Delete</p>
                 </div>
             </div>
             <div className='flex justify-between'>
