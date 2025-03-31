@@ -1,29 +1,13 @@
 import React from "react";
 import "../styles/PackageDetails.css";
 import { useLoaderData } from "react-router-dom";
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { BookingForm } from "../components/BookingForm";
 
 export const PackageDetails = () => {
-  // Sample Data (Replace with API data)
-  const p = useLoaderData()
-  const packageData = p.data.packageData
-//   const packageData = {
-//     packageName: "Exotic Bali Tour",
-//     image:
-//       "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1200&q=80",
-//     destination: "Bali, Indonesia",
-//     address: "Sunset Road No. 101, Bali, Indonesia",
-//     price: "$999 per head",
-//     facilities: [
-//       "5-Star Hotel Stay",
-//       "Free Breakfast & Dinner",
-//       "Sightseeing Tours",
-//       "Airport Pickup & Drop",
-//       "Adventure Activities",
-//     ],
-//     description:
-//       "Experience the beauty of Bali with our exclusive package. Explore the stunning beaches, vibrant culture, and breathtaking landscapes with a well-curated itinerary.",
-//     contact: "+62 812-3456-7890",
-//   };
+  const p = useLoaderData();
+  const packageData = p.data.packageData;
 
   return (
     <div className="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6">
@@ -40,12 +24,17 @@ export const PackageDetails = () => {
           <h1 className="text-3xl font-bold text-teal-600">
             {packageData.Title}
           </h1>
-          <p className="text-lg text-gray-600 mt-2">{packageData.DESTINATION}</p>
-          <p className="text-gray-500 mt-2">{packageData.ADDRESS}</p>
+          <p className="text-lg text-gray-600 mt-2">📍{packageData.DESTINATION}</p>
+        
 
-          {/* Price */}
-          <div className="text-2xl font-semibold text-green-500 mt-4">
-            ₹{packageData.Price}-{packageData.Duration} {packageData.Duration === 1 ? "Day" : "Days"}
+          {/* Price & Duration Section */}
+          <div className="price-duration-container sm:flex items-center">
+            <div className="price">
+              <span className="label">Price:</span> ₹{packageData.Price} per person
+            </div>
+            <div className="duration">
+              <span className="label">Duration:</span> {packageData.Duration} {packageData.Duration === 1 ? "Day" : "Days"}
+            </div>
           </div>
 
           {/* Facilities */}
@@ -65,8 +54,8 @@ export const PackageDetails = () => {
 
           {/* Contact Info */}
           <div className="mt-4 text-lg">
-            <span className="font-semibold text-teal-600">Contact:</span>{" "}
-            {packageData.phoneno}
+            <p className="flex gap-2 items-center"><span className="font-semibold text-teal-600 flex items-center"><FaPhoneAlt /></span> {packageData.phoneno}</p>
+            <p className="flex gap-2 items-center"><span className="font-semibold text-teal-600"><FaLocationDot /></span>{packageData.ADDRESS}</p>
           </div>
 
           {/* Book Now Button */}
@@ -74,6 +63,7 @@ export const PackageDetails = () => {
             <button className="book-now-button shadow-2xl">Book Now</button>
           </div>
         </div>
+        <BookingForm />
       </div>
     </div>
   );
