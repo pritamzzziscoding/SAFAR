@@ -1,37 +1,66 @@
 /* Custom Spacing */
 .p-6 {
-    padding: 24px;
-  }
-  
-  .mt-2 {
-    margin-top: 8px;
-  }
-  
-  .mt-4 {
-    margin-top: 16px;
-  }
-  
-  .mt-6 {
-    margin-top: 24px;
-  }
-  
-  .text-lg {
-    font-size: 1.125rem;
-  }
-  
-  /* Button Styles */
-  .book-now-button {
-    background: linear-gradient(to right, #2baa1a, #06b6d4);
-    color: white;
-    padding: 12px 24px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .book-now-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
-  }
+  padding: 24px;
+}
+
+.mt-2 {
+  margin-top: 8px;
+}
+
+.mt-4 {
+  margin-top: 16px;
+}
+
+.mt-6 {
+  margin-top: 24px;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+/* Price & Duration Section */
+.price-duration-container {
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f4f6;
+  padding: 16px;
+  margin-top: 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.price, .duration {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.price{
+  margin-bottom: 0px;
+}
+
+.label {
+  font-weight: bold;
+  color: #06b6d4;
+  margin-right: 6px;
+}
+
+/* Button Styles */
+.book-now-button {
+  background: linear-gradient(to right, #2baa1a, #06b6d4);
+  color: white;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-now-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+}
+
   
