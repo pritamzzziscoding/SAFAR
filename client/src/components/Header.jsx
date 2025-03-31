@@ -58,7 +58,7 @@ export const Header = () => {
     },[image])
 
     return (
-        <header className="header bg-gradient-to-r from-stone-200 via-stone-50 to-stone-200 home-header w-full flex justify-between items-center h-15 shadow-2xl fixed top-0 left-0">
+        <header className="z-20 header bg-gradient-to-r from-stone-200 via-stone-50 to-stone-200 home-header w-full flex justify-between items-center h-15 shadow-2xl fixed top-0 left-0">
             <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-teal-700 via-teal-600 to-teal-700 bg-clip-text text-transparent italic">SAFAR</span>
             <span className="flex items-center gap-5">
                 {/* Hamburger Icon */}

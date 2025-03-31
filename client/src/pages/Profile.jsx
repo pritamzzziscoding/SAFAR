@@ -43,7 +43,7 @@ export const Profile = ({status, image, setImage}) => {
         getDetails()
     },[image, formData])
 
-    return <div className={`${status} z-10 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>
+    return <div className={`${status} z-50 profile-page absolute top-17 right-2 bg-gradient-to-tr from-stone-50 to-stone-200/80 shadow-2xl rounded-2xl`}>
         <div className="grid gap-3">
             <div className="flex gap-5 items-center">
                 <div className="w-20 h-20 bg-amber-400 rounded"><img className="w-full h-full" src={detail.image_url} alt="" /></div>
@@ -62,7 +62,6 @@ export const Profile = ({status, image, setImage}) => {
         <div className="flex justify-center">
             <button onClick={handleClick} className="logout-btn flex gap-2 items-center bg-red-500 rounded text-white font-medium">Logout <RiLogoutBoxLine /></button>
         </div>
-        
     </div>
 };
 
