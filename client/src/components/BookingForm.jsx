@@ -49,7 +49,7 @@ export const BookingForm = ({ touristId, packageId , hide}) => {
     };
 
     return (
-        <div className="booking-container">
+        <div className={`booking-container ${hide}`}>
             <h2 className="form-title">Bookings For...</h2>
             <form className="booking-form" onSubmit={handleSubmit}>
                 <label htmlFor="start_date" className="form-label">Start Date</label>
