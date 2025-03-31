@@ -5,6 +5,7 @@ import { delete_local_file } from "./uploadController.js";
 export const getPackageDetails = async (req, res) => {
   try {
     const { packageID } = req.params;
+    console.log("PackageID:",packageID);
     const packageData = await getPackageById(packageID);
 
     if (!packageData) {
@@ -12,7 +13,14 @@ export const getPackageDetails = async (req, res) => {
         .status(200)
         .json({ success: false, message: "Package not found" });
     }
-    res.json(packageData);
+    // console.log(packageData);
+    const facilities = await getfacilities(packageID);
+    packageData["facilities"] = facilities; 
+    console.log(packageData);
+    res.status(200).json({
+      success:true,
+      message:"Package Details fetched successfully!",
+      packageData});
   } catch (error) {
     console.error("Error fetching package:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
