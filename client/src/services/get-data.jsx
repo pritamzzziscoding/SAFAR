@@ -25,3 +25,9 @@ export const getAgencyPackage = () => {
     const res = api.get("/agency-packages")
     return res
 }
+
+export const getIndividualPackageDetails = ({params}) => {
+    console.log(params)
+    const res = api.get(`/get-package/${params.packageID}`)
+    return res
+}
