@@ -1,97 +1,124 @@
-import { useEffect, useState } from "react"
-import { BlogForm } from "../components/BlogForm"
-import { Header } from "../components/Header"
-import "../styles/blogs.css"
-import { BlogCard } from "../components/BlogCard"
-import { getBlog } from "../services/get-data"
-import { details } from "../services/auth-apis"
+import { useEffect, useState } from "react";
+import { BlogForm } from "../components/BlogForm";
+import { Header } from "../components/Header";
+import { BlogCard } from "../components/BlogCard";
+import { getBlog } from "../services/get-data";
+import { details } from "../services/auth-apis";
+import "../styles/blogs.css";
 
-
-function check(string1, string2) {
-    if (string1.length > string2.length) return false;
-    return string2.startsWith(string1);
-}
+// Function to check if a string starts with another
+const isMatchingSearch = (searchQuery, location) => {
+    return location.toLowerCase().startsWith(searchQuery.toLowerCase());
+};
 
 export const Blogs = () => {
-    const[search, setSearch] = useState("")
-    const[userBlog, setUserBlog] = useState(false)
-    const[blogs, setBlogs] = useState([])
-    const[detail, setDetail] = useState({})
-    const [like, setLike] = useState(null)
-    const[edit, setEdit] = useState(false)
-    const[refresh, setRefresh] = useState(false)
-    const [data, setData] = useState({
+    const [search, setSearch] = useState("");
+    const [userBlog, setUserBlog] = useState(false);
+    const [blogs, setBlogs] = useState([]);
+    const [userDetails, setUserDetails] = useState({});
+    const [like, setLike] = useState(null);
+    const [edit, setEdit] = useState(false);
+    const [refresh, setRefresh] = useState(false);
+    
+    const [blogData, setBlogData] = useState({
         caption: "",
         location: "",
         image: null,
         description: ""
     });
 
-    const getAndFilterBlogs = async () =>{
+    // Fetch blogs from backend and apply filters
+    const fetchBlogs = async () => {
         try {
-            const res = await getBlog()
-            if(res.data.success === true){
-                console.log("blogs fetched")
-                const b = res.data.blogs
-                const filterBlog = b.filter((blog)=>{
-                    if(check(search, blog.Location)){
-                        return true
-                    }
-                    return false
-                })
-                if(userBlog){
-                    const newFilterArray = filterBlog.filter((blog)=>{
-                        if(detail.id === blog.UserID) return true
-                        return false
-                    })
-                    setBlogs(newFilterArray)
-                }else{
-                    setBlogs(filterBlog)
+            const res = await getBlog();
+            if (res.data.success) {
+                console.log("✅ Blogs fetched successfully");
+                let filteredBlogs = res.data.blogs.filter(blog => isMatchingSearch(search, blog.Location));
+
+                if (userBlog) {
+                    filteredBlogs = filteredBlogs.filter(blog => blog.UserID === userDetails.id);
                 }
+
+                setBlogs(filteredBlogs);
             }
         } catch (error) {
-            console.log("Backend mei keeda")
+            console.error("❌ Error fetching blogs from backend");
         }
-    }
+    };
 
-    const getDetails = async () => {
+    // Fetch user details
+    const fetchUserDetails = async () => {
         try {
-            const res = await details()
-            if(res.data.success === true){
-                setDetail(res.data.result)
+            const res = await details();
+            if (res.data.success) {
+                setUserDetails(res.data.result);
             }
         } catch (error) {
-            console.log("Backend Error hai!!!")
+            console.error("❌ Error fetching user details");
         }
-    }
+    };
 
-    useEffect(()=>{
-        getDetails()
-        getAndFilterBlogs()
-    },[search, userBlog, like, edit, refresh])
+    useEffect(() => {
+        fetchUserDetails();
+        fetchBlogs();
+    }, [search, userBlog, like, edit, refresh]);
 
-    return <>
-        <Header />
-        <div className="blog-container">
-        </div>
-        <div className="blog-main z-20 rounded-xl">
-            <p className="h-20 blog-heading z-10 text-center bg-gradient-to-r from-green-50 to-teal-50 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold italic">Share with the World your Experience!</p>
-            <BlogForm data={data} setData={setData} edit={edit} setEdit={setEdit} setRefresh={setRefresh}/>
-            <div className="bg-teal-50/80 grid sm:grid-cols-2 gap-5 blog-filter rounded-2xl">
-                <input className="place-self-center blog-content h-8 w-[100%] rounded-xl" type="text" name="search" id="search" placeholder="Search Location" value={search} onChange={(e)=>setSearch(e.target.value)}/>
-                <div className="flex items-center gap-10 place-self-center">
-                    <p className="text-stone-900 font-medium">My Blogs: </p>
-                    <input className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500" type="checkbox" value={userBlog} onChange={()=>setUserBlog(prev => !prev)}/>
+    return (
+        <>
+            <Header />
+            <div className="blog-container">
+                <div className="blog-main">
+                    <h1 className="blog-heading">Share Your Experience with the World!</h1>
+
+                    {/* Blog Form */}
+                    <BlogForm 
+                        data={blogData} 
+                        setData={setBlogData} 
+                        edit={edit} 
+                        setEdit={setEdit} 
+                        setRefresh={setRefresh} 
+                    />
+
+                    {/* Search & Filter Section */}
+                    <div className="blog-filter gap-6">
+                        <input 
+                            type="text" 
+                            className="search-input w-[30%]"
+                            placeholder="Search by Location..." 
+                            value={search} 
+                            onChange={(e) => setSearch(e.target.value)} 
+                        />
+                        <label className="filter-option">
+                            <input 
+                                type="checkbox" 
+                                checked={userBlog} 
+                                onChange={() => setUserBlog(prev => !prev)} 
+                            />
+                            Show My Blogs
+                        </label>
+                    </div>
+
+                    {/* Blog Cards Section */}
+                    <ul className="blog-list">
+                        {blogs.length > 0 ? (
+                            blogs.map((blog) => (
+                                <BlogCard 
+                                    key={blog.BlogID} 
+                                    blog={blog} 
+                                    setRefresh={setRefresh} 
+                                    hide={blog.UserID === userDetails.id && blog.UserType === userDetails.type ? "not-hidden" : "hidden"} 
+                                    like={like} 
+                                    setLike={setLike} 
+                                    setEdit={setEdit} 
+                                    setData={setBlogData} 
+                                />
+                            ))
+                        ) : (
+                            <p className="text-center no-blogs-message">No blogs found. Try searching for another location.</p>
+                        )}
+                    </ul>
                 </div>
             </div>
-            <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                {
-                    blogs.map((blog) => {
-                        return <BlogCard setRefresh={setRefresh} key={blog.BlogID} blog={blog} hide = {blog.UserID === detail.id && blog.UserType === detail.type ? "not-hidden" : "hidden"} like={like} setLike={setLike} setEdit={setEdit} setData={setData}/>
-                    })
-                }
-            </ul>
-        </div>
-    </>
-}
-
+        </>
+    );
+};
