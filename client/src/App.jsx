@@ -35,7 +35,7 @@ export const App = () => {
     {
       path: "/home/:packageID",
       element: <PackageDetails />,
-      loader: getIndividualPackageDetails
+      loader: getIndividualPackageDetails //this is what done
     }
     ,
     {
