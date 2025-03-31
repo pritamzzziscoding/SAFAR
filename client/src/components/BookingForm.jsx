@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "../styles/booking-form.css"; // Importing external CSS
 import { MdDelete } from "react-icons/md";
+import { payment } from "../services/payment-api";
 
-export const BookingForm = ({ touristId, packageId , hide}) => {
+export const BookingForm = ({packageId , hide}) => {
     const [data, setData] = useState({
-        touristId,
         packageId,
         start_date: "",
-        members: [""],
+        members: [],
         status: "pending"
     });
 
@@ -38,6 +38,8 @@ export const BookingForm = ({ touristId, packageId , hide}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(data);
+        
         try {
             const res = await payment(data)
             if(res.data.success === true){
