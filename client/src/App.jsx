@@ -12,6 +12,7 @@ import { Blogs } from "./pages/Blogs";
 import { Packages } from "./pages/Packages";
 import { Profile } from "./pages/Profile";
 import { PackageDetails } from "./pages/PackageDetails";
+import { getIndividualPackageDetails } from "./services/get-data";
 
 export const App = () => {
   const router = createBrowserRouter([
@@ -32,8 +33,9 @@ export const App = () => {
       element: <Home />,
     },
     {
-      path: "/home/pkg",
+      path: "/home/:packageID",
       element: <PackageDetails />,
+      loader: getIndividualPackageDetails
     }
     ,
     {
