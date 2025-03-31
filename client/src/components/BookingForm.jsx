@@ -1,11 +1,13 @@
 import { useState } from "react";
+import "../styles/booking-form.css"; // Importing external CSS
+import { MdDelete } from "react-icons/md";
 
-export const BookingForm = ({ touristId, packageId }) => {
+export const BookingForm = ({ touristId, packageId , hide}) => {
     const [data, setData] = useState({
         touristId,
         packageId,
         start_date: "",
-        members: [],
+        members: [""],
         status: "pending"
     });
 
@@ -34,58 +36,69 @@ export const BookingForm = ({ touristId, packageId }) => {
         setData({ ...data, members: updatedMembers });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(data);
+        try {
+            const res = await payment(data)
+            if(res.data.success === true){
+                console.log(res.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     return (
-        <form className="flex flex-col gap-3 p-4 bg-gray-100 rounded-md" onSubmit={handleSubmit}>
-            <label htmlFor="start_date">Start Date</label>
-            <input
-                className="p-2 border rounded"
-                type="date"
-                name="start_date"
-                id="start_date"
-                required
-                min={today} // ✅ Restrict past dates
-                value={data.start_date}
-                onChange={handleChange}
-            />
+        <div className="booking-container">
+            <h2 className="form-title">Bookings For...</h2>
+            <form className="booking-form" onSubmit={handleSubmit}>
+                <label htmlFor="start_date" className="form-label">Start Date</label>
+                <input
+                    className="form-input"
+                    type="date"
+                    name="start_date"
+                    id="start_date"
+                    required
+                    min={today}
+                    value={data.start_date}
+                    onChange={handleChange}
+                />
 
-            {/* Dynamic Members */}
-            <label>Members</label>
-            {data.members.map((member, index) => (
-                <div key={index} className="flex flex-wrap items-center gap-2 p-2 border rounded">
-                    <input
-                        className="p-2 border rounded w-full sm:w-1/3"
-                        type="text"
-                        placeholder="Name"
-                        value={member.name}
-                        onChange={(e) => handleMemberChange(index, "name", e.target.value)}
-                    />
-                    <input
-                        className="p-2 border rounded w-full sm:w-1/3"
-                        type="number"
-                        placeholder="Age"
-                        value={member.age}
-                        onChange={(e) => handleMemberChange(index, "age", e.target.value)}
-                    />
-                    <select
-                        className="p-2 border rounded w-full sm:w-1/3"
-                        value={member.gender}
-                        onChange={(e) => handleMemberChange(index, "gender", e.target.value)}
-                    >
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <button type="button" className="bg-red-500 text-white p-2 rounded" onClick={() => removeMember(index)}>✖</button>
-                </div>
-            ))}
+                {/* Dynamic Members */}
+                <label className="form-label">Add Travelers</label>
+                {data.members.map((member, index) => (
+                    <div key={index} className="member-card">
+                        <input
+                            className="form-input"
+                            type="text"
+                            placeholder="Full Name"
+                            value={member.name}
+                            onChange={(e) => handleMemberChange(index, "name", e.target.value)}
+                        />
+                        <input
+                            className="form-input"
+                            type="number"
+                            placeholder="Age"
+                            value={member.age}
+                            min={0}
+                            onChange={(e) => handleMemberChange(index, "age", e.target.value)}
+                        />
+                        <select
+                            className="form-select"
+                            value={member.gender}
+                            onChange={(e) => handleMemberChange(index, "gender", e.target.value)}
+                        >
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <button type="button" onClick={() => removeMember(index)}><MdDelete className="text-red-600 text-2xl"/></button>
+                    </div>
+                ))}
 
-            <button type="button" className="bg-blue-500 text-white p-2 rounded" onClick={addMember}>Add Member</button>
-            <button type="submit" className="bg-green-500 text-white p-2 rounded">Submit</button>
-        </form>
+                <button type="button" className="add-member" onClick={addMember}>+ Add Traveler</button>
+                <button type="submit" className="submit-btn">{"Create Bill >"}</button>
+            </form>
+        </div>
     );
 };

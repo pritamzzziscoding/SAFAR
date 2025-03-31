@@ -1,0 +1,107 @@
+/* Container */
+.booking-container {
+    max-width: 90%;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin: auto;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Title */
+.form-title {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #075e54; /* Classy Dark Teal */
+    margin-bottom: 18px;
+}
+
+/* Labels */
+.form-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    display: block;
+    margin-top: 12px;
+    text-align: left;
+}
+
+/* Inputs */
+.form-input, .form-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    outline: none;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.75);
+    transition: 0.3s ease;
+}
+
+.form-input:focus, .form-select:focus {
+    border: 1px solid #075e54;
+    box-shadow: 0 0 8px rgba(7, 94, 84, 0.3);
+}
+
+/* Member Cards */
+.member-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 14px;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add & Remove Buttons */
+.add-member, .remove-member {
+    background: #075e54;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-member{
+    margin-top: 10px;
+}
+
+.remove-member {
+    background: #b22222;
+}
+
+.add-member:hover {
+    background: #054c44;
+}
+
+.remove-member:hover {
+    background: #921a1a;
+}
+
+/* Submit Button */
+.submit-btn {
+    background: linear-gradient(135deg, #075e54, #054c44);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(7, 94, 84, 0.3);
+}

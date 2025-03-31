@@ -3,27 +3,8 @@ import "../styles/PackageDetails.css";
 import { useLoaderData } from "react-router-dom";
 
 export const PackageDetails = () => {
-  // Sample Data (Replace with API data)
   const p = useLoaderData()
   const packageData = p.data.packageData
-//   const packageData = {
-//     packageName: "Exotic Bali Tour",
-//     image:
-//       "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1200&q=80",
-//     destination: "Bali, Indonesia",
-//     address: "Sunset Road No. 101, Bali, Indonesia",
-//     price: "$999 per head",
-//     facilities: [
-//       "5-Star Hotel Stay",
-//       "Free Breakfast & Dinner",
-//       "Sightseeing Tours",
-//       "Airport Pickup & Drop",
-//       "Adventure Activities",
-//     ],
-//     description:
-//       "Experience the beauty of Bali with our exclusive package. Explore the stunning beaches, vibrant culture, and breathtaking landscapes with a well-curated itinerary.",
-//     contact: "+62 812-3456-7890",
-//   };
 
   return (
     <div className="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6">
@@ -73,6 +54,7 @@ export const PackageDetails = () => {
           <div className="mt-6 flex justify-center">
             <button className="book-now-button shadow-2xl">Book Now</button>
           </div>
+
         </div>
       </div>
     </div>
