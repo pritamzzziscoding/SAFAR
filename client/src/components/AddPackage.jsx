@@ -86,7 +86,6 @@ export const AddPackage = ({ setRefresh, edit, setEdit, hide }) => {
             address: "",
             image: null,
             description: "",
-            agency_id: agency_id,
             is_active: true,
             facilities: []
         });
@@ -137,17 +136,18 @@ export const AddPackage = ({ setRefresh, edit, setEdit, hide }) => {
                 <textarea name="description" required value={formData.description} onChange={handleChange}></textarea>
             </div>
                 </div>
-                <div>
-                <div className="facilities-container flex flex-col items-start">
-                <label>Providing Facilities</label>
-                {formData.facilities.map((facility, index) => (
-                    <div key={index} className="facility-item w-[100%]">
-                        <input type="text" value={facility} onChange={(e) => handleFacilityChange(index, e.target.value)} placeholder="Enter facility" required />
-                        <button type="button" className="remove-btn" onClick={() => removeFacility(index)}>✖</button>
+                    <div>
+                    <div className="facilities-container flex flex-col items-start">
+                    <label>Providing Facilities</label>
+                    <button type="button" className="add-btn" onClick={addFacility}>+ Add Facility</button>
+                    {formData.facilities.map((facility, index) => (
+                        <div key={index} className="facility-item w-[100%]">
+                            <input type="text" value={facility} onChange={(e) => handleFacilityChange(index, e.target.value)} placeholder="Enter facility" required />
+                            <button type="button" className="remove-btn" onClick={() => removeFacility(index)}>✖</button>
+                        </div>
+                    ))}
+                    
                     </div>
-                ))}
-                <button type="button" className="add-btn" onClick={addFacility}>+ Add Facility</button>
-            </div>
                 </div>
             </div>
             

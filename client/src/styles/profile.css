@@ -52,3 +52,7 @@ button{
 .close-profile{
     display: none;
 }
+
+.input-field{
+    width: 55%;
+}

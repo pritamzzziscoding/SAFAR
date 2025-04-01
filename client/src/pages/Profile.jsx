@@ -98,7 +98,7 @@ const ProfileForm = ({formData, setFormData}) => {
       <div className="form-container flex justify-between items-center">
         <label htmlFor="firstname">First Name: </label>
         <input
-          className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          className="w-[50%] input-field border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
           type="text"
           name="firstname"
           id="firstname"
@@ -111,7 +111,7 @@ const ProfileForm = ({formData, setFormData}) => {
       <div className="form-container flex justify-between items-center">
         <label htmlFor="lastname">Last Name: </label>
         <input
-          className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          className="w-[50%] input-field border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
           type="text"
           name="lastname"
           id="lastname"
@@ -169,7 +169,7 @@ const ChangePasswordForm = () => {
       <div className="form-container flex justify-between items-center">
         <label htmlFor="current">Current Password: </label>
         <input
-          className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          className="w-[44%] input-field border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
           type="password"
           name="current"
           id="current"
@@ -183,7 +183,7 @@ const ChangePasswordForm = () => {
       <div className="form-container flex justify-between items-center">
         <label htmlFor="new">New Password: </label>
         <input
-          className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          className="w-[44%] input-field border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
           type="password"
           name="new"
           id="new"
@@ -197,7 +197,7 @@ const ChangePasswordForm = () => {
       <div className="form-container flex justify-between items-center">
         <label htmlFor="confirm">Confirm Password: </label>
         <input
-          className="w-[44%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
+          className="w-[44%] input-field border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700"
           type="password"
           name="confirm"
           id="confirm"
@@ -248,7 +248,7 @@ const ImageUrlForm = ({image, setImage}) => {
     return <form className="" onSubmit={handleSubmit}>
         <div className="flex justify-between items-center">
             <label htmlFor="image_url">Upload DP:</label>
-            <input className="w-[50%] border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="file" name="image" id="image" onChange={handleChange} required autoComplete="off"/>
+            <input className="w-[50%] input-field border-2 border-teal-700 bg-teal-50/50 rounded-2xl text-teal-700" type="file" name="image" id="image" onChange={handleChange} required autoComplete="off"/>
         </div>
         <button className="image-btn bg-green-600/70 text-white rounded-lg font-medium" type="submit">Change</button>
     </form>

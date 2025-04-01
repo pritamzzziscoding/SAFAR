@@ -22,6 +22,10 @@
     margin-top: 20px;
 }
 
+.package-adder{
+    padding: 30px;
+}
+
 .package-delete-btn{
     padding: 5px;
     margin-top: 5px;
