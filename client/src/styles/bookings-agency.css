@@ -1,0 +1,7 @@
+/* 📌 Margin & Padding Adjustments */
+.p-6 { padding: 1.5rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-5 { margin-top: 1.25rem; }
+.space-y-1 > * + * { margin-top: 0.25rem; }

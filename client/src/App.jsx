@@ -13,6 +13,8 @@ import { Packages } from "./pages/Packages";
 import { Profile } from "./pages/Profile";
 import { PackageDetails } from "./pages/PackageDetails";
 import { getIndividualPackageDetails } from "./services/get-data";
+import { ViewDetails } from "./components/ViewDetails";
+import { CustomerBookings } from "./pages/CustomerBookings";
 
 export const App = () => {
   const router = createBrowserRouter([
@@ -43,6 +45,11 @@ export const App = () => {
       element: <Bookings />,
     },
     {
+      path: "/bookings/det",
+      element: <ViewDetails />
+    }
+    ,
+    {
       path: "/blogs",
       element: <Blogs />,
     },
@@ -50,6 +57,11 @@ export const App = () => {
       path: "/packages",
       element: <Packages />,
     },
+    {
+      path: "/packages/book",
+      element: <CustomerBookings />
+    }
+    ,
     {
       path: "/add-package",
       element: <AddPackage agency_id="1234" />,
@@ -60,7 +72,7 @@ export const App = () => {
     },
     {
       path: "/rating",
-      element: <RatingForm bookingId="12" />,
+      element: <RatingForm />,
     },
   ]);
   return <RouterProvider router={router} />;
