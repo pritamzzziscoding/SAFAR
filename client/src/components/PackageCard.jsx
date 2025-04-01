@@ -9,7 +9,7 @@ export const PackageCard = ({ pkg }) => {
         <li className="package-card shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105">
             <img src={pkg.ImgURL} alt="Package Thumbnail" className="thumbnail-image w-full h-48 object-cover" />
             <div className="card-content bg-white p-5 rounded-b-xl">
-                <h2 className="package-name text-lg font-bold text-gray-800">{pkg.Title}</h2>
+                <h2 className="package-name text-lg font-bold text-gray-800 truncate" >{pkg.Title}</h2>
                 <p className="destination text-teal-600 font-medium">{pkg.Destination}</p>
                 <p className="price text-green-600 font-semibold">₹{Math.round(pkg.Price)} per person</p>
                 
