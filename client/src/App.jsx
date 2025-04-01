@@ -13,6 +13,7 @@ import { Packages } from "./pages/Packages";
 import { Profile } from "./pages/Profile";
 import { PackageDetails } from "./pages/PackageDetails";
 import { getIndividualPackageDetails } from "./services/get-data";
+import { ViewDetails } from "./components/ViewDetails";
 
 export const App = () => {
   const router = createBrowserRouter([
@@ -42,6 +43,11 @@ export const App = () => {
       path: "/bookings",
       element: <Bookings />,
     },
+    {
+      path: "/bookings/det",
+      element: <ViewDetails />
+    }
+    ,
     {
       path: "/blogs",
       element: <Blogs />,

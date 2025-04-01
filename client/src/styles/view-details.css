@@ -1,0 +1,131 @@
+/* 📌 Page Background - Soft White with Green Accents */
+.view-details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: #f8fdfb; /* Light greenish-white */
+    padding: 20px;
+}
+
+/* 📌 Modern Card with Soft Shadows */
+.details-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0px 10px 25px rgba(0, 128, 128, 0.2);
+    width: 90%;
+    max-width: 500px;
+    border: 2px solid #3cb371;
+}
+
+/* 📌 Headings & Text */
+.package-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #008080; /* Teal */
+}
+
+/* 📌 Booking ID */
+.booking-id {
+    font-size: 1rem;
+    background: #e0f7fa; /* Light teal */
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #00695c;
+}
+
+/* 📌 Other Details */
+.destination, .duration, .total-amount, .start-date, .booking-date {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #004d40; /* Dark teal */
+    font-weight: 500;
+}
+
+/* 📌 Members Section */
+.member-heading {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 20px;
+    color: #2e7d32; /* Dark green */
+}
+
+.member-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    background: #e8f5e9; /* Light green */
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+/* 📌 Button Group */
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* 📌 View Package Button */
+.view-package-btn {
+    background: #008080; /* Teal */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s ease-in-out;
+}
+
+.view-package-btn:hover {
+    transform: scale(1.05);
+    background: #00695c; /* Darker Teal */
+}
+
+/* 📌 Cancel Booking Button */
+.cancel-btn {
+    background: #d32f2f; /* Red */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s ease-in-out;
+}
+
+.cancel-btn:hover {
+    transform: scale(1.05);
+    background: #b71c1c; /* Darker Red */
+}
+
+/* 📌 Responsive Design */
+@media (max-width: 480px) {
+    .details-card {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+
+    .view-package-btn, .cancel-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
