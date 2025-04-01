@@ -1,42 +1,76 @@
 .package-card {
-    margin: 1rem; /* Card margin */
-    position: relative;
+    width: 100%;
+    max-width: 320px;
+    background: linear-gradient(to right, #0f766e, #15803d);
+    border-radius: 12px;
     overflow: hidden;
-    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.package-card:hover {
+    transform: scale(1.05);
 }
 
 .thumbnail-image {
     width: 100%;
-    height: 12rem; /* Fixed height for thumbnail */
+    height: 200px;
     object-fit: cover;
-    transition: transform 0.3s ease; /* Smooth zoom effect */
-}
-
-.thumbnail-image:hover {
-    transform: scale(1.0); /* Zoom effect on hover */
 }
 
 .card-content {
-    padding: 1rem; /* Padding inside the card */
-    color: white; /* Text color for better contrast */
+    padding: 1rem;
+    color: #f0fdfa;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .package-name {
-    margin-bottom: 0.5rem; /* Spacing below package name */
-    font-size: 1.5rem; /* Larger font size */
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .destination {
-    margin-bottom: 0.5rem; /* Spacing below destination */
-    font-style: italic; /* Italic style for destination */
+    font-size: 1rem;
+    font-weight: 500;
+    color: #d1fae5;
 }
 
 .price {
-    margin-bottom: 0.5rem; /* Spacing below price */
-    font-size: 1.25rem; /* Slightly larger font size */
+    font-size: 1rem;
+    font-weight: 600;
+    color: #bbf7d0;
 }
 
 .rating {
-    margin-top: 0.5rem; /* Spacing above rating section */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+}
+
+.rating-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rating-text {
+    font-size: 0.9rem;
+    color: #f0fdfa;
+}
+
+.explore-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #f0fdfa;
+    transition: color 0.2s ease-in-out;
+}
+
+.explore-link:hover {
+    color: #d1fae5;
 }
