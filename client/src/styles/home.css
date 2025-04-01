@@ -9,3 +9,9 @@
     align-items: center;
     padding-top: 150px;
 }
+
+.package-display{
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

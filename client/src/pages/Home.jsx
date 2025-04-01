@@ -42,7 +42,7 @@ export const Home = () => {
             <p className="bg-gradient-to-r from-teal-300 via-teal-50 to-teal-300 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semibold italic">Discover your perfect destination</p>
             <FilterForm filters={filters} setFilters={setFilters} handleSubmit={handleSubmit}/>
         </div>
-        <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-[90%] gap-5 package-display">
             {packages.map((pkg)=>{
                 return <PackageCard pkg={pkg}/>
             })}
