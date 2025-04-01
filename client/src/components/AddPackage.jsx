@@ -86,7 +86,6 @@ export const AddPackage = ({ setRefresh, edit, setEdit, hide }) => {
             address: "",
             image: null,
             description: "",
-            agency_id: agency_id,
             is_active: true,
             facilities: []
         });
