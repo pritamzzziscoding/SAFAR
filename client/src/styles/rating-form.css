@@ -1,0 +1,6 @@
+/* 🎯 More Space for a Cleaner Look */
+.p-10 { padding: 2.5rem; } /* Increased padding */
+.mt-5 { margin-top: 1.25rem; } /* More space above elements */
+.space-y-10 > * + * { margin-top: 2.5rem; } /* More spacing between sections */
+.gap-5 { gap: 1.5rem; } /* More gap between rating & label */
+.gap-4 { gap: 1rem; } /* More gap between feedback label & textarea */
