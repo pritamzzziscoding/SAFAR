@@ -1,4 +1,4 @@
-.package-card {
+/* .package-card {
     width: 100%;
     max-width: 320px;
     background: linear-gradient(to right, #0f766e, #15803d);
@@ -73,4 +73,15 @@
 
 .explore-link:hover {
     color: #d1fae5;
+} */
+
+.package-card {
+    margin: 15px;
+    padding: 10px;
+}
+
+
+.card-content{
+    padding-left: 10px;
+    padding-right: 10px;
 }
