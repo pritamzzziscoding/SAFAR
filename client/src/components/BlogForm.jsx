@@ -65,7 +65,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
 
             <div className="form-grid grid sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <div className="form-group">
-                    <label htmlFor="caption">Blog Caption:</label>
+                    <label htmlFor="caption">Caption</label>
                     <input 
                         type="text" 
                         name="caption" 
@@ -79,7 +79,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="location">Location:</label>
+                    <label htmlFor="location">Location</label>
                     <input 
                         type="text" 
                         name="location" 
@@ -93,7 +93,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="image">Upload Image:</label>
+                    <label htmlFor="image">Upload Image</label>
                     <input 
                         type="file" 
                         name="image" 
@@ -104,7 +104,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
             </div>
 
             <div className="form-group full-width">
-                <label htmlFor="description">Description:</label>
+                <label htmlFor="description">Description</label>
                 <textarea 
                     name="description" 
                     id="description" 
