@@ -19,7 +19,7 @@
     width: 90%;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     padding: 20px; /* 📌 Handles padding */
-    margin: 15px auto; /* 📌 Handles margin */
+    margin: 5px auto; /* 📌 Handles margin */
 }
 
 /* 📌 Hover Effect */

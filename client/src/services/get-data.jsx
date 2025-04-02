@@ -31,3 +31,14 @@ export const getIndividualPackageDetails = ({params}) => {
     const res = api.get(`/get-package/${params.packageID}`)
     return res
 }
+
+export const getTouristBookings = () => {
+    const res = api.get("/tourist-bookings")
+    return res
+}
+
+//getting bookings detail for tourist to see their details
+export const getBookingDetails = (id) => {
+    const res = api.get(`/tourist-bookings/${id}`)
+    return res
+}

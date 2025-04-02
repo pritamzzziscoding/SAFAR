@@ -1,11 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "../styles/BookingCard.css"; // External CSS for padding & margin
 
-export const BookingCard = ({ booking = {
-    PackageName: "Majestic Mountains Retreat",
-    Destination: "Himalayas, India",
-    PACKAGEID: "123"
-} }) => {
+export const BookingCard = ({id, title, destination}) => {
     return (
         <div className="booking-card-container">
             <div className="booking-card">

@@ -14,8 +14,6 @@ export const BookingForm = ({ packageId , price ,hide}) => {
         amount: 0
     });
 
-    const today = new Date().toISOString().split("T")[0];
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setData({ ...data, [name]: value });
@@ -84,6 +82,11 @@ export const BookingForm = ({ packageId , price ,hide}) => {
         }
     };
 
+    const today = new Date().toISOString().split("T")[0];
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 4);
+    const maxDateString = maxDate.toISOString().split("T")[0];
+
     return (
         <div className={`booking-container ${hide}`}>
             <h2 className="form-title">Bookings For...</h2>
@@ -96,6 +99,7 @@ export const BookingForm = ({ packageId , price ,hide}) => {
                     id="start_date"
                     required
                     min={today}
+                    max={maxDateString}
                     value={data.start_date}
                     onChange={handleChange}
                 />

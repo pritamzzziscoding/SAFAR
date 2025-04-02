@@ -1,48 +1,50 @@
 import "../styles/view-details.css"; // Import updated CSS
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getBookingDetails } from "../services/get-data";
 
 export const ViewDetails = () => {
     const navigate = useNavigate();
+    const {id} = useParams()
+    const[booking, setBooking] = useState({})
 
-    // Sample Booking Data
-    const [booking] = useState({
-        BookingID: "BK-202503281234",
-        PackageName: "Luxury Maldives Escape",
-        Destination: "Maldives",
-        Duration: "5 Days / 4 Nights",
-        TotalAmount: 120000,
-        StartDate: "2025-06-20",
-        BookingDate: "2025-03-28",
-        Members: [
-            { name: "Rohit Khanna", age: 30, gender: "Male" },
-            { name: "Aisha Verma", age: 27, gender: "Female" },
-        ],
-    });
+    const getDetail = async () => {
+        try {
+            const res = await getBookingDetails(id)
+            setBooking(res.data.booking)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(()=>{
+        getDetail()
+    },[])
 
     return (
         <div className="view-details-container">
             <div className="details-card">
-                <h1 className="package-title">{booking.PackageName}</h1>
+                <h1 className="package-title">{booking.packagename}</h1>
                 <p className="booking-id"><strong>Booking ID:</strong> {booking.BookingID}</p>
-                <p className="destination"><strong>Location:</strong> {booking.Destination}</p>
-                <p className="duration"><strong>Duration:</strong> {booking.Duration}</p>
-                <p className="total-amount"><strong>Total Amount Paid:</strong> ₹{booking.TotalAmount}</p>
-                <p className="start-date"><strong>Start Date:</strong> {booking.StartDate}</p>
-                <p className="booking-date"><strong>Booking Date:</strong> {booking.BookingDate}</p>
+                <p className="destination"><strong>Location:</strong> {booking.Destination || "NOT got"}</p>
+                <p className="duration"><strong>Duration:</strong> {booking.duration} D / {booking.duration - 1} N</p>
+                <p className="total-amount"><strong>Total Amount Paid:</strong> ₹{booking.NetPayableAmount}</p>
+                <p className="start-date"><strong>Start Date:</strong> {booking.FromDate.split("T")[0]}</p>
+                <p className="booking-date"><strong>Booking Date:</strong> {booking.BookingDate.split("T")[0]}</p>
 
                 <h2 className="member-heading">Members Details</h2>
                 <ul className="member-list">
                     {booking.Members.map((member, index) => (
                         <li key={index} className="member-item">
-                            <span className="member-name">{member.name}</span> 
+                            <span className="member-name">{member.MemberName}</span> 
                             <span className="member-age">({member.age} yrs, {member.gender})</span>
                         </li>
                     ))}
                 </ul>
 
                 <div className="btn-group">
-                    <button className="view-package-btn">View Package</button>
+                    <NavLink to={`/home/${booking.PackageID}`}></NavLink>
+                    <button className="view-package-btn" >View Package</button>
                     <button className="cancel-btn" onClick={() => navigate("/")}>Cancel Booking</button>
                 </div>
             </div>
