@@ -47,7 +47,7 @@ export const App = () => {
       element: <Bookings />,
     },
     {
-      path: "/bookings/det",
+      path: "/bookings/:id",
       element: <ViewDetails />
     }
     ,

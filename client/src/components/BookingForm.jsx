@@ -13,8 +13,6 @@ export const BookingForm = ({ packageId , price ,hide}) => {
         amount: 0
     });
 
-    const today = new Date().toISOString().split("T")[0];
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setData({ ...data, [name]: value });
@@ -40,10 +38,14 @@ export const BookingForm = ({ packageId , price ,hide}) => {
 
     const handlePayment = async (event) => {
         event.preventDefault();
-        const length = data.members.length 
+        const length = data.members.length
+        if(length === 0){
+            alert("For Bookings there must be atleast 1 Traveller")
+            return
+        }
         setData({...data, amount : length * price})
         try {
-            const {data:{key}} = axios.get("http://localhost:8080/getKey")
+            const {data:{key}} = await axios.get("http://localhost:8080/getKey")
             const { data:{result} } = await details()
 
             const res = await payment(data)
@@ -81,6 +83,11 @@ export const BookingForm = ({ packageId , price ,hide}) => {
         }
     };
 
+    const today = new Date().toISOString().split("T")[0];
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 4);
+    const maxDateString = maxDate.toISOString().split("T")[0];
+
     return (
         <div className={`booking-container ${hide}`}>
             <h2 className="form-title">Bookings For...</h2>
@@ -93,6 +100,7 @@ export const BookingForm = ({ packageId , price ,hide}) => {
                     id="start_date"
                     required
                     min={today}
+                    max={maxDateString}
                     value={data.start_date}
                     onChange={handleChange}
                 />
