@@ -49,7 +49,7 @@ export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
 
 
     return (
-        <li className="agency-package-card bg-white shadow-lg rounded-lg p-4 relative overflow-hidden transform transition-transform duration-300 hover:scale-105">
+        <li className="agency-package-card bg-white shadow-lg rounded-lg p-4 relative overflow-hidden transform transition-transform duration-300 hover:scale-101">
             <img 
                 src={pkg.ImgURL} 
                 alt="Package Thumbnail" 
@@ -65,9 +65,9 @@ export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
                     <p onClick={handleDelete} className='cursor-pointer hover:bg-gray-100 text-sm font-normal'>Delete</p>
                 </div>
             </div>
-            <div className='flex justify-between'>
+            <div className='flex justify-between items-center'>
                 <div className="flex items-center mt-2 gap-2">
-                    <label className="toggle-label">
+                    <label className="toggle-label flex items-center">
                         <input 
                             type="checkbox" 
                             checked={isActive} 
@@ -76,7 +76,7 @@ export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
                         />
                         <span className={`toggle ${isActive ? 'active' : 'inactive'}`}></span>
                     </label>
-                    <span className="ml-2 text-md font-medium">{isActive ? 'Active' : 'Inactive'}</span>
+                    <span className="ml-2 text-md font-medium flex flex-start">{isActive ? 'Active' : 'Inactive'}</span>
                 </div>
                 <div className='cursor-pointer'>
                     <p className='text-green-700'>bookings....</p>
