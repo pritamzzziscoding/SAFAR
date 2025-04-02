@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/PackageDetails.css";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { BookingForm } from "../components/BookingForm";
+import { ReviewCard } from "../components/ReviewCard";
 
 export const PackageDetails = () => {
     const[hide, setHide] = useState(true)
+    const[reviews, setReviews] = useState([])
     const p = useLoaderData();
     const packageData = p.data.packageData;
-    console.log(packageData.PackageID)
+    
+    const {packageId} = useParams()
+
+    const getReviews = async () => {
+        try {
+            const res = await getPackageReviews(packageId)
+            if(res.data.success === true){
+                setReviews(res.data.reviews)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getReviews()
+    },[packageId])
+
 
   return (
     <div className="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6">
@@ -67,6 +86,14 @@ export const PackageDetails = () => {
 
             </div>
             <BookingForm packageId={packageData.PackageID} price={packageData.Price} hide={hide ? "hidden" : ""}/>
+        </div>
+        <div className="container bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
+            <h1>Package Reviews</h1>
+            {
+                reviews.map((review)=>{
+                    return <ReviewCard review={review} />
+                })
+            }
         </div>
     </div>
   );
