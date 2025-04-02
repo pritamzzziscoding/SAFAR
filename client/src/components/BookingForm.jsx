@@ -2,13 +2,15 @@ import { useState } from "react";
 import "../styles/booking-form.css"; // Importing external CSS
 import { MdDelete } from "react-icons/md";
 import { payment } from "../services/payment-api";
+import axios from "axios";
+import { details } from "../services/auth-apis";
 
-export const BookingForm = ({packageId , hide}) => {
+export const BookingForm = ({ packageId , price ,hide}) => {
     const [data, setData] = useState({
         packageId,
         start_date: "",
         members: [],
-        status: "pending"
+        amount: 0
     });
 
     const today = new Date().toISOString().split("T")[0];
@@ -27,7 +29,7 @@ export const BookingForm = ({packageId , hide}) => {
     const addMember = () => {
         setData({
             ...data,
-            members: [...data.members, { name: "", age: "", gender: "Male" }]
+            members: [...data.members, { name: "", age: "", gender: "Male" }],
         });
     };
 
@@ -36,14 +38,43 @@ export const BookingForm = ({packageId , hide}) => {
         setData({ ...data, members: updatedMembers });
     };
 
-    const handleSubmit = async (event) => {
+    const handlePayment = async (event) => {
         event.preventDefault();
-        console.log(data);
-        
+        const length = data.members.length 
+        setData({...data, amount : length * price})
         try {
+            const {data:{key}} = axios.get("http://localhost:8080/getKey")
+            const { data:{result} } = await details()
+
             const res = await payment(data)
+
             if(res.data.success === true){
-                console.log(res.data)
+                
+                const options = {
+                    key: key, 
+                    amount: res.data.order.amount,
+                    currency: "INR",
+                    name: "SAFAR PVT LIMITED", 
+                    description: "Package Booking Transaction",
+                    image: result.image_url,
+                    order_id: res.data.order.id,
+                    callback_url: "http://localhost:8080/paymentVerification",
+                    prefill: { 
+                        name: `${result.firstname} ${result.lastname}`,
+                        email: result.email,
+                        contact : result.phone
+                    },
+                    notes: {
+                        address: "Razorpay Corporate Office"
+                    },
+                    theme: {
+                        "color": "#3399cc"
+                    }
+                }; 
+
+                const razor = new window.Razorpay(options)
+                razor.open()
+
             }
         } catch (error) {
             console.log(error)
@@ -53,7 +84,7 @@ export const BookingForm = ({packageId , hide}) => {
     return (
         <div className={`booking-container ${hide}`}>
             <h2 className="form-title">Bookings For...</h2>
-            <form className="booking-form" onSubmit={handleSubmit}>
+            <form className="booking-form" onSubmit={handlePayment}>
                 <label htmlFor="start_date" className="form-label">Start Date</label>
                 <input
                     className="form-input"
@@ -97,9 +128,8 @@ export const BookingForm = ({packageId , hide}) => {
                         <button type="button" onClick={() => removeMember(index)}><MdDelete className="text-red-600 text-2xl"/></button>
                     </div>
                 ))}
-
                 <button type="button" className="add-member" onClick={addMember}>+ Add Traveler</button>
-                <button type="submit" className="submit-btn">{"Create Bill >"}</button>
+                <button type="submit" className="submit-btn">{"Pay Now >"}</button>
             </form>
         </div>
     );

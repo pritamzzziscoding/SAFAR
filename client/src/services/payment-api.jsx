@@ -7,6 +7,6 @@ const api = axios.create({
 })
 
 export const payment = (body) => {
-    const res = api.post("/payment", body)
+    const res = api.post("/order", body)
     return res
 }

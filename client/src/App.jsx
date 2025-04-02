@@ -15,6 +15,8 @@ import { PackageDetails } from "./pages/PackageDetails";
 import { getIndividualPackageDetails } from "./services/get-data";
 import { ViewDetails } from "./components/ViewDetails";
 import { CustomerBookings } from "./pages/CustomerBookings";
+import { Success } from "./pages/Success";
+import { Failure } from "./pages/Fail";
 
 export const App = () => {
   const router = createBrowserRouter([
@@ -68,12 +70,19 @@ export const App = () => {
     },
     {
       path: "/book",
-      element: <BookingForm touristId={1} packageId={1} />,
+      element: <BookingForm packageId={1} price={100} />,
     },
     {
       path: "/rating",
       element: <RatingForm />,
     },
+    {
+      path: "/success/:reference",
+      element: <Success />
+    },{
+      path: "/failure",
+      element : <Failure />
+    }
   ]);
   return <RouterProvider router={router} />;
 };
