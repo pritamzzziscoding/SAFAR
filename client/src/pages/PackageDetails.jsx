@@ -9,10 +9,11 @@ export const PackageDetails = () => {
     const[hide, setHide] = useState(true)
     const p = useLoaderData();
     const packageData = p.data.packageData;
+    console.log(packageData.PackageID)
 
   return (
     <div className="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6">
-        <div className="bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
+        <div className="container bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
             {/* Image */}
             <img
             src={packageData.ImgURL}
@@ -31,7 +32,7 @@ export const PackageDetails = () => {
             {/* Price & Duration Section */}
             <div className="price-duration-container sm:flex items-center">
                 <div className="price">
-                <span className="label">Price:</span> ₹{packageData.Price} per person
+                <span className="label">Price:</span> ₹{Math.round(packageData.Price)}/per person
                 </div>
                 <div className="duration">
                 <span className="label">Duration:</span> {packageData.Duration} {packageData.Duration === 1 ? "Day" : "Days"}
@@ -61,11 +62,11 @@ export const PackageDetails = () => {
 
             {/* Book Now Button */}
             <div className={`${hide === true ? "" : "hidden"} mt-6 flex justify-center`}>
-                <button onClick={()=>setHide(true)} className="book-now-button shadow-2xl">Book Now</button>
+                <button onClick={()=>setHide(false)} className="book-now-button shadow-2xl">Book Now</button>
             </div>
 
             </div>
-            <BookingForm hide={hide ? "hidden" : ""}/>
+            <BookingForm hide={hide ? "hidden" : ""} packageId={packageData.PackageID}/>
         </div>
     </div>
   );

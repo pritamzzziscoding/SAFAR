@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BlogForm } from "../components/BlogForm";
 import { Header } from "../components/Header";
-import { BlogCard, BlogList } from "../components/BlogCard";
+import { BlogCard } from "../components/BlogCard";
 import { getBlog } from "../services/get-data";
 import { details } from "../services/auth-apis";
 import "../styles/blogs.css";
