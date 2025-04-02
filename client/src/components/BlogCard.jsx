@@ -62,7 +62,7 @@ export const BlogCard = ({
 const BlogContent = ({ handleClick, full, Title, Description }) => {
   return (
     <div className={`${full ? "flex" : "hidden"} fixed inset-0 bg-teal-100/90 z-50 items-center justify-center`}>
-      <div className="relative bg-white content-box rounded-lg shadow-lg w-[90%] max-w-2xl overflow-auto">
+      <div className="relative bg-white content-box rounded-lg shadow-lg h-[95%] w-[90%] max-w-2xl overflow-auto">
         <button onClick={handleClick} className="absolute top-4 right-4 text-2xl text-gray-700 hover:text-gray-900">
           <MdCloseFullscreen />
         </button>
