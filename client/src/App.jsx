@@ -60,7 +60,7 @@ export const App = () => {
       element: <Packages />,
     },
     {
-      path: "/packages/book",
+      path: "/packages/:package_id",
       element: <CustomerBookings />
     }
     ,

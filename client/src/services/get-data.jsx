@@ -42,3 +42,9 @@ export const getBookingDetails = (id) => {
     const res = api.get(`/tourist-bookings/${id}`)
     return res
 }
+
+//getting bookings for agency
+export const getBookingsForAgency = (id) => {
+    const res = api.get(`/agency-bookings/${id}`)
+    return res
+}

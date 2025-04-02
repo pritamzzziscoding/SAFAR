@@ -1,44 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/bookings-agency.css"; // Import margins & paddings CSS
+import { useParams } from "react-router-dom";
+import { getBookingsForAgency } from "../services/get-data";
 
 export const CustomerBookings = () => {
-    // Sample Booking Data
-    const [bookings, setBookings] = useState([
-        {
-            BookingID: "BK-202503281234",
-            TouristName: "Rohit Khanna",
-            PackageName: "Luxury Maldives Escape",
-            Members: [
-                { name: "Rohit Khanna", age: 30, gender: "Male" },
-                { name: "Aisha Verma", age: 27, gender: "Female" }
-            ],
-            BookingDate: "2025-03-28",
-            StartDate: "2025-06-20",
-            Duration: 5, // Trip Duration in Days
-            TotalAmount: 120000
-        },
-        {
-            BookingID: "BK-202503291456",
-            TouristName: "Amit Sharma",
-            PackageName: "Swiss Alps Adventure",
-            Members: [
-                { name: "Amit Sharma", age: 35, gender: "Male" }
-            ],
-            BookingDate: "2025-03-29",
-            StartDate: "2025-07-15",
-            Duration: 7, // Trip Duration in Days
-            TotalAmount: 150000
-        }
-    ]);
-
+    const {package_id} = useParams()
+    const [bookings, setBookings] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchID, setSearchID] = useState("");
 
     // Filter Logic
-    const filteredBookings = bookings.filter((booking) =>
-        booking.PackageName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+
+    const getBooking = async () => {
+        try {
+            const res = await getBookingsForAgency(package_id)
+            if(res.data.success === true){
+                setBookings(res.data.result)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        getBooking()
+    },[id])
+
+
+
+    const filteredBookings = bookings.filter((booking) => {
+        const fullname = (`${booking.firstname} ${booking.lastname}`).toLowerCase()
+        return fullname.includes(searchTerm.toLowerCase()) &&
         booking.BookingID.toLowerCase().includes(searchID.toLowerCase())
-    );
+    });
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
@@ -46,7 +40,7 @@ export const CustomerBookings = () => {
             <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4 mb-6">
                 <input
                     type="text"
-                    placeholder="Search by Package Name"
+                    placeholder="Search by Name"
                     className="w-full sm:w-1/2 border border-teal-600 rounded-md p-3 text-gray-800 focus:ring-2 focus:ring-teal-500"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -75,43 +69,36 @@ export const CustomerBookings = () => {
 
 const BookingCard = ({ booking }) => {
     return (
-        <div className="relative bg-white bg-opacity-70 backdrop-blur-lg border border-teal-300 shadow-xl rounded-2xl overflow-hidden p-6 transition transform hover:scale-105 hover:shadow-2xl">
+        <div className="relative bg-white bg-opacity-70 border border-teal-300 shadow-xl rounded-2xl overflow-hidden p-6 transition transform hover:scale-101 hover:shadow-2xl">
             <div className="absolute top-2 right-4 text-gray-400 text-xs">#{booking.BookingID}</div>
             
-            <h2 className="text-2xl font-semibold text-teal-700">{booking.PackageName}</h2>
-            <p className="text-gray-500">Tourist: <span className="text-gray-800 font-medium">{booking.TouristName}</span></p>
+            <p className="text-gray-500">Tourist: <span className="text-gray-800 font-medium">{booking.firstname} {booking.lastname}</span></p>
 
             <div className="flex justify-between text-gray-600 mt-4">
                 <div>
                     <p className="text-sm">Booking Date:</p>
-                    <p className="text-gray-900 font-semibold">{booking.BookingDate}</p>
+                    <p className="text-gray-900 font-semibold">{booking.BookingDate.split("T")[0]}</p>
                 </div>
                 <div>
                     <p className="text-sm">Start Date:</p>
-                    <p className="text-gray-900 font-semibold">{booking.StartDate}</p>
+                    <p className="text-gray-900 font-semibold">{booking.FromDate.split("T")[0]}</p>
                 </div>
             </div>
 
-            {/* Trip Duration Section */}
-            <div className="mt-4 text-gray-800">
-                <p className="text-sm">Trip Duration:</p>
-                <p className="text-gray-900 font-semibold">{booking.Duration} days</p>
-            </div>
-
-            <p className="text-lg font-semibold text-green-600 mt-4">₹{booking.TotalAmount}</p>
+            <p className="text-lg font-semibold text-green-600 mt-4">₹{booking.NetPayableAmount}</p>
 
             <h3 className="text-gray-800 font-semibold mt-3">Members:</h3>
             <ul className="mt-2 space-y-1">
                 {booking.Members.map((member, index) => (
                     <li key={index} className="bg-green-100/60 p-2 rounded-md text-gray-700">
-                        {member.name} ({member.age} yrs, {member.gender})
+                        {member.MemberName} ({member.age} yrs, {member.gender})
                     </li>
                 ))}
             </ul>
 
-            <button className="mt-5 w-full bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition">
+            {/* <button className="mt-5 w-full bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition">
                 Refund to Tourist
-            </button>
+            </button> */}
         </div>
     );
 };
