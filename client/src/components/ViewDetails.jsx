@@ -4,16 +4,11 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { getBookingDetails } from "../services/get-data";
 
 function generateBookingId(date, id) {
-    // Convert date to YYYYMMDD format
     let dateObj = new Date(date);
     let formattedDate = dateObj.getFullYear().toString() +
                         String(dateObj.getMonth() + 1).padStart(2, '0') +
                         String(dateObj.getDate()).padStart(2, '0');
-
-    // Format ID as a 4-digit zero-padded string
     let formattedId = String(id).padStart(4, '0');
-
-    // Construct and return booking ID
     return `BK-${formattedDate}${formattedId}`;
 }
 
@@ -44,7 +39,7 @@ export const ViewDetails = () => {
 
     useEffect(() => {
         getDetail();
-    }, [id]); // Add id as dependency
+    }, [id]); 
 
     return (
         <div className="view-details-container">
