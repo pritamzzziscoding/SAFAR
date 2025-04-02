@@ -66,7 +66,7 @@ export const PackageDetails = () => {
             </div>
 
             </div>
-            <BookingForm hide={hide ? "hidden" : ""} packageId={packageData.PACKAGEID} price={packageData.Price}/>
+            <BookingForm packageId={packageData.PackageID} price={packageData.Price} hide={hide ? "hidden" : ""}/>
         </div>
     </div>
   );
