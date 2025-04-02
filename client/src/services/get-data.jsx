@@ -7,7 +7,7 @@ const api = axios.create({
 })
 
 export const getBlog = () => {
-    const res = api.get("blogs")
+    const res = api.get("/blogs")
     return res
 }
 

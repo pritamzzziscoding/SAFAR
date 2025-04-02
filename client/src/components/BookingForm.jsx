@@ -2,6 +2,8 @@ import { useState } from "react";
 import "../styles/booking-form.css"; // Importing external CSS
 import { MdDelete } from "react-icons/md";
 import { payment } from "../services/payment-api";
+import axios from "axios";
+import { details } from "../services/auth-apis";
 
 export const BookingForm = ({ packageId , price ,hide}) => {
     const [data, setData] = useState({
@@ -36,16 +38,43 @@ export const BookingForm = ({ packageId , price ,hide}) => {
         setData({ ...data, members: updatedMembers });
     };
 
-    const handleSubmit = async (event) => {
+    const handlePayment = async (event) => {
         event.preventDefault();
         const length = data.members.length 
         setData({...data, amount : length * price})
         try {
-            console.log(data)
-            console.log(data.members.length)
+            const {data:{key}} = axios.get("http://localhost:8080/getKey")
+            const { data:{result} } = await details()
+
             const res = await payment(data)
+
             if(res.data.success === true){
-                console.log(res.data)
+                
+                const options = {
+                    key: key, 
+                    amount: res.data.order.amount,
+                    currency: "INR",
+                    name: "SAFAR PVT LIMITED", 
+                    description: "Package Booking Transaction",
+                    image: result.image_url,
+                    order_id: res.data.order.id,
+                    callback_url: "http://localhost:8080/paymentVerification",
+                    prefill: { 
+                        name: `${result.firstname} ${result.lastname}`,
+                        email: result.email,
+                        contact : result.phone
+                    },
+                    notes: {
+                        address: "Razorpay Corporate Office"
+                    },
+                    theme: {
+                        "color": "#3399cc"
+                    }
+                }; 
+
+                const razor = new window.Razorpay(options)
+                razor.open()
+
             }
         } catch (error) {
             console.log(error)
@@ -55,7 +84,7 @@ export const BookingForm = ({ packageId , price ,hide}) => {
     return (
         <div className={`booking-container ${hide}`}>
             <h2 className="form-title">Bookings For...</h2>
-            <form className="booking-form" onSubmit={handleSubmit}>
+            <form className="booking-form" onSubmit={handlePayment}>
                 <label htmlFor="start_date" className="form-label">Start Date</label>
                 <input
                     className="form-input"
