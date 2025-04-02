@@ -68,7 +68,7 @@ export const App = () => {
     },
     {
       path: "/book",
-      element: <BookingForm touristId={1} packageId={1} />,
+      element: <BookingForm packageId={1} price={100} />,
     },
     {
       path: "/rating",

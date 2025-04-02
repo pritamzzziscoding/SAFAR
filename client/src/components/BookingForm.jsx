@@ -1,14 +1,14 @@
 import { useState } from "react";
 import "../styles/booking-form.css"; // Importing external CSS
 import { MdDelete } from "react-icons/md";
+import { payment } from "../services/payment-api";
 
-export const BookingForm = ({ touristId, packageId , hide}) => {
+export const BookingForm = ({ packageId , price ,hide}) => {
     const [data, setData] = useState({
-        touristId,
         packageId,
         start_date: "",
-        members: [""],
-        status: "pending"
+        members: [],
+        amount: 0
     });
 
     const today = new Date().toISOString().split("T")[0];
@@ -27,7 +27,7 @@ export const BookingForm = ({ touristId, packageId , hide}) => {
     const addMember = () => {
         setData({
             ...data,
-            members: [...data.members, { name: "", age: "", gender: "Male" }]
+            members: [...data.members, { name: "", age: "", gender: "Male" }],
         });
     };
 
@@ -38,7 +38,11 @@ export const BookingForm = ({ touristId, packageId , hide}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const length = data.members.length 
+        setData({...data, amount : length * price})
         try {
+            console.log(data)
+            console.log(data.members.length)
             const res = await payment(data)
             if(res.data.success === true){
                 console.log(res.data)
@@ -95,9 +99,8 @@ export const BookingForm = ({ touristId, packageId , hide}) => {
                         <button type="button" onClick={() => removeMember(index)}><MdDelete className="text-red-600 text-2xl"/></button>
                     </div>
                 ))}
-
                 <button type="button" className="add-member" onClick={addMember}>+ Add Traveler</button>
-                <button type="submit" className="submit-btn">{"Create Bill >"}</button>
+                <button type="submit" className="submit-btn">{"Pay Now >"}</button>
             </form>
         </div>
     );
