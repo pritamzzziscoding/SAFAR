@@ -39,6 +39,10 @@ export const BookingForm = ({ packageId , price ,hide}) => {
 
     const handlePayment = async (event) => {
         event.preventDefault();
+        if(data.members.length === 0){
+            alert("Add members")
+            return
+        }
         const amount = data.members.length * price
         const newBody = data
         data["amount"] = amount
@@ -78,7 +82,7 @@ export const BookingForm = ({ packageId , price ,hide}) => {
 
             }
         } catch (error) {
-            console.log(error)
+            alert("Unavoidable Error")
         }
     };
 

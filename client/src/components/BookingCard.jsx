@@ -5,11 +5,11 @@ export const BookingCard = ({id, title, destination}) => {
     return (
         <div className="booking-card-container">
             <div className="booking-card">
-                <div className="booking-info">
-                    <h2 className="package-name">{booking.PackageName}</h2>
-                    <p className="destination">{booking.Destination}</p>
+                <div className="booking-info w-[60%] sm:w-[50%]">
+                    <h2 className="package-name truncate">{title}</h2>
+                    <p className="destination text-center sm:text-left">{destination}</p>
                 </div>
-                <NavLink to={`/booking/${booking.PACKAGEID}`} className="view-details-btn">
+                <NavLink to={`/bookings/${id}`} className="view-details-btn">
                     View Details
                 </NavLink>
             </div>

@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 export const showAllBookings = async(req,res)=>{
   try {
     const touristid = req.user.id;
-    const bookingsQuery = `SELECT B.BookingID , p.destination,p.title FROM BOOKINGS B LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  WHERE B.TOURISTID = ?`
-    const bookings = await db.query(bookingsQuery,[touristid]);
+    const bookingsQuery = `SELECT B.BookingID , p.destination,p.title FROM BOOKINGS B LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  WHERE B.TOURISTID = ? AND B.STATUS=?`
+    const bookings = await db.query(bookingsQuery,[touristid,"VERIFIED"]);
     res.status(200).json({
       success:true,
       message:"All bookings  of fetched successfully",
