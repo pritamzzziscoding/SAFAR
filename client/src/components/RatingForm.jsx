@@ -4,6 +4,7 @@ import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
 import "../styles/rating-form.css"; // Separate CSS for margins & paddings
+import { Header } from "./Header";
 
 // 🌟 Fun & Engaging Rating Messages  
 const labels = {
@@ -36,6 +37,7 @@ export const RatingForm = ({ bookingId }) => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <Header></Header>
       <form
         className="w-full max-w-lg bg-white shadow-2xl rounded-2xl overflow-hidden p-10 space-y-10 transition-all hover:shadow-2xl transform hover:scale-[1.02]"
         onSubmit={handleSubmit}

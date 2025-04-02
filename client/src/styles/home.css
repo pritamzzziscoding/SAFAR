@@ -19,3 +19,10 @@
   padding: 8px 16px;
   border-radius: 8px;
 }
+
+
+.package-display{
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

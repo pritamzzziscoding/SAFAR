@@ -14,8 +14,9 @@ export const FilterForm = ({filters, setFilters, handleSubmit}) => {
     return (
         <form className="filter-form bg-teal-500/80 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-white rounded-2xl w-[90%] md:w-[80%] gap-3" onSubmit={handleSubmit}>
             <div className="flex flex-col items-center gap-2">
-                <label classname="font-medium" htmlFor="destination">Destination</label>
-                <input className="rounded-2xl w-[90%] border text-center" 
+                <label classname="font-medium" style={{color:"white"}} htmlFor="destination">Destination</label>
+                <input className="rounded-2xl w-[90%] border text-center"
+                    style={{color:"black"}} 
                     type="text" 
                     name="destination" 
                     id="destination" 
@@ -25,8 +26,9 @@ export const FilterForm = ({filters, setFilters, handleSubmit}) => {
             </div>
 
             <div className="flex flex-col items-center gap-2">
-                <label classname="font-medium" htmlFor="rating">Minimum Rating</label>
+                <label classname="font-medium" style={{color:"white"}} htmlFor="rating">Minimum Rating</label>
                 <input className="rounded-2xl w-[90%] border text-center" 
+                    style={{color:"black"}}
                     type="number" 
                     name="rating" 
                     id="rating" 
@@ -38,8 +40,9 @@ export const FilterForm = ({filters, setFilters, handleSubmit}) => {
             </div>
 
             <div className="flex flex-col items-center gap-2">
-                <label classname="font-medium" htmlFor="maximum">Max-Price Per Head</label>
-                <input className="rounded-2xl w-[90%] border text-center" 
+                <label classname="font-medium" style={{color:"white"}} htmlFor="maximum">Max-Price Per Head</label>
+                <input className="rounded-2xl w-[90%] border text-center"
+                    style={{color:"black"}} 
                     type="number" 
                     name="maximum" 
                     id="maximum" 
@@ -50,7 +53,7 @@ export const FilterForm = ({filters, setFilters, handleSubmit}) => {
             </div>
 
             <div className="flex flex-col items-center gap-2">
-                <label classname="font-medium" htmlFor="sort">SORT</label>
+                <label classname="font-medium" style={{color:"white"}} htmlFor="sort">SORT</label>
                 <input className="border" 
                     type="checkbox" 
                     name="sort" 
