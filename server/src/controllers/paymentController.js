@@ -62,8 +62,8 @@ export const paymentVerification =  async(req,res)=>{
     console.log("Generated Signature :",expectedSignature);
     
     if(razorpay_signature === expectedSignature){
-        const payment_id_query = `UPDATE BOOKINGS SET PaymentID = ? WHERE ORDERID=? `
-        await db.query(payment_id_query,[razorpay_payment_id,razorpay_order_id])
+        const payment_id_query = `UPDATE BOOKINGS SET PaymentID = ?,Status=? WHERE ORDERID=? `
+        await db.query(payment_id_query,[razorpay_payment_id,"VERIFIED",razorpay_order_id])
         return res.redirect(`http://localhost:5173/success/${razorpay_payment_id}`);
 
     }

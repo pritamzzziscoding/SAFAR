@@ -49,7 +49,7 @@ app.use(uploadRoutes);
 app.use(blogRoutes);
 app.use(packageRoutes);
 app.use("/review", reviewRoutes);
-app.use("/book", bookingRoutes);
+app.use( bookingRoutes);
 app.use(paymentRoute);
 app.get("/getKey",(req,res)=>res.status(200).json({
     key:process.env.RAZORPAY_API_KEY

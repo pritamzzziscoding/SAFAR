@@ -6,6 +6,7 @@ import axios from "axios";
 import { details } from "../services/auth-apis";
 
 export const BookingForm = ({ packageId , price ,hide}) => {
+    console.log("yehhhhhhh", packageId)
     const [data, setData] = useState({
         packageId,
         start_date: "",
@@ -40,18 +41,20 @@ export const BookingForm = ({ packageId , price ,hide}) => {
 
     const handlePayment = async (event) => {
         event.preventDefault();
-        const length = data.members.length 
-        setData({...data, amount : length * price})
+        const amount = data.members.length * price
+        const newBody = data
+        data["amount"] = amount
         try {
-            const {data:{key}} = axios.get("http://localhost:8080/getKey")
-            const { data:{result} } = await details()
-
+            const t = await  axios.get("http://localhost:8080/getKey")
+            const d = await details()
+            console.log(data)
+            console.log(t.data.key)
+            const result = d.data.result
             const res = await payment(data)
-
             if(res.data.success === true){
                 
                 const options = {
-                    key: key, 
+                    key: t.data.key, 
                     amount: res.data.order.amount,
                     currency: "INR",
                     name: "SAFAR PVT LIMITED", 
