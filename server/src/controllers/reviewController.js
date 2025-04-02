@@ -83,3 +83,41 @@ export const addReview = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal Server Error!" });
   }
 };
+
+// DP, Tourist First name , ReviewDate,Rating,Feedback
+
+
+export const getAllreviews = async (req,res)=>{
+  try {
+      
+      const pkgid = req.params.id; 
+      const select_reviews = `SELECT * FROM REVIEWS WHERE PACKAGEID=? ORDER BY REVIEWDATE DESC`
+      const reviews = await db.query(select_reviews,[pkgid]);
+      console.log(reviews[0]);
+      for(let i=0;i<reviews[0].length;i++){
+           const bookingID = reviews[0][i]["BookingID"]
+           const touristIDquery = `SELECT TouristID FROM BOOKINGS WHERE BOOKINGID =?`
+           const tourist_result = await db.query(touristIDquery,[bookingID])
+          //  console.log(tourist_result)
+           const touristID = tourist_result[0][0]["TouristID"]
+           const nameQuery = `SELECT firstname,Image_url from tourist where touristID = ?`
+           const nameresult = await db.query(nameQuery,[touristID])
+           const firstname = nameresult[0][0]["firstname"]
+           const imgURL = nameresult[0][0]["Image_url"]
+           
+           reviews[0][i]["firstname"] = firstname  
+           reviews[0][i]["imgURL"] = imgURL     
+      }
+      res.status(200).json({
+        success:true,
+        message:"Reviews fetched successfully!",
+        reviews : reviews[0]
+      })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:"Internal Server Error!"
+    })
+  }
+}

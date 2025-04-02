@@ -49,7 +49,7 @@ app.use(userRoutes);
 app.use(uploadRoutes);
 app.use(blogRoutes);
 app.use(packageRoutes);
-app.use("/review", reviewRoutes);
+app.use( reviewRoutes);
 app.use( bookingRoutes);
 app.use(paymentRoute);
 app.use(packageBookingRoute);

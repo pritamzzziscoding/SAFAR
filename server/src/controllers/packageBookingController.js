@@ -9,11 +9,12 @@ export const getAllBookings = async (req,res)=>{
         const bookingQuery = `SELECT BookingID,TouristID,FromDate,NetPayableAmount,BookingDate FROM BOOKINGS WHERE PACKAGEID = ? AND STATUS = ?`
         const bookingResult = await db.query(bookingQuery,[pkgid,"VERIFIED"])
         for(let i=0;i<bookingResult[0].length;i++){
-        const touristQuery = `SELECT FirstName,LastName FROM TOURIST WHERE TOURISTID = ?`
+        const touristQuery = `SELECT FirstName,LastName,email FROM TOURIST WHERE TOURISTID = ?`
         
         const touristResult = await db.query(touristQuery,[bookingResult[0][i]["TouristID"]])
         bookingResult[0][i]["firstname"] = touristResult[0][0]["FirstName"]
         bookingResult[0][i]["lastname"] = touristResult[0][0]["LastName"]
+        bookingResult[0][i]["email"] = touristResult[0][0]["email"]
         
         // console.log(bookingResult[0]);
         // console.log(touristResult[0]);

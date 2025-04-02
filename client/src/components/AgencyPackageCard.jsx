@@ -6,6 +6,7 @@ import { FaDeleteLeft } from 'react-icons/fa6';
 import { MdDelete } from 'react-icons/md';
 import { deletePackage } from '../services/delete-data';
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { NavLink } from "react-router-dom"
 
 export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
     const [isActive, setIsActive] = useState(pkg.IsActive); // State to manage active status
@@ -78,9 +79,11 @@ export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
                     </label>
                     <span className="ml-2 text-md font-medium flex flex-start">{isActive ? 'Active' : 'Inactive'}</span>
                 </div>
-                <div className='cursor-pointer'>
-                    <p className='text-green-700'>bookings....</p>
-                </div>
+                <NavLink to={`/packages/${pkg.PackageID}`}>
+                    <div className='cursor-pointer'>
+                        <p className='text-green-700'>bookings....</p>
+                    </div>
+                </NavLink>
             </div>
         </li>
     );
