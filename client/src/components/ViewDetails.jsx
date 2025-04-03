@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { getBookingDetails } from "../services/get-data";
 import { Header } from "./Header";
+import { cancelBooking } from "../services/update";
 
 function generateBookingId(date, id) {
     let dateObj = new Date(date);
@@ -26,7 +27,8 @@ export const ViewDetails = () => {
         BookingDate: "",
         PackageID: "",
         members: [],
-        isCancellable : false
+        isCancellable : false,
+        cancelled : 0
     });
 
     const getDetail = async () => {
@@ -43,11 +45,27 @@ export const ViewDetails = () => {
         getDetail();
     }, [id]); 
 
+    const handleCancel = async () => {
+        try {
+            const res = await cancelBooking({BookingID : booking.BookingID})
+            if(res.data.status === true){
+                setBooking({...booking, cancelled : 1})
+            }else{
+                console.log("Error updating request")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <>
             <Header />
-            <div className="view-details-container margin-for-header">
-                <div className="details-card">
+            <div className="view-details-container margin-for-header relative">
+                <div className={`fixed top-0 left-0 size-full flex justify-center items-center ${booking.cancelled === 2 && "hidden"}`}>
+                    <h1 className="text-3xl font-bold">Booking Cancelled!!!</h1>
+                </div>
+                <div className="details-card z-10">
                     <h1 className="package-title">{booking.packagename || "N/A"}</h1>
                     <p className="booking-id"><strong>Booking ID:</strong> {generateBookingId(booking.BookingDate.split("T")[0],booking.BookingID) || "N/A"}</p>
                     <p className="destination"><strong>Location:</strong> {booking.destination || "N/A"}</p>
@@ -78,7 +96,7 @@ export const ViewDetails = () => {
                                 <button className="view-package-btn">View Package</button>
                             </NavLink>
                         )}
-                        <button className={`cancel-btn ${booking.isCancellable === false && "hidden"}`} onClick={() => navigate("/")}>Cancel Booking</button>
+                        <button className={`cancel-btn ${(booking.isCancellable === false || booking.cancelled === 1 || booking.cancel_status === 2) && "hidden"}`} onClick={handleCancel}>Cancel Booking</button>
                     </div>
                 </div>
             </div>
