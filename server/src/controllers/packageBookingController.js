@@ -1,5 +1,4 @@
 import { db } from "../config/database.js";
-
 export const getAllBookings = async (req,res)=>{
     try {
         if(req.user.type === "tourist"){
@@ -11,8 +10,8 @@ export const getAllBookings = async (req,res)=>{
         if(req.user.id != packageResult[0][0]["AgencyID"]){
             return res.redirect("http://localhost:5173/packages")
         }
-        const bookingQuery = `SELECT BookingID,TouristID,FromDate,NetPayableAmount,BookingDate FROM BOOKINGS WHERE PACKAGEID = ? AND STATUS = ?`
-        const bookingResult = await db.query(bookingQuery,[pkgid,"VERIFIED"])
+        const bookingQuery = `SELECT BookingID,TouristID,FromDate,NetPayableAmount,BookingDate,cancelstatus FROM BOOKINGS WHERE PACKAGEID = ? AND STATUS = ? AND CANCELSTATUS !=?`
+        const bookingResult = await db.query(bookingQuery,[pkgid,"VERIFIED",2])
         for(let i=0;i<bookingResult[0].length;i++){
         const touristQuery = `SELECT FirstName,LastName,email FROM TOURIST WHERE TOURISTID = ?`
         

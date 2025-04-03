@@ -7,7 +7,7 @@ export const addReview = async (req, res) => {
     if(req.user.type ==="agency"){
       return res.redirect("http://localhost:5173/packages")
     }
-    console.log("1")
+    // console.log("1")
     const [result] = await db.query(
       "SELECT * FROM BOOKINGS WHERE TouristID = ?",
       [TouristID]
@@ -17,14 +17,14 @@ export const addReview = async (req, res) => {
         .status(200)
         .json({ success: false, message: "You can't review without booking!" });
     }
-    console.log("2")
+    // console.log("2")
     const { bookingID, Rating, Feedback } = req.body;
     if (!bookingID || !Rating) {
       return res
         .status(200)
         .json({ success: false, message: "Please enter the required fields" });
     }
-    console.log("3")
+    // console.log("3")
 
     const query = `
     SELECT 
@@ -38,7 +38,7 @@ export const addReview = async (req, res) => {
     WHERE b.bookingID = ?;
   `;
     const [rows] = await db.execute(query, [bookingID]);
-    console.log("4")
+    // console.log("4")
     let isExpired = rows.length > 0 ? rows[0].isExpired === 1 : false;
     if (!isExpired) {
       return res.status(200).json({
@@ -47,7 +47,7 @@ export const addReview = async (req, res) => {
           "You can't review this booking as  it's duration is not complete yet.",
       });
     }
-    console.log("5")
+    // console.log("5")
     const [result2] = await db.query(
       `SELECT * FROM BOOKINGS WHERE BOOKINGID=?`,
       [bookingID]
@@ -60,7 +60,7 @@ export const addReview = async (req, res) => {
           message: "No booking exists with the given bookingID!",
         });
     }
-    console.log("6")
+    // console.log("6")
 
     const package_query = "SELECT PACKAGEID FROM BOOKINGS WHERE BOOKINGID = ?";
     const [helper] = await db.query(package_query, [bookingID]);
@@ -70,7 +70,15 @@ export const addReview = async (req, res) => {
         .status(200)
         .json({ success: false, message: "Invalid BookingID" });
     }
-    console.log("7")
+    const ifExistQuery = `SELECT * FROM REVIEWS WHERE BOOKINGID =? AND PACKAGEID =?`
+    const ifExistResult = await db.query(ifExistQuery,[bookingID,PackageID]);
+    if(ifExistResult[0].length !=0){
+      return res.status(200).json({
+        success:false,
+        message:"You can only review once per booking ! Thank You 🙏"
+      })
+    }
+    // console.log("7")
     const reviewQuery =
       "INSERT INTO REVIEWS(BookingID, PackageID, Rating, Feedback) VALUES (?, ?, ?, ?)";
     await db.query(reviewQuery, [bookingID, PackageID, Rating, Feedback || ""]);

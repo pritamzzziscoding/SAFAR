@@ -28,7 +28,7 @@ export const ViewDetails = () => {
         PackageID: "",
         members: [],
         isCancellable : false,
-        cancelled : 0
+        cancelstatus : 0
     });
 
     const getDetail = async () => {
@@ -48,8 +48,10 @@ export const ViewDetails = () => {
     const handleCancel = async () => {
         try {
             const res = await cancelBooking({BookingID : booking.BookingID})
-            if(res.data.status === true){
-                setBooking({...booking, cancelled : 1})
+            console.log(res.data)
+            if(res.data.success === true){
+                setBooking({...booking, cancelstatus : 1})
+                alert("Your request for cancellation of the booking has been sent to the agency. The refund will be issued within 1-2 business days 😊")
             }else{
                 console.log("Error updating request")
             }
@@ -62,8 +64,11 @@ export const ViewDetails = () => {
         <>
             <Header />
             <div className="view-details-container margin-for-header relative">
-                <div className={`fixed top-0 left-0 size-full flex justify-center items-center ${booking.cancelled === 2 && "hidden"}`}>
-                    <h1 className="text-3xl font-bold">Booking Cancelled!!!</h1>
+                <div className={`z-20 fixed top-0 left-0 size-full flex justify-center items-center ${booking.cancelstatus !== 2 && "hidden"}`}>
+                    <h1 className="text-3xl md:text-5xl font-bold text-red-600/50">Booking Cancelled</h1>
+                </div>
+                <div className={`z-20 fixed top-0 left-0 size-full flex justify-center items-center ${booking.cancelstatus !== 1 && "hidden"}`}>
+                    <h1 className="text-3xl md:text-5xl font-bold text-red-600/50">Refund Pending</h1>
                 </div>
                 <div className="details-card z-10">
                     <h1 className="package-title">{booking.packagename || "N/A"}</h1>
@@ -96,7 +101,7 @@ export const ViewDetails = () => {
                                 <button className="view-package-btn">View Package</button>
                             </NavLink>
                         )}
-                        <button className={`cancel-btn ${(booking.isCancellable === false || booking.cancelled === 1 || booking.cancel_status === 2) && "hidden"}`} onClick={handleCancel}>Cancel Booking</button>
+                        <button className={`cancel-btn ${(booking.isCancellable === false || booking.cancelstatus === 1 || booking.cancelstatus === 2) && "hidden"}`} onClick={handleCancel}>Cancel Booking</button>
                     </div>
                 </div>
             </div>

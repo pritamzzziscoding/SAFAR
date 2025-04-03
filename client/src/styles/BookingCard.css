@@ -17,7 +17,7 @@
     /* max-width: 900px; */
     width: 90%;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    padding: 20px; /* 📌 Handles padding */
+    padding: 20px; 
     margin: 5px auto; /* 📌 Handles margin */
 }
 
@@ -38,19 +38,17 @@
 .package-name {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #1f2937;
     margin-bottom: 5px;
 }
 
 /* 📌 Destination */
 .destination {
     font-size: 0.9rem;
-    color: #6b7280;
 }
 
 /* 📌 View Details Button */
 .view-details-btn {
-    background: linear-gradient(to right, #0f766e, #15803d);
+    background: linear-gradient(to right, #0f766df5, #15803cb6);
     padding: 8px 16px;
     border-radius: 6px;
     color: white;

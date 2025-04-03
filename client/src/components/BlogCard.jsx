@@ -69,7 +69,7 @@ export const BlogCard = ({
         <h2 className="text-xl font-semibold text-gray-900 truncate">{Title}</h2>
         <div className="flex justify-between">
           <button onClick={handleClick} className="text-teal-500 font-medium hover:underline">
-            Read More...
+            Read Blog
           </button>
           <div className={`${hide} flex gap-2 text-lg`}>
             <button onClick={handleDelete}>
