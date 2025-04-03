@@ -3,10 +3,11 @@ import { db } from "../config/database.js";
 
 export const addReview = async (req, res) => {
   try {
-   
+    const TouristID = req.user.id
     if(req.user.type ==="agency"){
       return res.redirect("http://localhost:5173/packages")
     }
+    console.log("1")
     const [result] = await db.query(
       "SELECT * FROM BOOKINGS WHERE TouristID = ?",
       [TouristID]
@@ -16,12 +17,14 @@ export const addReview = async (req, res) => {
         .status(200)
         .json({ success: false, message: "You can't review without booking!" });
     }
+    console.log("2")
     const { bookingID, Rating, Feedback } = req.body;
     if (!bookingID || !Rating) {
       return res
         .status(200)
         .json({ success: false, message: "Please enter the required fields" });
     }
+    console.log("3")
 
     const query = `
     SELECT 
@@ -35,6 +38,7 @@ export const addReview = async (req, res) => {
     WHERE b.bookingID = ?;
   `;
     const [rows] = await db.execute(query, [bookingID]);
+    console.log("4")
     let isExpired = rows.length > 0 ? rows[0].isExpired === 1 : false;
     if (!isExpired) {
       return res.status(200).json({
@@ -43,7 +47,7 @@ export const addReview = async (req, res) => {
           "You can't review this booking as  it's duration is not complete yet.",
       });
     }
-
+    console.log("5")
     const [result2] = await db.query(
       `SELECT * FROM BOOKINGS WHERE BOOKINGID=?`,
       [bookingID]
@@ -56,17 +60,17 @@ export const addReview = async (req, res) => {
           message: "No booking exists with the given bookingID!",
         });
     }
+    console.log("6")
 
     const package_query = "SELECT PACKAGEID FROM BOOKINGS WHERE BOOKINGID = ?";
     const [helper] = await db.query(package_query, [bookingID]);
     const PackageID = helper[0]?.PACKAGEID;
-
     if (!PackageID) {
       return res
         .status(200)
         .json({ success: false, message: "Invalid BookingID" });
     }
-
+    console.log("7")
     const reviewQuery =
       "INSERT INTO REVIEWS(BookingID, PackageID, Rating, Feedback) VALUES (?, ?, ?, ?)";
     await db.query(reviewQuery, [bookingID, PackageID, Rating, Feedback || ""]);
@@ -78,8 +82,6 @@ export const addReview = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal Server Error!" });
   }
 };
-
-// DP, Tourist First name , ReviewDate,Rating,Feedback
 
 
 export const getAllreviews = async (req,res)=>{
@@ -116,5 +118,3 @@ export const getAllreviews = async (req,res)=>{
     })
   }
 }
-
-

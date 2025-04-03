@@ -16,7 +16,6 @@ export const Blogs = () => {
     const [userBlog, setUserBlog] = useState(false);
     const [blogs, setBlogs] = useState([]);
     const [userDetails, setUserDetails] = useState({});
-    const [like, setLike] = useState(null);
     const [edit, setEdit] = useState(false);
     const [refresh, setRefresh] = useState(false);
     
@@ -61,7 +60,7 @@ export const Blogs = () => {
     useEffect(() => {
         fetchUserDetails();
         fetchBlogs();
-    }, [search, userBlog, like, edit, refresh]);
+    }, [search, userBlog, edit, refresh]);
 
     return (
         <>
@@ -97,7 +96,7 @@ export const Blogs = () => {
                             Show My Blogs
                         </label>
                     </div>
-
+                    <h1 className="text-center">Blog Section</h1>
                     {/* Blog Cards Section */}
                     <ul className="blog-list">
                         {blogs.length > 0 ? (
@@ -107,8 +106,6 @@ export const Blogs = () => {
                                     blog={blog} 
                                     setRefresh={setRefresh} 
                                     hide={blog.UserID === userDetails.id && blog.UserType === userDetails.type ? "not-hidden" : "hidden"} 
-                                    like={like} 
-                                    setLike={setLike} 
                                     setEdit={setEdit} 
                                     setData={setBlogData} 
                                 />

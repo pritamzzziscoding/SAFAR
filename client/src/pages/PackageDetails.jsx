@@ -38,8 +38,8 @@ export const PackageDetails = () => {
   return (
     <>
         <Header />
-        <div className="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6 margin-for-header">
-            <div className="container bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
+        <div className="bg-green-50 text-gray-900 min-h-screen flex items-center flex-col justify-center p-6 margin-for-header">
+            <div className="container bg-stone-50 rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
                 {/* Image */}
                 <img
                 src={packageData.ImgURL}
@@ -68,7 +68,7 @@ export const PackageDetails = () => {
                 {/* Facilities */}
                 <div className="mt-4">
                     <h2 className="text-xl font-semibold text-teal-600">
-                    Facilities Included:
+                    Facilities and Iteneries Included:
                     </h2>
                     <ul className="mt-2 list-inside space-y-1 text-gray-700">
                     {packageData.facilities.map((facility, index) => (

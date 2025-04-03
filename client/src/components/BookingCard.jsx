@@ -9,9 +9,14 @@ export const BookingCard = ({id, title, destination}) => {
                     <h2 className="package-name truncate">{title}</h2>
                     <p className="destination text-center sm:text-left">{destination}</p>
                 </div>
-                <NavLink to={`/bookings/${id}`} className="view-details-btn">
-                    View Details
-                </NavLink>
+                <div className="grid grid-cols-2 gap-0.5">
+                    <NavLink to={`/rating/${id}`} className="view-details-btn">
+                        Give Reviews
+                    </NavLink>
+                    <NavLink to={`/bookings/${id}`} className="view-details-btn">
+                        View Details
+                    </NavLink>
+                </div>
             </div>
         </div>
     );

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 export const showAllBookings = async(req,res)=>{
   try {
+ 
     if(req.user.type==="agency"){
       return res.redirect("http://localhost:5173/packages")
     }

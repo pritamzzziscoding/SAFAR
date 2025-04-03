@@ -60,7 +60,7 @@ export const Home = () => {
 
             <FilterForm filters={filters} setFilters={setFilters} handleSubmit={handleSubmit}/>
         </div>
-        <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-[90%] gap-5 package-display">
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 w-[90%] gap-2 package-display shadow-2xl rounded-xl border border-stone-100">
             {packages.map((pkg)=>{
                 return <PackageCard pkg={pkg}/>
             })}

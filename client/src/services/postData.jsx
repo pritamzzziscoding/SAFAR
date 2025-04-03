@@ -29,3 +29,8 @@ export const getFilteredPackage = (filterData) => {
     const res = api.post("/filter-package", filterData)
     return res
 }
+
+export const giveRating = (body) => {
+    const res = api.post("/rating", body)
+    return res
+}
