@@ -3,6 +3,7 @@ import "../styles/PackageDetails.css";
 import { useLoaderData, useParams } from "react-router-dom";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { IoIosArrowForward } from "react-icons/io";
 import { BookingForm } from "../components/BookingForm";
 import { ReviewCard } from "../components/ReviewCard";
 
@@ -63,9 +64,9 @@ export const PackageDetails = () => {
                 <h2 className="text-xl font-semibold text-teal-600">
                 Facilities Included:
                 </h2>
-                <ul className="mt-2 list-disc list-inside space-y-1 text-gray-700">
+                <ul className="mt-2 list-inside space-y-1 text-gray-700">
                 {packageData.facilities.map((facility, index) => (
-                    <li key={index}>{facility}</li>
+                    <li key={index}><IoIosArrowForward className="text-teal-300"/> {facility}</li>
                 ))}
                 </ul>
             </div>

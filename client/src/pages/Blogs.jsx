@@ -117,8 +117,7 @@ export const Blogs = () => {
                             <p className="text-center no-blogs-message">No blogs found. Try searching for another location.</p>
                         )}
                     </ul>
-                </div>
-                
+                </div> 
             </div>
         </>
     );

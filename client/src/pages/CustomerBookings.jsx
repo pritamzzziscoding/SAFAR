@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/bookings-agency.css"; // Import margins & paddings CSS
 import { useParams } from "react-router-dom";
 import { getBookingsForAgency } from "../services/get-data";
+import { Header } from "../components/Header";
 
 export const CustomerBookings = () => {
     const {package_id} = useParams()
@@ -35,32 +36,35 @@ export const CustomerBookings = () => {
     });
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
-            {/* Filter Section */}
-            <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4 mb-6">
-                <input
-                    type="text"
-                    placeholder="Search by Name"
-                    className="w-full sm:w-1/2 border border-teal-600 rounded-md p-3 text-gray-800 focus:ring-2 focus:ring-teal-500"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Search by Booking ID"
-                    className="w-full sm:w-1/2 border border-teal-600 rounded-md p-3 text-gray-800 focus:ring-2 focus:ring-teal-500"
-                    value={searchID}
-                    onChange={(e) => setSearchID(e.target.value)}
-                />
-            </div>
+        <>
+            <Header />
+            <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
+                {/* Filter Section */}
+                <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4 mb-6">
+                    <input
+                        type="text"
+                        placeholder="Search by Name"
+                        className="w-full sm:w-1/2 border border-teal-600 rounded-md p-3 text-gray-800 focus:ring-2 focus:ring-teal-500"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Search by Booking ID"
+                        className="w-full sm:w-1/2 border border-teal-600 rounded-md p-3 text-gray-800 focus:ring-2 focus:ring-teal-500"
+                        value={searchID}
+                        onChange={(e) => setSearchID(e.target.value)}
+                    />
+                </div>
 
-            {/* Booking Cards */}
-            <div className="w-full max-w-md flex flex-col gap-6">
-                {filteredBookings.map((booking) => (
-                    <BookingCard key={booking.BookingID} booking={booking} />
-                ))}
+                {/* Booking Cards */}
+                <div className="w-full max-w-md flex flex-col gap-6">
+                    {filteredBookings.map((booking) => (
+                        <BookingCard key={booking.BookingID} booking={booking} />
+                    ))}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
