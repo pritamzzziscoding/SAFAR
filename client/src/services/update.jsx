@@ -41,6 +41,11 @@ export const updatePackage = (body) => {
 }
 
 export const cancelBooking = (body) => {
-    const res = api.put("/cancel-package", body)
+    const res = api.put("/cancel-booking", body)
+    return res
+}
+
+export const giveRefund = (body) => {
+    const res = api.put("/refund-tourist", body)
     return res
 }

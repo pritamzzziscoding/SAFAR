@@ -3,6 +3,7 @@ import "../styles/bookings-agency.css"; // Import margins & paddings CSS
 import { useParams } from "react-router-dom";
 import { getBookingsForAgency } from "../services/get-data";
 import { Header } from "../components/Header";
+import { giveRefund } from "../services/update";
 
 function generateBookingId(date, id) {
     let dateObj = new Date(date);
@@ -84,6 +85,21 @@ export const CustomerBookings = () => {
 
 
 const BookingCard = ({ booking }) => {
+    
+    const handleRefund = async () => {
+        try {
+            const res = await giveRefund({BookingID : booking.BookingID})
+            console.log(res.data)
+            if(res.data.success === true){
+                console.log("Refund Processed!!!");
+            }else{
+                console.log("Error in refund giving!!!")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
     return (
         <div className="relative bg-white bg-opacity-70 border border-teal-300 shadow-xl rounded-2xl overflow-hidden p-6 transition transform hover:scale-101 hover:shadow-2xl">
             <div className="absolute top-2 right-4 text-gray-400 text-xs">#{generateBookingId(booking.BookingDate.split("T")[0],booking.BookingID)}</div>
@@ -113,7 +129,7 @@ const BookingCard = ({ booking }) => {
                 ))}
             </ul>
 
-            <button className="mt-5 w-full bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition">
+            <button onClick={handleRefund} className={`${booking.cancelstatus === 0 && "hidden"} mt-5 w-full bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition`}>
                 Refund to Tourist
             </button>
         </div>
