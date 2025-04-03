@@ -113,7 +113,7 @@ const BookingCard = ({ booking }) => {
                 ))}
             </ul>
 
-            <button className="mt-5 w-full bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition">
+            <button className={`${booking.cancelstatus === 0 && "hidden"} mt-5 w-full bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition`}>
                 Refund to Tourist
             </button>
         </div>
