@@ -12,7 +12,6 @@
     flex-direction: column; /* Stacked on mobile */
     align-items: center;
     justify-content: space-between;
-    background-color: white;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     /* max-width: 900px; */
@@ -24,7 +23,6 @@
 
 /* 📌 Hover Effect */
 .booking-card:hover {
-    /* transform: translateY(-3px); */
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
 }
 

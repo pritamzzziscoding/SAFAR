@@ -25,7 +25,7 @@ export const Bookings = () => {
             <div className="mt-20">
                 {
                     bookings.map((booking)=>{
-                        return <BookingCard key={booking.BookingID} id={booking.BookingID} title={booking.title} destination={booking.destination}/>
+                        return <BookingCard key={booking.BookingID} id={booking.BookingID} title={booking.title} destination={booking.destination} image_url={booking.ImgURL}/>
                     })
                 }
             </div>
