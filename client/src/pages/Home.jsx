@@ -52,7 +52,7 @@ export const Home = () => {
         </div>
 
         <div className="header-home">
-        <div className="bg-white/30 backdrop-blur-sm px-4 py-2 rounded-lg inline-block">
+        <div className="bg-white/30 px-4 py-2 rounded-lg inline-block">
   <p className="bg-gradient-to-r from-teal-700 via-teal-400 to-teal-600 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semibold italic">
     Discover your perfect destination
   </p>
@@ -60,7 +60,7 @@ export const Home = () => {
 
             <FilterForm filters={filters} setFilters={setFilters} handleSubmit={handleSubmit}/>
         </div>
-        <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-[90%] gap-5 package-display">
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 w-[90%] gap-2 package-display shadow-2xl rounded-xl border border-stone-100">
             {packages.map((pkg)=>{
                 return <PackageCard pkg={pkg}/>
             })}

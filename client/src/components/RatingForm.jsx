@@ -5,8 +5,9 @@ import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
 import "../styles/rating-form.css"; // Separate CSS for margins & paddings
 import { Header } from "./Header";
+import { useParams } from "react-router-dom";
+import { giveRating } from "../services/postData";
 
-// 🌟 Fun & Engaging Rating Messages  
 const labels = {
   0.5: "😡 Oh no! Did we ruin your trip?",
   1: "🙄 Not what you expected?",
@@ -25,14 +26,29 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 }
 
-export const RatingForm = ({ bookingId }) => {
+export const RatingForm = () => {
+  const {id} = useParams()
   const [value, setValue] = React.useState(5);
   const [hover, setHover] = React.useState(-1);
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({ value, description }); // Logging data for backend submission
+    try {
+      const res = await giveRating({
+        bookingID : id,
+        Rating : value,
+        Feedback : description
+      });
+
+      if(res.data.status === true){
+        console.log("Feedback submitted")
+      }else{
+        alert(res.data.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (

@@ -9,6 +9,7 @@ import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import paymentRoute from "./routes/paymentRoutes.js"
+import packageBookingRoute from "./routes/packageBoookingroutes.js"
 const app = express();
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
@@ -48,9 +49,10 @@ app.use(userRoutes);
 app.use(uploadRoutes);
 app.use(blogRoutes);
 app.use(packageRoutes);
-app.use("/review", reviewRoutes);
+app.use(reviewRoutes);
 app.use( bookingRoutes);
 app.use(paymentRoute);
+app.use(packageBookingRoute);
 app.get("/getKey",(req,res)=>res.status(200).json({
     key:process.env.RAZORPAY_API_KEY
 }))

@@ -12,7 +12,7 @@
 .blog-main {
     width: 100%;
     max-width: 1300px;
-    background: white;
+    background: rgb(234, 253, 239);
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
