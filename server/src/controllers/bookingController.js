@@ -8,7 +8,7 @@ export const showAllBookings = async(req,res)=>{
       return res.redirect("http://localhost:5173/packages")
     }
     const touristid = req.user.id;
-    const bookingsQuery = `SELECT B.BookingID , p.destination,p.title FROM BOOKINGS B LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  WHERE B.TOURISTID = ? AND B.STATUS=?`
+    const bookingsQuery = `SELECT B.BookingID , p.destination,p.title,p.ImgURL FROM BOOKINGS B LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  WHERE B.TOURISTID = ? AND B.STATUS=?`
     const bookings = await db.query(bookingsQuery,[touristid,"VERIFIED"]);
     res.status(200).json({
       success:true,
@@ -45,10 +45,22 @@ export const getBookingDetails = async (req,res)=>{
     console.log(pkgID);
     const extra_query = `SELECT Title,Duration,Destination FROM PACKAGES WHERE PACKAGEID =?`
     const extra_result = await db.query(extra_query,[pkgID]);
+    // const time = extra_result[0][0]["Duration"]; // Time in days
+    // const startDate = new Date(result[0][0]["FromDate"]); // Convert to Date object
+    const bookingDate = new Date(result[0][0]["BookingDate"]);
+    const durationInMs =  24 * 60 * 60 * 1000; 
+    const targetDate = new Date(bookingDate.getTime() + durationInMs);
+    const currentDate = new Date();
+    let isCancellable = true;
+    if(currentDate>targetDate){
+      isCancellable = false;
+    }
     // console.log(extra_result);
     result[0][0]["packagename"] = extra_result[0][0]["Title"];
     result[0][0]["duration"]  = extra_result[0][0]["Duration"];
     result[0][0]["destination"]  = extra_result[0][0]["Destination"];
+    result[0][0]["isCancellable"] = isCancellable;
+
     res.status(200).json({
       success:true,
       message:"Booking Details Fetched",

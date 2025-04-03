@@ -10,6 +10,8 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import paymentRoute from "./routes/paymentRoutes.js"
 import packageBookingRoute from "./routes/packageBoookingroutes.js"
+import cancelRoute from "./routes/cancelRoutes.js"
+import refundRoute from "./routes/refundRoutes.js"
 const app = express();
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
@@ -53,6 +55,8 @@ app.use(reviewRoutes);
 app.use( bookingRoutes);
 app.use(paymentRoute);
 app.use(packageBookingRoute);
+app.use(cancelRoute)
+app.use(refundRoute)
 app.get("/getKey",(req,res)=>res.status(200).json({
     key:process.env.RAZORPAY_API_KEY
 }))
