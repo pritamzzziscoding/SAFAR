@@ -7,6 +7,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { BookingForm } from "../components/BookingForm";
 import { ReviewCard } from "../components/ReviewCard";
 import { Header } from "../components/Header";
+import { getPackageReviews } from "../services/get-data";
 
 export const PackageDetails = () => {
     const[hide, setHide] = useState(true)

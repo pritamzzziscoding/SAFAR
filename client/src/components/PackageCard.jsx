@@ -13,7 +13,7 @@ export const PackageCard = ({ pkg }) => {
                 <p className="destination text-teal-600 font-medium">{pkg.Destination}</p>
                 <p className="price text-green-600 font-semibold">₹{Math.round(pkg.Price)} per person</p>
                 
-                <div className="rating flex items-center justify-between mt-4">
+                <div className="rating flex flex-col mt-4">
                     <div className="rating-info flex items-center gap-2">
                         <Rating
                             name="text-feedback"
