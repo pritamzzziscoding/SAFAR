@@ -32,7 +32,7 @@ export const ViewDetails = () => {
         try {
             const res = await getBookingDetails(id);
             console.log(res.data);
-            setBooking(res.data.booking || {}); // Ensure fallback
+            setBooking(res.data.booking || {}); 
         } catch (error) {
             console.error(error);
         }
@@ -45,7 +45,7 @@ export const ViewDetails = () => {
     return (
         <>
             <Header />
-            <div className="view-details-container">
+            <div className="view-details-container margin-for-header">
                 <div className="details-card">
                     <h1 className="package-title">{booking.packagename || "N/A"}</h1>
                     <p className="booking-id"><strong>Booking ID:</strong> {generateBookingId(booking.BookingDate.split("T")[0],booking.BookingID) || "N/A"}</p>

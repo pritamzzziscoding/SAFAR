@@ -38,7 +38,7 @@ export const CustomerBookings = () => {
     return (
         <>
             <Header />
-            <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
+            <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6 margin-for-header">
                 {/* Filter Section */}
                 <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4 mb-6">
                     <input
