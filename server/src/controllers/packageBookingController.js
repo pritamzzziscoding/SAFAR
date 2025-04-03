@@ -1,5 +1,4 @@
 import { db } from "../config/database.js";
-
 export const getAllBookings = async (req,res)=>{
     try {
         if(req.user.type === "tourist"){

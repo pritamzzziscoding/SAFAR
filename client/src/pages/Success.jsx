@@ -14,8 +14,8 @@ export const Success = () => {
                 <h1 className="text-2xl sm:text-3xl font-semibold mt-4 text-center">Payment Successful!</h1>
                 <p className="sm:text-lg mt-2 text-center">Your package has been booked successfully.</p>
                 <p className="sm:text-lg mt-2 text-center">Transaction ID : {reference}</p>
-                <NavLink to="/home" className="back-home-btn bg-teal-800 rounded-md hover:shadow-2xl">
-                    Back to Home
+                <NavLink to="/bookings" className="back-home-btn bg-teal-800 rounded-md hover:shadow-2xl">
+                    Back to Bookings
                 </NavLink>
             </div>
         </>
