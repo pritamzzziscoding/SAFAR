@@ -6,38 +6,40 @@ import { FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { BookingForm } from "../components/BookingForm";
 import { ReviewCard } from "../components/ReviewCard";
-import { Header } from "../components/Header";
 import { getPackageReviews } from "../services/get-data";
+import {Header} from "../components/Header"
 
 export const PackageDetails = () => {
-    const[hide, setHide] = useState(true)
-    const[reviews, setReviews] = useState([])
-    const p = useLoaderData();
-    const packageData = p.data.packageData;
-    
-    const {packageId} = useParams()
+  const [hide, setHide] = useState(true);
+  const [reviews, setReviews] = useState([]);
+  const p = useLoaderData();
+  const packageData = p.data.packageData;
 
-    const getReviews = async () => {
-        try {
-            const res = await getPackageReviews(packageId)
-            if(res.data.success === true){
-                setReviews(res.data.reviews)
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  const { packageID } = useParams();
+  console.log(packageID);
+
+  const getReviews = async () => {
+    try {
+      const res = await getPackageReviews(packageID);
+      if (res.data.success === true) {
+        console.log(res.data);
+
+        setReviews(res.data.reviews);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    useEffect(()=>{
-        getReviews()
-    },[packageId])
-
+  useEffect(() => {
+    getReviews();
+  }, [packageID]);
 
   return (
     <>
         <Header />
-        <div className="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6 margin-for-header">
-            <div className="container bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
+        <div className="bg-green-50 text-gray-900 min-h-screen flex items-center flex-col justify-center p-6 margin-for-header">
+            <div className="container bg-stone-50 rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
                 {/* Image */}
                 <img
                 src={packageData.ImgURL}
@@ -66,7 +68,7 @@ export const PackageDetails = () => {
                 {/* Facilities */}
                 <div className="mt-4">
                     <h2 className="text-xl font-semibold text-teal-600">
-                    Facilities Included:
+                    Facilities and Iteneries Included:
                     </h2>
                     <ul className="mt-2 list-inside space-y-1 text-gray-700">
                     {packageData.facilities.map((facility, index) => (

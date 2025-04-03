@@ -4,6 +4,6 @@ import { authenticateUser } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.get("/tourist-bookings",authenticateUser, showAllBookings);
-router.get("/tourist-bookings/:id",getBookingDetails);
+router.get("/tourist-bookings/:id",authenticateUser,getBookingDetails);
 
 export default router;

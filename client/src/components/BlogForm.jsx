@@ -60,8 +60,8 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
     };
 
     return (
-        <form className="blog-form" onSubmit={handleSubmit}>
-            <h2 className="form-heading">{edit ? "Edit Your Blog" : "Create a New Blog"}</h2>
+        <form className="blog-form bg-teal-50" onSubmit={handleSubmit}>
+            <h2 className="form-heading">{edit ? "Edit Your Blog" : "Add a New Blog"}</h2>
 
             <div className="form-grid grid sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <div className="form-group">
@@ -71,7 +71,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
                         name="caption" 
                         id="caption" 
                         required 
-                        maxLength={30} 
+                        maxLength={60} 
                         placeholder="Enter a catchy title" 
                         value={data.caption} 
                         onChange={handleChange} 

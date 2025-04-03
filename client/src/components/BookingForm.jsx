@@ -73,7 +73,7 @@ export const BookingForm = ({ packageId , price ,hide}) => {
                         address: "Razorpay Corporate Office"
                     },
                     theme: {
-                        "color": "#3399cc"
+                        "color": "#4e8939"
                     }
                 }; 
 
