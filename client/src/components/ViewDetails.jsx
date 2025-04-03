@@ -26,6 +26,7 @@ export const ViewDetails = () => {
         BookingDate: "",
         PackageID: "",
         members: [],
+        isCancellable : false
     });
 
     const getDetail = async () => {
@@ -77,7 +78,7 @@ export const ViewDetails = () => {
                                 <button className="view-package-btn">View Package</button>
                             </NavLink>
                         )}
-                        <button className="cancel-btn" onClick={() => navigate("/")}>Cancel Booking</button>
+                        <button className={`cancel-btn ${booking.isCancellable === false && "hidden"}`} onClick={() => navigate("/")}>Cancel Booking</button>
                     </div>
                 </div>
             </div>
