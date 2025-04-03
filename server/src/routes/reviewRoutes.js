@@ -4,6 +4,6 @@ import { addReview, getAllreviews } from "../controllers/reviewController.js";
 const router = express.Router();
 
 router.post("/add", addReview);
-router.get("/allreviews/:id",getAllreviews)
+router.get("/package-reviews/:id",getAllreviews)
 
 export default router;

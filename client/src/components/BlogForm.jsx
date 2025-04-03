@@ -71,7 +71,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
                         name="caption" 
                         id="caption" 
                         required 
-                        maxLength={30} 
+                        maxLength={60} 
                         placeholder="Enter a catchy title" 
                         value={data.caption} 
                         onChange={handleChange} 

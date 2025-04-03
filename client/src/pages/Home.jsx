@@ -52,7 +52,7 @@ export const Home = () => {
         </div>
 
         <div className="header-home">
-        <div className="bg-white/30 backdrop-blur-sm px-4 py-2 rounded-lg inline-block">
+        <div className="bg-white/30 px-4 py-2 rounded-lg inline-block">
   <p className="bg-gradient-to-r from-teal-700 via-teal-400 to-teal-600 bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semibold italic">
     Discover your perfect destination
   </p>

@@ -5,6 +5,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { BookingForm } from "../components/BookingForm";
 import { ReviewCard } from "../components/ReviewCard";
+import { getPackageReviews } from "../services/get-data";
 
 export const PackageDetails = () => {
     const[hide, setHide] = useState(true)
@@ -12,12 +13,15 @@ export const PackageDetails = () => {
     const p = useLoaderData();
     const packageData = p.data.packageData;
     
-    const {packageId} = useParams()
+    const {packageID} = useParams()
+    console.log(packageID)
 
     const getReviews = async () => {
         try {
-            const res = await getPackageReviews(packageId)
+            const res = await getPackageReviews(packageID)
             if(res.data.success === true){
+                console.log(res.data);
+                
                 setReviews(res.data.reviews)
             }
         } catch (error) {
@@ -27,11 +31,11 @@ export const PackageDetails = () => {
 
     useEffect(()=>{
         getReviews()
-    },[packageId])
+    },[packageID])
 
 
   return (
-    <div className="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-6">
+    <div className="bg-gray-100 text-gray-900 min-h-screen flex flex-col items-center justify-center p-6">
         <div className="container bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
             {/* Image */}
             <img
@@ -88,7 +92,7 @@ export const PackageDetails = () => {
             <BookingForm packageId={packageData.PackageID} price={packageData.Price} hide={hide ? "hidden" : ""}/>
         </div>
         <div className="container bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
-            <h1>Package Reviews</h1>
+            <h1 className="text-2xl">Package Reviews</h1>
             {
                 reviews.map((review)=>{
                     return <ReviewCard review={review} />

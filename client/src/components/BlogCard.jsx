@@ -29,7 +29,7 @@ export const BlogCard = ({
   };
 
   return (
-    <li className="blog-card bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-101">
+    <li className="blog-card bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform">
       <img className="w-full h-56 object-cover" src={ImgURL} alt="Blog Thumbnail" />
       <div className="blog-content flex flex-col gap-2">
         <div className="flex items-center justify-between">
@@ -41,7 +41,7 @@ export const BlogCard = ({
             <MdLocationPin /> {Location}
           </p>
         </div>
-        <h2 className="text-xl font-semibold text-gray-900">{Title}</h2>
+        <h2 className="text-xl font-semibold text-gray-900 truncate">{Title}</h2>
         <button onClick={handleClick} className="text-teal-500 font-medium hover:underline">
           Read More...
         </button>

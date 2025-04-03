@@ -52,6 +52,5 @@ export const getBookingsForAgency = (id) => {
 //
 export const getPackageReviews = (id) => {
     const res = api.get(`/package-reviews/${id}`)
-    const res = api.get(`/package-bookings/${id}`)
     return res
 }

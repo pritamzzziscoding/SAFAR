@@ -6,6 +6,11 @@ export const getAllBookings = async (req,res)=>{
             return res.redirect("http://localhost:5173/home")
         }
         const pkgid = req.params.id ;
+        const packageQuery = `SELECT AgencyID from packages where packageID = ?`
+        const packageResult = await db.query(packageQuery,[pkgid])
+        if(req.user.id != packageResult[0][0]["AgencyID"]){
+            return res.redirect("http://localhost:5173/packages")
+        }
         const bookingQuery = `SELECT BookingID,TouristID,FromDate,NetPayableAmount,BookingDate FROM BOOKINGS WHERE PACKAGEID = ? AND STATUS = ?`
         const bookingResult = await db.query(bookingQuery,[pkgid,"VERIFIED"])
         for(let i=0;i<bookingResult[0].length;i++){

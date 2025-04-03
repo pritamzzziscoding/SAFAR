@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 
 export const showAllBookings = async(req,res)=>{
   try {
+    if(req.user.type==="agency"){
+      return res.redirect("http://localhost:5173/packages")
+    }
     const touristid = req.user.id;
     const bookingsQuery = `SELECT B.BookingID , p.destination,p.title FROM BOOKINGS B LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  WHERE B.TOURISTID = ? AND B.STATUS=?`
     const bookings = await db.query(bookingsQuery,[touristid,"VERIFIED"]);
@@ -23,9 +26,16 @@ export const showAllBookings = async(req,res)=>{
 
 export const getBookingDetails = async (req,res)=>{
   try {
+    const touristID = req.user.id;
+    if(req.user.type === "agency"){
+      return res.redirect("http://localhost/packages")
+    }
     const {id} = req.params;
     const bookingQuery = `SELECT * FROM BOOKINGS WHERE BOOKINGID = ?`
     const result = await db.query(bookingQuery,[Number(id)]);
+    if(result[0][0]["TouristID"]!=touristID){
+          return res.redirect("http://localhost:5173/home")
+    }
     const memberQuery = 'SELECT MemberName, age, gender FROM MEMBERS WHERE BOOKINGID=?'
     const member_result = await db.query(memberQuery,[Number(id)]);
     // console.log(result[0],member_result);
