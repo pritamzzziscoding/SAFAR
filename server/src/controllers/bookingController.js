@@ -8,7 +8,7 @@ export const showAllBookings = async(req,res)=>{
       return res.redirect("http://localhost:5173/packages")
     }
     const touristid = req.user.id;
-    const bookingsQuery = `SELECT B.BookingID , p.destination,p.title FROM BOOKINGS B LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  WHERE B.TOURISTID = ? AND B.STATUS=?`
+    const bookingsQuery = `SELECT B.BookingID , p.destination,p.title,p.ImgURL FROM BOOKINGS B LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  WHERE B.TOURISTID = ? AND B.STATUS=?`
     const bookings = await db.query(bookingsQuery,[touristid,"VERIFIED"]);
     res.status(200).json({
       success:true,

@@ -79,7 +79,7 @@ export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
                     </label>
                     <span className="ml-2 text-md font-medium flex flex-start">{isActive ? 'Active' : 'Inactive'}</span>
                 </div>
-                <div className='flex gap-0.5'>
+                <div className='flex gap-2'>
                     <NavLink to={`/packages/${pkg.PackageID}`}><p className='text-green-700'>bookings</p></NavLink>
                     <NavLink to={`/reviews/${pkg.PackageID}`}><p className='text-green-700'>reviews</p></NavLink>
                 </div>
