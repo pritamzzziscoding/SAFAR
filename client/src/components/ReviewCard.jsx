@@ -6,10 +6,8 @@ export const ReviewCard = ({ review }) => {
     return (
         <div className="review-card flex gap-4 p-5 rounded-lg shadow-md bg-white transition-transform transform hover:scale-101">
             
-            {/* Tourist Profile Image */}
             <img src={review.imgURL} alt="Tourist DP" className="w-14 h-14 rounded-full object-cover border-2 border-teal-500 shadow-sm" />
             
-            {/* Review Content */}
             <div className="flex flex-col justify-between w-full">
                 
                 <div className="flex justify-between items-center">
@@ -18,7 +16,6 @@ export const ReviewCard = ({ review }) => {
                         <p className="text-gray-500 text-sm">{review.ReviewDate.split("T")[0]}</p>
                     </div>
                     
-                    {/* Rating */}
                     <div className="flex items-center">
                         <Rating
                             name="text-feedback"
@@ -33,7 +30,6 @@ export const ReviewCard = ({ review }) => {
                     </div>
                 </div>
 
-                {/* Feedback Text */}
                 <p className="mt-2 text-gray-800 text-sm leading-relaxed italic">{review.Feedback}”</p>
             </div>
         </div>

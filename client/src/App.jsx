@@ -17,6 +17,7 @@ import { ViewDetails } from "./components/ViewDetails";
 import { CustomerBookings } from "./pages/CustomerBookings";
 import { Success } from "./pages/Success";
 import { Failure } from "./pages/Fail";
+import { Reviews } from "./pages/Reviews";
 
 export const App = () => {
   const router = createBrowserRouter([
@@ -49,6 +50,10 @@ export const App = () => {
     {
       path: "/bookings/:id",
       element: <ViewDetails />
+    },
+    {
+      path: "/reviews/:packageId",
+      element : <Reviews />
     }
     ,
     {
