@@ -7,72 +7,79 @@ import { IoIosArrowForward } from "react-icons/io";
 import { BookingForm } from "../components/BookingForm";
 import { ReviewCard } from "../components/ReviewCard";
 import { getPackageReviews } from "../services/get-data";
+import {Header} from "../components/Header"
 
 export const PackageDetails = () => {
-    const[hide, setHide] = useState(true)
-    const[reviews, setReviews] = useState([])
-    const p = useLoaderData();
-    const packageData = p.data.packageData;
-    
-    const {packageID} = useParams()
-    console.log(packageID)
+  const [hide, setHide] = useState(true);
+  const [reviews, setReviews] = useState([]);
+  const p = useLoaderData();
+  const packageData = p.data.packageData;
 
-    const getReviews = async () => {
-        try {
-            const res = await getPackageReviews(packageID)
-            if(res.data.success === true){
-                console.log(res.data);
-                
-                setReviews(res.data.reviews)
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  const { packageID } = useParams();
+  console.log(packageID);
+
+  const getReviews = async () => {
+    try {
+      const res = await getPackageReviews(packageID);
+      if (res.data.success === true) {
+        console.log(res.data);
+
+        setReviews(res.data.reviews);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    useEffect(()=>{
-        getReviews()
-    },[packageID])
-
+  useEffect(() => {
+    getReviews();
+  }, [packageID]);
 
   return (
-    <div className="bg-gray-100 text-gray-900 min-h-screen flex flex-col items-center justify-center p-6">
+    <>
+        <Header></Header>
+      <div className="bg-gray-100 text-gray-900 min-h-screen flex flex-col items-center justify-center p-6">
         <div className="container bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
-            {/* Image */}
-            <img
+          {/* Image */}
+          <img
             src={packageData.ImgURL}
             alt={packageData.Title}
             className="w-full h-72 object-cover"
-            />
+          />
 
-            {/* Content */}
-            <div className="p-6">
+          {/* Content */}
+          <div className="p-6">
             <h1 className="text-3xl font-bold text-teal-600">
-                {packageData.Title}
+              {packageData.Title}
             </h1>
-            <p className="text-lg text-gray-600 mt-2">📍{packageData.DESTINATION}</p>
-            
+            <p className="text-lg text-gray-600 mt-2">
+              📍{packageData.DESTINATION}
+            </p>
 
             {/* Price & Duration Section */}
             <div className="price-duration-container sm:flex items-center">
-                <div className="price">
-                <span className="label">Price:</span> ₹{Math.round(packageData.Price)}/per person
-                </div>
-                <div className="duration">
-                <span className="label">Duration:</span> {packageData.Duration} {packageData.Duration === 1 ? "Day" : "Days"}
-                </div>
+              <div className="price">
+                <span className="label">Price:</span> ₹
+                {Math.round(packageData.Price)}/per person
+              </div>
+              <div className="duration">
+                <span className="label">Duration:</span> {packageData.Duration}{" "}
+                {packageData.Duration === 1 ? "Day" : "Days"}
+              </div>
             </div>
 
             {/* Facilities */}
             <div className="mt-4">
-                <h2 className="text-xl font-semibold text-teal-600">
+              <h2 className="text-xl font-semibold text-teal-600">
                 Facilities Included:
-                </h2>
-                <ul className="mt-2 list-inside space-y-1 text-gray-700">
+              </h2>
+              <ul className="mt-2 list-inside space-y-1 text-gray-700">
                 {packageData.facilities.map((facility, index) => (
-                    <li key={index}><IoIosArrowForward className="text-teal-300"/> {facility}</li>
+                  <li className="flex gap-0.5 items-center" key={index}>
+                    <IoIosArrowForward className="text-teal-300" /> {facility}
+                  </li>
                 ))}
-                </ul>
+              </ul>
             </div>
 
             {/* Description */}
@@ -80,27 +87,48 @@ export const PackageDetails = () => {
 
             {/* Contact Info */}
             <div className="mt-4 text-lg">
-                <p className="flex gap-2 items-center"><span className="font-semibold text-teal-600 flex items-center"><FaPhoneAlt /></span> {packageData.phoneno}</p>
-                <p className="flex gap-2 items-center"><span className="font-semibold text-teal-600"><FaLocationDot /></span>{packageData.ADDRESS}</p>
+              <p className="flex gap-2 items-center">
+                <span className="font-semibold text-teal-600 flex items-center">
+                  <FaPhoneAlt />
+                </span>{" "}
+                {packageData.phoneno}
+              </p>
+              <p className="flex gap-2 items-center">
+                <span className="font-semibold text-teal-600">
+                  <FaLocationDot />
+                </span>
+                {packageData.ADDRESS}
+              </p>
             </div>
 
             {/* Book Now Button */}
-            <div className={`${hide === true ? "" : "hidden"} mt-6 flex justify-center`}>
-                <button onClick={()=>setHide(false)} className="book-now-button shadow-2xl">Book Now</button>
+            <div
+              className={`${
+                hide === true ? "" : "hidden"
+              } mt-6 flex justify-center`}
+            >
+              <button
+                onClick={() => setHide(false)}
+                className="book-now-button shadow-2xl"
+              >
+                Book Now
+              </button>
             </div>
-
-            </div>
-            <BookingForm packageId={packageData.PackageID} price={packageData.Price} hide={hide ? "hidden" : ""}/>
+          </div>
+          <BookingForm
+            packageId={packageData.PackageID}
+            price={packageData.Price}
+            hide={hide ? "hidden" : ""}
+          />
         </div>
         <div className="container bg-white rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
-            <h1 className="text-2xl">Package Reviews</h1>
-            {
-                reviews.map((review)=>{
-                    return <ReviewCard review={review} />
-                })
-            }
+          <h1 className="text-2xl">Package Reviews</h1>
+          {reviews.map((review) => {
+            return <ReviewCard review={review} />;
+          })}
         </div>
-    </div>
+      </div>
+    </>
   );
 };
 

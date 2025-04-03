@@ -1,17 +1,12 @@
 import { db } from "../config/database.js";
-import jwt from "jsonwebtoken";
+
 
 export const addReview = async (req, res) => {
   try {
-    const { token } = req.cookies;
-    if (!token) {
-      return res
-        .status(200)
-        .json({ success: false, message: "Please login first!" });
+   
+    if(req.user.type ==="agency"){
+      return res.redirect("http://localhost:5173/packages")
     }
-    const decoded = jwt.verify(token, "ijinwincwifjqun");
-    const TouristID = decoded.id;
-
     const [result] = await db.query(
       "SELECT * FROM BOOKINGS WHERE TouristID = ?",
       [TouristID]
@@ -121,3 +116,5 @@ export const getAllreviews = async (req,res)=>{
     })
   }
 }
+
+

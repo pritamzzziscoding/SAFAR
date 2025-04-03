@@ -30,7 +30,7 @@ export const Packages = () => {
         <Header />
         <div className="package-header">
             <p className="h-20 bg-gradient-to-r from-teal-700 via-teal-600 to-teal-800 bg-clip-text text-transparent text-center text-2xl sm:text-3xl md:text-4xl font-bold shadow-4xl">Craft your Perfect Travel Package</p>
-            <div className={`${hide === false ? "hidden":""} border-dotted rounded-2xl package-adder border-2 w-[80%] flex flex-col items-center text-2xl font-medium`}>
+            <div className={`${hide === false || edit ? "hidden":""} border-dotted rounded-2xl package-adder border-2 w-[80%] flex flex-col items-center text-2xl font-medium`}>
                 <p className="text-center">Enhance your offerings effortlessly—click the button to add packages and expand your services.</p>
                 <MdLibraryAdd onClick={()=>setHide(false)} className={`text-9xl just add-btn`} />
             </div>

@@ -14,7 +14,7 @@ export const LandingFooter = () => {
                         <li className="text-sm"><NavLink>FAQ</NavLink></li>
                         <li className="text-sm"><NavLink>Terms & Conditions</NavLink></li>
                     </ul>
-                    <ul className="place-self-center">
+                    <ul className="place-self-center" >
                         <p className="font-medium text-lg">Follow us</p>
                         <li className="text-xl"><NavLink><FaInstagram className="" /></NavLink></li>
                         <li className="text-xl"><NavLink><FaYoutube /></NavLink></li>

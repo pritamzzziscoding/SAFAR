@@ -28,6 +28,11 @@ export const BlogCard = ({
     setCurrentLike(!currLike);
   };
 
+  const handleEdit = () => {
+    setEdit(blog)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   return (
     <li className="blog-card bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform">
       <img className="w-full h-56 object-cover" src={ImgURL} alt="Blog Thumbnail" />
@@ -49,7 +54,7 @@ export const BlogCard = ({
           <button onClick={handleDelete}>
             <MdDelete className="text-red-600 hover:text-red-700" />
           </button>
-          <button onClick={() => setEdit(blog)}>
+          <button onClick={handleEdit}>
             <MdEdit className="text-gray-700 hover:text-gray-900" />
           </button>
         </div>
@@ -63,7 +68,7 @@ const BlogContent = ({ handleClick, full, Title, Description }) => {
   return (
     <div className={`${full ? "flex" : "hidden"} fixed inset-0 bg-teal-100/90 z-50 items-center justify-center`}>
       <div className="relative bg-white content-box rounded-lg shadow-lg h-[95%] w-[90%] max-w-2xl overflow-auto">
-        <button onClick={handleClick} className="absolute top-4 right-4 text-2xl text-gray-700 hover:text-gray-900">
+        <button onClick={handleClick} className="fixed top-7 right-7 text-2xl text-gray-700 hover:text-gray-900">
           <MdCloseFullscreen />
         </button>
         <h1 className="text-2xl font-bold text-teal-700 text-center">{Title}</h1>
