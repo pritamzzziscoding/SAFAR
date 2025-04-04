@@ -3,6 +3,7 @@ import { MdCloseFullscreen, MdDelete, MdEdit, MdLocationPin } from "react-icons/
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import "../styles/BlogCard.css"; // Import margins & paddings only
 import { checkLike, Like } from "../services/get-data";
+import { deleteBlog } from "../services/delete-data";
 
 export const BlogCard = ({
   blog,
@@ -32,8 +33,17 @@ export const BlogCard = ({
     setFull((prev) => !prev);
   };
 
-  const handleDelete = () => {
-    console.log("Blog Deleted:", BlogID);
+  const handleDelete = async () => {
+    try {
+      const res = await deleteBlog(BlogID)
+      if(res.data.success === true){
+        alert("Blog deleted")
+      }else{
+        alert("Error deleting data")
+      }
+    } catch (error) {
+      console.log(error)
+    }
     setRefresh((prev) => !prev);
   };
 
