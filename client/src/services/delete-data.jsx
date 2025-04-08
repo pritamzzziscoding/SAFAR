@@ -7,6 +7,7 @@ const api = axios.create({
 })
 
 export const deleteBlog = (body) => {
+    console.log(body)
     const res = api.delete("/delete-blog", {data : body})
     return res
 }

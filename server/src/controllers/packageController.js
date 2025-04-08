@@ -122,7 +122,6 @@ export const updateStatus = async (req,res)=>{
 
 export const deletePackage = async (req,res)=>{
   try {
-    console.log("LUND", req.body)
     const {PackageID} = req.body;
     const query = `DELETE FROM  PACKAGES WHERE PACKAGEID = ? `;
     await db.query(query,[PackageID]);

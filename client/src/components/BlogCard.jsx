@@ -35,7 +35,7 @@ export const BlogCard = ({
 
   const handleDelete = async () => {
     try {
-      const res = await deleteBlog(BlogID)
+      const res = await deleteBlog({BlogID})
       if(res.data.success === true){
         alert("Blog deleted")
       }else{
