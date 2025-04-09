@@ -209,6 +209,7 @@ export const filterData = async (req,res)=>{
        WHERE P.DESTINATION LIKE ? 
        AND (Q.TotalRating IS NULL OR Q.TotalRating >= ?) 
        AND P.PRICE <= ?
+       AND P.ISACTIVE = 1
        ${sort ? "ORDER BY P.PRICE ASC, Q.TotalRating DESC" : ""}
    `;
    

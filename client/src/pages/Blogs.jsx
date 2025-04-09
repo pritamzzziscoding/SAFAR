@@ -35,7 +35,7 @@ export const Blogs = () => {
                 let filteredBlogs = res.data.blogs.filter(blog => isMatchingSearch(search, blog.Location));
 
                 if (userBlog) {
-                    filteredBlogs = filteredBlogs.filter(blog => blog.UserID === userDetails.id);
+                    filteredBlogs = filteredBlogs.filter(blog => blog.UserID === userDetails.id && blog.UserType === userDetails.type);
                 }
 
                 setBlogs(filteredBlogs);
@@ -105,7 +105,7 @@ export const Blogs = () => {
                                     key={blog.BlogID} 
                                     blog={blog} 
                                     setRefresh={setRefresh} 
-                                    hide={blog.UserID === userDetails.id && blog.UserType === userDetails.type ? "not-hidden" : "hidden"} 
+                                    hide={(blog.UserID === userDetails.id && blog.UserType === userDetails.type) ? "not-hidden" : "hidden"} 
                                     setEdit={setEdit} 
                                     setData={setBlogData} 
                                 />

@@ -1,28 +1,60 @@
 import { db } from "../config/database.js";
 import jwt from "jsonwebtoken";
 
-export const showAllBookings = async(req,res)=>{
+
+
+export const showAllBookings = async (req, res) => {
   try {
- 
-    if(req.user.type==="agency"){
-      return res.redirect("http://localhost:5173/packages")
+    if (req.user.type === "agency") {
+      return res.redirect("http://localhost:5173/packages");
     }
+
     const touristid = req.user.id;
-    const bookingsQuery = `SELECT B.BookingID , p.destination,p.title,p.ImgURL FROM BOOKINGS B LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  WHERE B.TOURISTID = ? AND B.STATUS=?`
-    const bookings = await db.query(bookingsQuery,[touristid,"VERIFIED"]);
+    const bookingsQuery = `
+      SELECT B.BookingID, p.destination, p.title, p.ImgURL 
+      FROM BOOKINGS B 
+      LEFT JOIN PACKAGES P ON B.PACKAGEID = P.PACKAGEID  
+      WHERE B.TOURISTID = ? AND B.STATUS = ?`;
+
+    let bookings = await db.query(bookingsQuery, [touristid, "VERIFIED"]);
+    bookings = bookings[0];
+
+    bookings = await Promise.all(bookings.map(async (obj) => {
+      const ret_obj = obj;
+      const bookingID = ret_obj.BookingID;
+
+      const query = `
+        SELECT 
+          CASE 
+            WHEN NOW() > DATE_ADD(b.FromDate, INTERVAL p.duration DAY) 
+            THEN 1 
+            ELSE 0 
+          END AS isExpired
+        FROM Bookings b
+        JOIN Packages p ON b.packageID = p.packageID
+        WHERE b.bookingID = ? AND b.cancelstatus = 0;
+      `;
+
+      const [rows] = await db.execute(query, [bookingID]);
+      const isExpired = rows.length > 0 ? rows[0].isExpired === 1 : false;
+      ret_obj["isReviewable"] = isExpired;
+      return ret_obj;
+    }));
+    console.log(bookings)
     res.status(200).json({
-      success:true,
-      message:"All bookings  of fetched successfully",
-      bookings:bookings[0]
-    })
+      success: true,
+      message: "All bookings fetched successfully",
+      bookings
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      success:false,
-      message:"Internal Server Error !"
-    })
+      success: false,
+      message: "Internal Server Error!"
+    });
   }
-}
+};
+
 
 
 export const getBookingDetails = async (req,res)=>{

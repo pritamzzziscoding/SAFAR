@@ -19,14 +19,27 @@ export const Bookings = () => {
         getBooking()
     },[])
 
+    console.log(bookings)
+
     return (
         <>
             <Header />
             <div className="mt-20">
                 {
-                    bookings.map((booking)=>{
-                        return <BookingCard key={booking.BookingID} id={booking.BookingID} title={booking.title} destination={booking.destination} image_url={booking.ImgURL}/>
-                    })
+                    bookings.length == 0 ? (
+                        "No Bookings Yet!!!"
+                    ) : (
+                        bookings.map((booking) => (
+                            <BookingCard
+                                key={booking.BookingID}
+                                id={booking.BookingID}
+                                title={booking.title}
+                                destination={booking.destination}
+                                isReviewable={booking.isReviewable}
+                                image_url={booking.ImgURL}
+                            />
+                        ))
+                    )
                 }
             </div>
         </>

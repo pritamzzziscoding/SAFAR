@@ -37,7 +37,7 @@ export const Packages = () => {
             
             <AddPackage setRefresh={setRefresh} edit={edit} setEdit={setEdit} hide={hide === true && !edit ? "hidden":""}/>
         </div>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 w-[90%] gap-2 package-display shadow-2xl rounded-xl border border-stone-100">
             {
                 packages.map((pkg)=>{
                     return <AgencyPackageCard key={pkg.PackageID} pkg={pkg} setRefresh={setRefresh} setEdit={setEdit}/>

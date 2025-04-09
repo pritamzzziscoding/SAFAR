@@ -4,7 +4,7 @@ import { updateBlog } from "../services/update";
 import "../styles/blogForm.css";
 
 export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
-    
+    const[isSubmitting, setIsSubmitting] = useState(false)
     const handleChange = (e) => {
         const { name } = e.target;
         setData({
@@ -26,7 +26,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setIsSubmitting(true)
         const formData = new FormData();
         formData.append("caption", data.caption);
         formData.append("location", data.location);
@@ -57,6 +57,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
         } catch (error) {
             console.error("❌ Backend error while adding blog:", error);
         }
+        setIsSubmitting(false)
     };
 
     return (
@@ -117,8 +118,9 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
             </div>
 
             <button className="submit-btn" type="submit">
-                {edit ? "Update Blog" : "Add Blog"}
+                {isSubmitting ? "Submitting..." : (edit ? "Update Blog" : "Add Blog")}
             </button>
+
         </form>
     );
 };

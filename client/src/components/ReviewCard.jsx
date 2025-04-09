@@ -3,6 +3,7 @@ import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 
 export const ReviewCard = ({ review }) => {
+    console.log(review)
     return (
         <div className="review-card flex gap-4 p-5 rounded-lg shadow-md bg-white transition-transform transform hover:scale-101">
             
@@ -19,18 +20,18 @@ export const ReviewCard = ({ review }) => {
                     <div className="flex items-center">
                         <Rating
                             name="text-feedback"
-                            value={review.Rating}
+                            value={review.rating}
                             readOnly
                             precision={0.5}
                             size="small"
                             sx={{ color: "#FFD700" }}
                             emptyIcon={<StarIcon style={{ opacity: 0.3 }} fontSize="inherit" />}
                         />
-                        <span className="text-gray-600 text-sm font-semibold ml-2">{review.Rating.toFixed(1)}</span>
+                        <span className="text-gray-600 text-sm font-semibold ml-2">{review.rating.toFixed(1)}</span>
                     </div>
                 </div>
 
-                <p className="mt-2 text-gray-800 text-sm leading-relaxed italic">{review.Feedback}”</p>
+                <p className="mt-2 text-gray-800 text-sm leading-relaxed italic">"{review.Feedback}”</p>
             </div>
         </div>
     );

@@ -7,9 +7,7 @@ import { giveRefund } from "../services/update";
 
 function generateBookingId(date, id) {
     let dateObj = new Date(date);
-    let formattedDate = dateObj.getFullYear().toString() +
-                        String(dateObj.getMonth() + 1).padStart(2, '0') +
-                        String(dateObj.getDate()).padStart(2, '0');
+    let formattedDate = dateObj.getFullYear().toString() + String(dateObj.getMonth() + 1).padStart(2, '0') + String(dateObj.getDate()).padStart(2, '0');
     let formattedId = String(id).padStart(4, '0');
     return `BK-${formattedDate}${formattedId}`;
 }
@@ -19,6 +17,7 @@ export const CustomerBookings = () => {
     const [bookings, setBookings] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchID, setSearchID] = useState("");
+    const [refresh, setRefresh] = useState(false)
 
     // Filter Logic
 
@@ -36,7 +35,7 @@ export const CustomerBookings = () => {
 
     useEffect(()=>{
         getBooking()
-    },[package_id])
+    },[package_id, refresh])
 
 
 
@@ -73,7 +72,7 @@ export const CustomerBookings = () => {
                 {/* Booking Cards */}
                 <div className="w-full max-w-md flex flex-col gap-6">
                     {filteredBookings.map((booking) => (
-                        <BookingCard key={booking.BookingID} booking={booking} />
+                        <BookingCard key={booking.BookingID} booking={booking} setRefresh={setRefresh}/>
                     ))}
                 </div>
             </div>
@@ -84,7 +83,7 @@ export const CustomerBookings = () => {
 
 
 
-const BookingCard = ({ booking }) => {
+const BookingCard = ({ booking, setRefresh }) => {
     
     const handleRefund = async () => {
         try {
@@ -98,6 +97,7 @@ const BookingCard = ({ booking }) => {
         } catch (error) {
             console.log(error)
         }
+        setRefresh((prev)=>!prev)
     }
     
     return (

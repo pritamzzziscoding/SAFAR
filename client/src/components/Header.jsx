@@ -71,7 +71,7 @@ export const Header = () => {
                     <li><NavLink to={`${detail.type === "tourist" ? "/home" : "/packages"}`}>{`${detail.type === "tourist" ? "Home" : "Packages"}`}</NavLink></li>
                     {detail.type == "tourist" && <li><NavLink to={"/bookings"}>Bookings</NavLink></li>}
                 </ul>
-                <img onClick={handleImageClick} className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2" src={detail.image_url} alt="." />
+                <img onClick={handleImageClick} className="cursor-pointer h-10 w-10 bg-amber-300 rounded-full border-amber-500 border-2" src={detail.image_url || "https://i.imgflip.com/6yvpkj.jpg"} alt="." />
             </span>
             <Profile image={image} setImage={setImage} status = {profileOpen == false ? 'close-profile' : 'open-profile slide-down'}/>
             {/* <CheckToken /> */}

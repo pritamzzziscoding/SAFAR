@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { addPackage } from "../services/postData";
 import { updatePackage } from "../services/update";
 import "../styles/add-package.css"; // External CSS
+import { useNavigation } from "react-router-dom";
 
 export const AddPackage = ({ setRefresh, edit, setEdit, hide }) => {
+    const navigation = useNavigation()
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         packagename: "",
         destination: "",
@@ -50,7 +53,7 @@ export const AddPackage = ({ setRefresh, edit, setEdit, hide }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setIsSubmitting(true)
         const fd = new FormData();
         fd.append("packagename", formData.packagename);
         fd.append("destination", formData.destination);
@@ -89,7 +92,7 @@ export const AddPackage = ({ setRefresh, edit, setEdit, hide }) => {
             is_active: true,
             facilities: []
         });
-
+        setIsSubmitting(false)
         setEdit(null);
         setRefresh((prev) => !prev);
     };
@@ -150,8 +153,9 @@ export const AddPackage = ({ setRefresh, edit, setEdit, hide }) => {
                     </div>
                 </div>
             </div>
-            
-            <button type="submit" className="submit-btn">{edit ? "Update Package" : "Create Package"}</button>
+            <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                {isSubmitting ? (edit ? "Updating..." : "Adding...") : (edit ? "Update Package" : "Create Package")}
+            </button>
         </form>
     );
 };

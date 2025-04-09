@@ -19,7 +19,11 @@ export const LoginForm = ({ type }) => {
     event.preventDefault();
     const res = await login(data);
     if (res.data.success === true) {
-      navigate("/blogs");
+      if(data.type === "tourist"){
+        navigate("/home")
+      }else{
+          navigate("/packages")
+      }
     } else {
       alert(res.data.message);
     }

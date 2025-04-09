@@ -42,7 +42,7 @@ export const PackageDetails = () => {
             <div className="container bg-stone-50 rounded-lg shadow-lg max-w-4xl w-full overflow-hidden border border-gray-200">
                 {/* Image */}
                 <img
-                src={packageData.ImgURL}
+                src={packageData.ImgURL || "https://img.freepik.com/premium-vector/cheerful-hand-drawn-cartoon-illustration-two-tourists-exploring-destination_1120563-3255.jpg"}
                 alt={packageData.Title}
                 className="w-full h-72 object-cover"
                 />

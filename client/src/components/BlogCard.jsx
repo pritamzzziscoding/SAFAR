@@ -65,7 +65,7 @@ export const BlogCard = ({
 
   return (
     <li className="blog-card bg-teal-100 rounded-lg shadow-lg overflow-hidden transition-transform transform">
-      <img className="w-full h-56 object-cover" src={ImgURL} alt="Blog Thumbnail" />
+      <img className="w-full h-56 object-cover" src={ImgURL || "https://appliedsurveys.com/wp-content/uploads/2015/02/default.png"} alt="Blog Thumbnail" />
       <div className="blog-content flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <button onClick={handleLike} className="flex items-center gap-1 text-gray-600">

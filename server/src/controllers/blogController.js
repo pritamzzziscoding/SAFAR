@@ -38,7 +38,7 @@ export const insertblog = async (req,res)=>{
 
 export const getAllBlogs = async (req,res)=>{
     try {
-        const query = `SELECT * FROM BLOGS`;
+        const query = `SELECT * FROM BLOGS ORDER BY LIKES DESC`;
         const result = await db.query(query);
        
         res.status(200).json({

@@ -61,7 +61,7 @@ export const BookingForm = ({ packageId , price ,hide}) => {
                     currency: "INR",
                     name: "SAFAR PVT LIMITED", 
                     description: "Package Booking Transaction",
-                    image: result.image_url,
+                    image: "/logo.png",
                     order_id: res.data.order.id,
                     callback_url: "http://localhost:8080/paymentVerification",
                     prefill: { 

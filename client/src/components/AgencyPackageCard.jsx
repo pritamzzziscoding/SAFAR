@@ -52,7 +52,7 @@ export const AgencyPackageCard = ({pkg, setRefresh, setEdit}) => {
     return (
         <li className="agency-package-card bg-white shadow-lg rounded-lg p-4 relative overflow-hidden transform transition-transform duration-300 hover:scale-101">
             <img 
-                src={pkg.ImgURL} 
+                src={pkg.ImgURL || "https://img.freepik.com/premium-vector/cheerful-hand-drawn-cartoon-illustration-two-tourists-exploring-destination_1120563-3255.jpg"} 
                 alt="Package Thumbnail" 
                 className="package-image w-full h-48 object-cover rounded-md"
             />
