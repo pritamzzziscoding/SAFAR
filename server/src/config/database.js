@@ -1,7 +1,6 @@
+import "./env.js";
 import mysql from "mysql2";
-import dotenv, { config } from "dotenv";
 
-dotenv.config({ path: "./config/.env" });
 
 export let db = mysql
   .createPool({

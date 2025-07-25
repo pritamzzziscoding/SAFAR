@@ -1,11 +1,9 @@
+import "./config/env.js";
 import app from "./app.js";
 import { db } from "./config/database.js";
 import Razorpay from "razorpay"
-import {config} from "dotenv"
 const PORT = process.env.PORT || 8080;
-config({
-  path:"./config/.env"
-})
+
 export const instance = new Razorpay({
   key_id:process.env.RAZORPAY_API_KEY,
   key_secret: process.env.RAZORPAY_API_SECRET

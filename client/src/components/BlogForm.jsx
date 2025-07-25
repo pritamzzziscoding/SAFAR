@@ -3,7 +3,8 @@ import { addBlog } from "../services/postData";
 import { updateBlog } from "../services/update";
 import "../styles/blogForm.css";
 
-export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
+export const BlogForm = ({ data, setData, edit, setEdit, setRefresh, hide }) => {
+    console.log(hide)
     const[isSubmitting, setIsSubmitting] = useState(false)
     const handleChange = (e) => {
         const { name } = e.target;
@@ -61,7 +62,7 @@ export const BlogForm = ({ data, setData, edit, setEdit, setRefresh }) => {
     };
 
     return (
-        <form className="blog-form bg-teal-50" onSubmit={handleSubmit}>
+        <form className={`${hide} blog-form bg-teal-50`} onSubmit={handleSubmit}>
             <h2 className="form-heading">{edit ? "Edit Your Blog" : "Add a New Blog"}</h2>
 
             <div className="form-grid grid sm:grid-cols-2 md:grid-cols-3 gap-3">

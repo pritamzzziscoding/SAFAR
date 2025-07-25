@@ -70,13 +70,16 @@ export const Blogs = () => {
                     <h1 className="blog-heading">Share Your Experience with the World!</h1>
 
                     {/* Blog Form */}
-                    <BlogForm 
-                        data={blogData} 
-                        setData={setBlogData} 
-                        edit={edit} 
-                        setEdit={setEdit} 
-                        setRefresh={setRefresh} 
-                    />
+                    {
+                        userDetails.type === "tourist" && (<BlogForm 
+                            data={blogData} 
+                            setData={setBlogData} 
+                            edit={edit} 
+                            setEdit={setEdit} 
+                            setRefresh={setRefresh} 
+                        />)
+                    }
+
 
                     {/* Search & Filter Section */}
                     <div className="blog-filter gap-6">
@@ -87,7 +90,7 @@ export const Blogs = () => {
                             value={search} 
                             onChange={(e) => setSearch(e.target.value)} 
                         />
-                        <label className="filter-option">
+                        <label className={`filter-option`}>
                             <input 
                                 type="checkbox" 
                                 checked={userBlog} 
@@ -105,7 +108,7 @@ export const Blogs = () => {
                                     key={blog.BlogID} 
                                     blog={blog} 
                                     setRefresh={setRefresh} 
-                                    hide={(blog.UserID === userDetails.id && blog.UserType === userDetails.type) ? "not-hidden" : "hidden"} 
+                                    hide={((blog.UserID === userDetails.id && blog.UserType === userDetails.type) || userDetails.type === "agency") ? "not-hidden" : "hidden"} 
                                     setEdit={setEdit} 
                                     setData={setBlogData} 
                                 />
